@@ -1,0 +1,9 @@
+#This is the ONN4MDM version 0.2
+#--------------------------------------------------------------------------------------------------
+#We have add some new functions list as follows:
+#1> Add threshold parameter for better control the confidence of results.
+#2> Support cpu users for biome source tracking.
+#---------------------------------------------------------------------------------------------------
+#The bugs have been fixed in this version change, following is the bugs description:
+#1>A little of input samples will get a space output, which means this sample was classified to unknown. So we had add a unknown tag to this samples.
+#2>Some predictions may be lack of several internal layers.
