@@ -8,7 +8,7 @@ Download the zip archive from this [github website][1], then unzip the archive.
 ## Function
 The program can be used for biome source tracking.
 ### tsv convert to npz
-The input file format of ONN is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "preprocessing.py" could work for it.
+The input file format of ONN is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "/DP4ONN/main.py" could work for it.
 ### source tracking
 If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "ONN4MDM.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model.
 ### Dependencies
@@ -20,8 +20,9 @@ tsv convert to npz: preprocess.py
 source tracking: ONN4MDM.py \[options\] \-g/\-\-gpus &ltint&gt \-t/\-\-tree &lttree.file&gt \-n/\-\-name &ltname.file&gt \-m/\-\-model &ltmodel.file&gt \-i/\-\-ifn &ltinput.file&gt \-o/\-\-ofn &ltoutput.file&gt \-th/\-\-threshold &ltfloat&gt
 ## Author
 Name|Email|Organization
-:----:|:----:|:----:
-Hugo Zha|<hugozha@hust.deu.cn>|Ph.D. Candidate, School of Life Science and Technology, Huazhong University of Science & Technology
-Kang Ning|<ningkang@hust.edu.cn>|Professor, School of Life Science and Technology, Huazhong University of Science & Technology
+:---:|:---:|---
+Hugo Zha|hugozha@hust.deu.cn|Ph.D. Candidate, School of Life Science and Technology, Huazhong University of Science & Technology
+Kang Ning|ningkang@hust.edu.cn|Professor, School of Life Science and Technology, Huazhong University of Science & Technology
+Hui Chong|chonghui@hust.edu.cn ch37915405887@gmail.com|Research Assistant, School of Life Science and Technology, Huazhong University of Science & Technology
 
-[1]:https://github.com/HUST-NingKang-Lab/straingems
+[1]:https://github.com/HUST-NingKang-Lab/ONN4MDM
