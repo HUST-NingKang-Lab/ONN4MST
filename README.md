@@ -11,11 +11,11 @@ The program can be used for biome source tracking.
 The input file format of ONN is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "/DP4ONN/main.py" could work for it.
 ### source tracking
 If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "ONN4MDM.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model.
-### Dependencies
+## Dependencies
 * tensorflow-gpu-1.14.0
 + python-3.7
 - numpy-1.16.4
-### Usage
+## Usage
 tsv convert to npz: preprocess.py  
 source tracking: ONN4MDM.py \[options\] \-g/\-\-gpus &lt;int&gt; \-t/\-\-tree &lt;tree.file&gt; \-n/\-\-name &lt;name.file&gt; \-m/\-\-model &lt;model.file&gt; \-i/\-\-ifn &lt;input.file&gt; \-o/\-\-ofn &lt;output.file&gt; \-th/\-\-threshold &lt;float&gt;
 ## Author
