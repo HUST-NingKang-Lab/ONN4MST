@@ -16,11 +16,11 @@ If you have successfully converted the ".tsv" file into ".npz" file, then you co
 + python-3.7
 - numpy-1.16.4
 ### Usage
-tsv convert to npz: preprocess.py
-source tracking: ONN4MDM.py \[options\] \-g/\-\-gpus &ltint&gt \-t/\-\-tree &lttree.file&gt \-n/\-\-name &ltname.file&gt \-m/\-\-model &ltmodel.file&gt \-i/\-\-ifn &ltinput.file&gt \-o/\-\-ofn &ltoutput.file&gt \-th/\-\-threshold &ltfloat&gt
+tsv convert to npz: preprocess.py  
+source tracking: ONN4MDM.py \[options\] \-g/\-\-gpus &lt;int&gt; \-t/\-\-tree &lt;tree.file&gt; \-n/\-\-name &lt;name.file&gt; \-m/\-\-model &lt;model.file&gt; \-i/\-\-ifn &lt;input.file&gt; \-o/\-\-ofn &lt;output.file&gt; \-th/\-\-threshold &lt;float&gt;
 ## Author
 Name|Email|Organization
-:---:|:---:|---
+:------:|---|---
 Hugo Zha|hugozha@hust.deu.cn|Ph.D. Candidate, School of Life Science and Technology, Huazhong University of Science & Technology
 Kang Ning|ningkang@hust.edu.cn|Professor, School of Life Science and Technology, Huazhong University of Science & Technology
 Hui Chong|chonghui@hust.edu.cn ch37915405887@gmail.com|Research Assistant, School of Life Science and Technology, Huazhong University of Science & Technology
