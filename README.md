@@ -64,9 +64,9 @@ ONN4MDM.py [options] -g/--gpus <int> -t/--tree <tree.file> -n/--name <name.file>
 ```
 
 ## Author
-Name|Email|Organization
-----|----|----
-Hugo Zha|hugozha@hust.deu.cn|Ph.D. Candidate, School of Life Science and Technology, Huazhong University of Science & Technology
+   Name   |      Email      |      Organization
+:--------:|-----------------|--------------------------------------------------------------------------------------------------------------------------------
+Hugo Zha |hugozha@hust.deu.cn|Ph.D. Candidate, School of Life Science and Technology, Huazhong University of Science & Technology
 Hui Chong|chonghui@hust.edu.cn ch37915405887@gmail.com|Research Assistant, School of Life Science and Technology, Huazhong University of Science & Technology
 Kang Ning|ningkang@hust.edu.cn|Professor, School of Life Science and Technology, Huazhong University of Science & Technology
 
