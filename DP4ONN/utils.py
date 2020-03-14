@@ -5,11 +5,13 @@ from pandas import read_csv, DataFrame
 import numpy as np
 import pickle
 import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+from tqdm import tqdm
 #from ete3 import NCBITaxa
 
 # new_tree = Tree(tree.subtree(tree.root), deep=True)
 
-class super_tree(Tree):
+class SuperTree(Tree):
 
 	def get_bfs_nodes(self, ):
 		# tested
@@ -106,8 +108,9 @@ class super_tree(Tree):
 		np.save(file, matrix)
 
 	def copy(self, ):
-		# not working
-		return super_tree(self.subtree(self.root), deep=True) 
+		# not working----test 
+		return pickle.loads(pickle.dumps(self, -1))
+		# return super_tree(self.subtree(self.root), deep=True) 
 
 	def remove_levels(self, level: int):
 		# tested
@@ -142,7 +145,7 @@ class super_tree(Tree):
 	'''
 
 
-class data_loader(object):
+class DataLoader(object):
 
 	def __init__(self, path: str, ftype='.tsv'):
 		# tested
@@ -227,7 +230,7 @@ class data_loader(object):
 			return 'True'
 
 
-class id_converter(object):
+class IdConverter(object):
 	def __init__(self, ):
 		pass
 	
@@ -239,3 +242,81 @@ class id_converter(object):
 		ids = [sep.join(ids[0:i]) for i in range(1, len(ids)+1)]
 		self.nid = ids
 		return ids
+
+
+class Selector(object):
+	def __init__(self, matrices):
+		self.matrices = matrices
+		self.sum_matrix = matrices.sum(axis=0)
+
+	def count_true(self, array):
+		return list(array).count(True)
+
+	def run_basic_select(self, ):
+		# tested
+		'''
+		drop features: sum_matrix[:, i] < sum_matrix[:, i].mean() / 1000 
+		add threshold 
+		'''
+		s = self.matrices.shape
+		s_ma = self.sum_matrix
+		ct = self.count_true
+		checkVal = np.array([s_ma[:, i] >= s_ma[:, i].mean()/1000 for i in range(s[2])]).T
+		checkZeros = s_ma != 0 
+		self.basic_select__ = np.array([ct(checkVal[i]) == ct(checkZeros[i]) for i in range(s[1])])
+
+	def cal_feature_importances(self, label, n_jobs=10, max_depth=10):
+		# tested
+		'''
+		'''
+		s = self.matrices.shape
+		self.label = label
+		importances = [''] * s[2]
+		for i in range(s[2]):
+			model = RandomForestRegressor(random_state=1, max_depth=max_depth, n_jobs=n_jobs)
+			model.fit(self.matrices[:, :, i], label)
+			importances[i] = model.feature_importances_
+		self.feature_importances = np.array(importances, dtype=np.float32).T
+
+	def run_RF_regression_select(self, ):
+		# tested
+		'''
+		add threshold 
+		'''
+		s = self.matrices.shape
+		checkZeros = [self.sum_matrix[i] != 0 for i in range(s[1])]
+		im = self.feature_importances
+		checkIm = np.array([im[:, i] >= im[:, i].mean() / 1000 for i in range(s[2])]).T
+		ct = self.count_true
+		self.RF_select__ = np.array([ct(checkIm[i]) == ct(checkZeros[i]) for i in range(s[1])])
+
+
+def npz_merge(files):
+	# tested
+	npzs = [np.load(file) for file in files]
+	keys = ['matrices','label_0','label_1','label_2','label_3','label_4','label_5']
+	data = {key: np.concatenate([npz[key] for npz in npzs], axis=0) for key in keys}
+	return data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
