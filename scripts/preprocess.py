@@ -24,11 +24,11 @@ parser.add_argument("mode", type=str, choices=['check', 'build', 'convert', 'cou
                     help = "work mode of the program. default: convert")
 parser.add_argument("--n_jobs", type=int, default=1, 
                     help = 'the number of processors to use. default: 1')
-parser.add_argument('--input_dir', type=str, default='tsv/',
+parser.add_argument('--input_dir', type=str, default='data/tsvs/',
                     help = 'input directory, must be parent folder of biome folders. default: data/')
-parser.add_argument('--output_dir', type=str, default='matrices/',
+parser.add_argument('--output_dir', type=str, default='data/npzs/',
                     help = 'output directory. default: matrices')                    
-parser.add_argument('--tree', type=str, default='tree/',
+parser.add_argument('--tree', type=str, default='data/trees/',
                     help = 'the directory of trees (species_tree.pkl and biome_tree.pkl). default: tree/')
 
 args = parser.parse_args()

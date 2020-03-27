@@ -30,37 +30,37 @@ If you have successfully converted the ".tsv" file into ".npz" file, then you co
 - Check data 
 
 ```shell
-python scripts/preprocess.py check --input_dir data
+python scripts/preprocess.py check --input_dir data/tsvs
 ```
 
 - Construct tree de novoly
 
 ```shell
-python scripts/preprocess.py build --input_dir data --tree tree
+python scripts/preprocess.py build --input_dir data/tsvs --tree data/trees
 ```
 
 - Convert 'tsv' files to model-acceptable 'npz' file
 
 ```shell
-python scripts/preprocess.py convert --input_dir data --tree tree --output_dir matrices
+python scripts/preprocess.py convert --input_dir data/tsvs --tree data/trees --output_dir data/npzs
 ```
 
 - Count the number of samples in each biome
 
 ```shell
-python scripts/preprocess.py count --input_dir data --output_dir sample_count
+python scripts/preprocess.py count --input_dir data/tsvs --output_dir tmp/
 ```
 
 - Merge multiple 'npz' files to a single 'npz'
 
 ```shell
-python scripts/preprocess.py merge --input_dir matrices
+python scripts/preprocess.py merge --input_dir data/npzs --output_dir data/npzs
 ```
 
 - Do feature selection
 
 ```python
-python scripts/preprocess.py select --input_dir matrices --output_dir matrices
+python scripts/preprocess.py select --input_dir data/npzs --output_dir data/npzs
 ```
 
 - **source tracking**
