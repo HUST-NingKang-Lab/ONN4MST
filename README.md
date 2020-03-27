@@ -59,7 +59,7 @@ python scripts/preprocess.py merge --input_dir data/npzs --output_dir data/npzs
 
 - Do feature selection
 
-```python
+```shell
 python scripts/preprocess.py select --input_dir data/npzs --output_dir data/npzs
 ```
 
