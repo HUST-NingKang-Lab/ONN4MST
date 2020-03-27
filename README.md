@@ -10,16 +10,16 @@ Download the zip archive from this [repository][1], then unzip the archive.
 ## Function
 The program can be used for biome source tracking.
 ### tsv convert to npz
-The input file format of ONN is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "/DP4ONN/main.py" could work for it.
+The input file format of ONN is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "scripts/preprocess.py" could work for it.
 ### source tracking
-If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "ONN4MDM.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model.
+If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "scripts/ONN4MDM.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model.
 ## Dependencies
 
 - for data preprocessing
+  - [python 3.7][6]
   - [Treelib 1.5.5][2]
   - [Pandas 1.0.1][3]
-  - [Numpy 1.18.1][4]
-
+- [Numpy 1.18.1][4]
 - for microbiome source tracking
   - [tensorflow-gpu-1.14.0][5]
   - [python-3.7][6]
@@ -30,37 +30,43 @@ If you have successfully converted the ".tsv" file into ".npz" file, then you co
 - Check data 
 
 ```shell
-python main.py check --input_dir data
+python scripts/preprocess.py check --input_dir data
 ```
 
 - Construct tree de novoly
 
 ```shell
-python main.py build --input_dir data --tree tree
+python scripts/preprocess.py build --input_dir data --tree tree
 ```
 
 - Convert 'tsv' files to model-acceptable 'npz' file
 
 ```shell
-python main.py convert --input_dir data --tree tree --output_dir matrices
+python scripts/preprocess.py convert --input_dir data --tree tree --output_dir matrices
 ```
 
 - Count the number of samples in each biome
 
 ```shell
-python main.py count --input_dir data --output_dir sample_count
+python scripts/preprocess.py count --input_dir data --output_dir sample_count
 ```
 
 - Merge multiple 'npz' files to a single 'npz'
 
 ```shell
-python main.py merge --input_dir matrices
+python scripts/preprocess.py merge --input_dir matrices
+```
+
+- Do feature selection
+
+```python
+python scripts/preprocess.py select --input_dir matrices --output_dir matrices
 ```
 
 - **source tracking**
 
 ```shell
-ONN4MDM.py [options] -g/--gpus <int> -t/--tree <tree.file> -n/--name <name.file> -m/--model <model.file> -i/--ifn <input.file> -o/--ofn <output.file> -th/--threshold <float>
+scripts/ONN4MDM.py [options] -g/--gpus <int> -t/--tree <tree.file> -n/--name <name.file> -m/--model <model.file> -i/--ifn <input.file> -o/--ofn <output.file> -th/--threshold <float>
 ```
 
 ## Author

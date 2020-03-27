@@ -1,7 +1,7 @@
 import argparse
 import os
 import joblib
-from utils import SuperTree, DataLoader, IdConverter, Selector, npz_merge
+from dp_utils import SuperTree, DataLoader, IdConverter, Selector, npz_merge
 import numpy as np
 from functools import reduce
 
@@ -24,7 +24,7 @@ parser.add_argument("mode", type=str, choices=['check', 'build', 'convert', 'cou
                     help = "work mode of the program. default: convert")
 parser.add_argument("--n_jobs", type=int, default=1, 
                     help = 'the number of processors to use. default: 1')
-parser.add_argument('--input_dir', type=str, default='data/',
+parser.add_argument('--input_dir', type=str, default='tsv/',
                     help = 'input directory, must be parent folder of biome folders. default: data/')
 parser.add_argument('--output_dir', type=str, default='matrices/',
                     help = 'output directory. default: matrices')                    
@@ -135,7 +135,7 @@ elif args.mode == 'select':
     feature_ixs = selector.RF_select__
     new_matrices = tmp_matrices[:, feature_ixs, :]
     print(new_matrices.shape)
-    np.savez(os.path.join(args.output_dir, 'matrices_(selected_features).npz'), 
+    np.savez(os.path.join(args.output_dir, 'feature-selected_matrices.npz'), 
             matrices=new_matrices,
             label_0 = labels_['label_0'],
             label_1 = labels_['label_1'],
