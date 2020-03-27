@@ -19,7 +19,7 @@ If you have successfully converted the ".tsv" file into ".npz" file, then you co
   - [python 3.7][6]
   - [Treelib 1.5.5][2]
   - [Pandas 1.0.1][3]
-- [Numpy 1.18.1][4]
+  - [Numpy 1.18.1][4]
 - for microbiome source tracking
   - [tensorflow-gpu-1.14.0][5]
   - [python-3.7][6]
