@@ -7,6 +7,7 @@ import pickle
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from tqdm import tqdm
+from functools import reduce
 #from ete3 import NCBITaxa
 
 # new_tree = Tree(tree.subtree(tree.root), deep=True)
@@ -147,18 +148,29 @@ class SuperTree(Tree):
 
 class DataLoader(object):
 
-	def __init__(self, path: str, ftype='.tsv'):
+	def __init__(self, path: str, ftype='.tsv', batch_size = -1, batch_index = -1):
 		# tested
 		self.ftype = ftype
-		self.paths = self.get_file_paths(path)
+		paths = self.get_file_paths(path, ftype)
+		if batch_index is not -1 and batch_size is not -1: 
+			self.paths = self.split_batches(paths, batch_size)[batch_index]
+		else:
+			self.paths = paths
 	
-	def get_file_paths(self, path: str):
+	def get_file_paths(self, path: str, ftype):
 		# tested
-		return [os.path.join(root, file)
-		for root, dirs, files in os.walk(path) 
-		for file in files 
-		if os.path.splitext(file)[1] == self.ftype]
-	
+		biome_dirs = [os.path.join(path, biome) for biome in os.listdir(path)]
+		tsv_dirs = [[os.path.join(biome_dir, tsv) for tsv in os.listdir(biome_dir) 
+					 if tsv.endswith(ftype)] for biome_dir in biome_dirs]
+		return reduce(lambda x, y: x + y, tsv_dirs)
+
+	def split_batches(self, samples, batch_size):
+		# tested
+		s = batch_size
+		batches = [samples[ix*s: (ix+1)*s] if (ix+1)*s < len(samples) else samples[ix*s:] 
+					for ix in range(int(len(samples) / batch_size) + 1)]
+		return batches
+
 	def get_sample_count(self, ):
 		self.get_paths_keep()
 		split_paths = list(map(lambda x: os.path.split(x)[0].split('/')[-1], self.paths_keep))
@@ -190,7 +202,8 @@ class DataLoader(object):
 	def check_data(self, header=1):
 		# tested
 		self.status = {}
-		for path in self.paths:
+		print('Check data integrity')
+		for path in tqdm(self.paths):
 			try: 
 				f = read_csv(path, header=header, sep='\t')
 				self.status[path] = [self.check_ncols(f), 
@@ -295,7 +308,7 @@ def npz_merge(files):
 	# tested
 	npzs = [np.load(file) for file in files]
 	keys = ['matrices','label_0','label_1','label_2','label_3','label_4','label_5']
-	data = {key: np.concatenate([npz[key] for npz in npzs], axis=0) for key in keys}
+	data = {key: np.concatenate([npz[key] for npz in tqdm(npzs)], axis=0) for key in keys}
 	return data
 
 
