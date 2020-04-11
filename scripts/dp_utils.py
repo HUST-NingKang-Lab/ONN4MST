@@ -8,6 +8,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from tqdm import tqdm
 from functools import reduce
+from copy import copy
 #from ete3 import NCBITaxa
 
 # new_tree = Tree(tree.subtree(tree.root), deep=True)
@@ -110,7 +111,7 @@ class SuperTree(Tree):
 
 	def copy(self, ):
 		# not working----test 
-		return pickle.loads(pickle.dumps(self, -1))
+		return copy(self)
 		# return super_tree(self.subtree(self.root), deep=True) 
 
 	def remove_levels(self, level: int):
@@ -185,7 +186,8 @@ class DataLoader(object):
 	def get_data(self, header=1):
 		# tested
 		self.get_paths_keep()
-		self.data = list(map(lambda x: read_csv(x, sep='\t', header=header), self.paths_keep))
+		print('Loading data')
+		self.data = [read_csv(x, sep='\t', header=header) for x in tqdm(self.paths_keep)]
 		# self.data = map(lambda x: x.iloc(1)[1:], self.data)
 		return self.data
 
@@ -197,7 +199,7 @@ class DataLoader(object):
 	def load_error_list(self, ):
 		# tested
 		with open('tmp/error_list', 'r') as f:
-			self.error_list = f.readlines()
+			self.error_list = [i.rstrip('\n') for i in f.readlines()]
 
 	def check_data(self, header=1):
 		# tested
