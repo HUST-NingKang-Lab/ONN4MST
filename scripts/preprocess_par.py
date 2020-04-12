@@ -84,14 +84,16 @@ elif args.mode == 'build':
 
 
 elif args.mode == 'convert':
-	print('Loading trees and data......', end='')
+	print('Loading trees and data......', end='', flush = True)
 	tree = SuperTree()
 	converter = IdConverter()
 	stree = tree.from_pickle(os.path.join(args.tree, 'species_tree.pkl'))
+	stree.init_nodes_data(value = 0)    # put this outside
 	btree = tree.from_pickle(os.path.join(args.tree, 'biome_tree.pkl'))
+	btree.init_nodes_data(value = 0)     # put this outside
 	data = []
 	for i in map(lambda x: x.iloc(1)[1:], loader.get_data(header=1)): data.append(i.values.tolist())
-	print('finished !\nPreprocessing data......', end='')
+	print('finished !\nPreprocessing data......', end = '', flush = True)
 	data = [{converter.convert(sp[1], sep=';')[-1]: sp[0] for sp in x} for x in data]
 	biomes = [converter.convert(os.path.split(x)[0].split('/')[-1], sep='-') 
 			  for x in loader.paths_keep]
@@ -111,18 +113,18 @@ elif args.mode == 'convert':
 	3. progress bar
 	"""
 	def convert_to_npzs(sample, biome_layered, species_tree, biome_tree):
-		species_tree.init_nodes_data(value = 0)
 		species_tree.fill_with(data = sample)
-		species_tree.update_value()
+		species_tree.update_value()  		
 		Sum = species_tree['root'].data
-		species_tree.remove_levels(species_tree.depth())
+		#species_tree.remove_levels(species_tree.depth())   # substitute ? 
 		matrix = species_tree.get_matrix() / Sum # relative abundance
-		biome_tree.init_nodes_data(value = 0)
 		biome_tree.fill_with(data = {biome: 1 for biome in biome_layered})
 		bfs_data = biome_tree.get_bfs_data()
 		labels = [np.array(bfs_data[i], dtype=np.float32) for i in range(biome_tree.depth() + 1)]
 		return matrix, labels
 	
+	# pre-compute reverse iteration node id order	
+	# pre-generate paths to node ids 
 	print('Use joblib parallel backend with {} cores'.format(args.n_jobs))
 	par = Parallel(n_jobs = args.n_jobs)
 	print('Performing conversion')
