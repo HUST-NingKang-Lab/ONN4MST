@@ -112,6 +112,7 @@ elif args.mode == 'convert':
 	2. function
 	3. progress bar
 	"""
+	@profile
 	def convert_to_npzs(sample, biome_layered, species_tree, biome_tree):
 		species_tree.fill_with(data = sample)
 		species_tree.update_value()  		
