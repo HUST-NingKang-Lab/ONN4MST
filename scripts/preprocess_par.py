@@ -129,7 +129,7 @@ elif args.mode == 'convert':
 	print('Use joblib parallel backend with {} cores'.format(args.n_jobs))
 	par = Parallel(n_jobs = args.n_jobs)
 	print('Performing conversion')
-	res = par(delayed(convert_to_npzs)(data[i], biomes[i], stree.copy(), btree.copy()) for i in trange(len(data)))
+	res = par(delayed(convert_to_npzs)(data[i], biomes[i], stree.copy(), btree.copy(), ) for i in trange(len(data)))
 	#print(res[0:2])
 	raw_npzs = list(zip(*res))
 	matrices = raw_npzs[0]
