@@ -258,7 +258,6 @@ class IdConverter(object):
 		self.nid = ids
 		return ids
 
-
 class Selector(object):
 	def __init__(self, matrices):
 		self.matrices = matrices

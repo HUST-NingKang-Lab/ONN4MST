@@ -1,6 +1,6 @@
 ## preprocessing update
 
-1. extend attrbutes for SuperTree
+1. extend attrbutes for SuperTree -> update livingTree package
 2. dont calculate the order of nodes in for-loops or functions being called repeatedly
 3. calculate attrbute and pass them to functions, dont let functions calculate itself
 4. dont remove levels, this is extremely slow
