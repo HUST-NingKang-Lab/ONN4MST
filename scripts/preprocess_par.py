@@ -1,12 +1,17 @@
+import gc
 import os
+import ray
+import psutil
+import pickle
 import argparse
 import numpy as np
 import pandas as pd
-from functools import reduce
 from tqdm import tqdm, trange
 from joblib import Parallel, delayed
-from livingTree import SuperTree
+from pympler import tracker,summary,muppy
 from dp_utils import DataLoader, IdConverter, Selector, npz_merge
+from functools import reduce
+from livingTree import SuperTree
 
 
 des = '''
@@ -51,6 +56,7 @@ if not os.path.isdir(args.output_dir):
 if not os.path.isdir(args.tree):
 	os.mkdir(args.tree)
 
+
 if args.mode == 'check':
 	# tested
 	# check just 1 line in file errors
@@ -88,13 +94,14 @@ elif args.mode == 'build':
 
 
 elif args.mode == 'convert':
-	print('Loading trees and data......', end='', flush=True)
+	print('Loading trees......', end='', flush=True)
 	tree = SuperTree()
 	converter = IdConverter()
 	stree = tree.from_pickle(os.path.join(args.tree, 'species_tree.pkl'))
 	stree.init_nodes_data(value=0)  # put this outside
 	btree = tree.from_pickle(os.path.join(args.tree, 'biome_tree.pkl'))
 	btree.init_nodes_data(value=0)  # put this outside
+	print('finished !')
 	data = []
 	for i in map(lambda x: x.iloc(1)[1:], loader.get_data(header=1)): data.append(i.values.tolist())
 	print('finished !\nPreprocessing data......', end='', flush=True)
@@ -112,51 +119,90 @@ elif args.mode == 'convert':
 	# data = list(data)
 	print('Total: {} biomes and {} samples'.format(len(biomes), len(data)))
 
-	print('Calculating variables that do not change during iteration......')
-	st_bottom_up_ids = stree.get_bottom_up_ids()
-	st_ids_by_level = stree.get_ids_by_level()
-	paths_to_gen_matrix = stree.get_paths_to_level(ids_by_level=st_ids_by_level, level=6,
+	# Back up the parameters during the first calculation, 
+	# no need to repeatedly calculate in the future
+	if 'prep_conf.pkl' in os.listdir('config'):
+		print('Found a backup and recovering parameters from it.......', end='')
+		with open('config/prep_conf.pkl', 'rb') as f:
+			conf = pickle.load(f)
+		st_bottom_up_ids = conf['st_bottom_up_ids']
+		st_ids_by_level = conf['st_ids_by_level']
+		paths_to_gen_matrix = conf['paths_to_gen_matrix']
+		matrix_ncol = conf['matrix_ncol']
+		print('finished !')
+	else:
+		print('No backup found, calculating parameters that do not change during iteration......', end='')
+		st_bottom_up_ids = stree.get_bottom_up_ids()
+		st_ids_by_level = stree.get_ids_by_level()
+		paths_to_gen_matrix = stree.get_paths_to_level(ids_by_level=st_ids_by_level, level=6,
 												   include_inner_leaves=True)
-	matrix_ncol = max([len(path) for path in paths_to_gen_matrix])
-	# how about fixing k_bact with sk_bact
-	print('finished !')
+		matrix_ncol = max([len(path) for path in paths_to_gen_matrix])
+		params = {'st_bottom_up_ids': st_bottom_up_ids, 'st_ids_by_level': st_ids_by_level, 
+				  'paths_to_gen_matrix': paths_to_gen_matrix, 'matrix_ncol': matrix_ncol}
+		print('finished !\nBacking up parameters to config/preprocessing.pkl', end='')
+		with open('config/prep_conf.pkl', 'wb') as f:
+			pickle.dump(params, f)
+		# how about fixing k_bact with sk_bact
+		print('finished !')
 
-	# @profile
+	# define convert function
+	#@profile
 	def convert_to_npzs(sample, biome_layered, matrix_ncol,
 						species_tree, st_bottom_up_ids, paths_to_gen_matrix, biome_tree):
+		species_tree = species_tree.copy()
+		biome_tree = biome_tree.copy()
 		species_tree.fill_with(data=sample)
 		species_tree.update_values(bottom_up_ids=st_bottom_up_ids)
 		Sum = species_tree['root'].data
 		matrix = species_tree.get_matrix(paths=paths_to_gen_matrix, ncol=matrix_ncol) / Sum  # relative abundance
 		biome_tree.fill_with(data={biome: 1 for biome in biome_layered})
 		bfs_data = biome_tree.get_bfs_data()
-		labels = [np.array(bfs_data[level], dtype=np.float32) for level in range(biome_tree.depth() + 1)]
+		labels = [np.array(bfs_data[level], dtype=np.float32) for level in range(1, biome_tree.depth() + 1)]
+		
+		# recycle memory
+		del matrix_ncol
+		del Sum
+		del species_tree 
+		del biome_tree 
+		del bfs_data 
+		del paths_to_gen_matrix 
+		del st_bottom_up_ids 
+		del sample 
+		del biome_layered
+		gc.collect()
+
 		return matrix, labels
 
+	'''
+	print('Performing conversion......')
+	# Execute sequentially
+	res = [convert_to_npzs(sample=data[i], biome_layered=biomes[i], matrix_ncol=matrix_ncol,
+								  species_tree=stree, st_bottom_up_ids=st_bottom_up_ids,
+								  paths_to_gen_matrix=paths_to_gen_matrix, biome_tree=btree) for i in trange(len(data))]
+
+	'''
 	# pre-compute reverse iteration node id order	
 	# pre-generate paths to node ids 
-	print('Using joblib parallel backend with {} cores'.format(args.n_jobs))
-	par = Parallel(n_jobs=args.n_jobs)
+	par_backend = 'threading' # ['loky', 'multiprocessing', 'threading']
+	print('Using jolib `{}` parallel backend with {} cores'.format(par_backend, args.n_jobs))
+	par = Parallel(n_jobs=args.n_jobs, backend=par_backend)  
 	print('Performing conversion......')
 
 	res = par(delayed(convert_to_npzs)(sample=data[i], biome_layered=biomes[i], matrix_ncol=matrix_ncol,
-									   species_tree=stree.copy(), st_bottom_up_ids=st_bottom_up_ids,
-									   paths_to_gen_matrix=paths_to_gen_matrix, biome_tree=btree.copy())
+									   species_tree=stree, st_bottom_up_ids=st_bottom_up_ids,
+									   paths_to_gen_matrix=paths_to_gen_matrix, biome_tree=btree)
 			  for i in trange(len(data))
 			  )
-	'''
-	for i in trange(len(data)): convert_to_npzs(sample=data[i], biome_layered=biomes[i], matrix_ncol=matrix_ncol,
-									   species_tree=stree.copy(), st_bottom_up_ids=st_bottom_up_ids,
-									   paths_to_gen_matrix=paths_to_gen_matrix, biome_tree=btree.copy())
-	'''
+	
+	
 	# print(res[0:2])
 	raw_npzs = list(zip(*res))
 	matrices = raw_npzs[0]
 	labels = raw_npzs[1]
 	labels = [[np.array(label[i]) for label in labels] for i in range(len(labels[0]))]
-	output_dir = os.path.join(args.output_dir, 'matrices.npz')
+	output_dir = os.path.join(args.output_dir, 'batch_'+str(args.batch_index)+'.npz')
 	np.savez(output_dir, matrices=matrices, label_0=labels[0], label_1=labels[1],
-			 label_2=labels[2], label_3=labels[3], label_4=labels[4], label_5=labels[5])
+			 label_2=labels[2], label_3=labels[3], label_4=labels[4])
 	print('Results are save in {}'.format(output_dir))
 
 elif args.mode == 'count':

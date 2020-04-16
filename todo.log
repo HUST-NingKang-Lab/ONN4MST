@@ -9,7 +9,8 @@
 
 
 
-
+1. fix label0-label5 deletions
+2. updating livingTree with numpy.chararray
 
 
 
