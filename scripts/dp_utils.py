@@ -1,15 +1,17 @@
-from treelib import Node, Tree
-import os, sys
-# from joblib import *
-from pandas import read_csv, DataFrame
-import numpy as np
+import os
 import pickle
+import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
-from tqdm import tqdm
+from copy import deepcopy
+from tqdm import tqdm, trange
+from pandas import read_csv, DataFrame
+from treelib import Node, Tree
 from functools import reduce
+from sklearn.ensemble import RandomForestRegressor
 from copy import copy
 #from ete3 import NCBITaxa
+# from joblib import *
+
 
 # new_tree = Tree(tree.subtree(tree.root), deep=True)
 
@@ -111,7 +113,7 @@ class SuperTree(Tree):
 
 	def copy(self, ):
 		# not working----test 
-		return copy(self)
+		return deepcopy(self)
 		# return super_tree(self.subtree(self.root), deep=True) 
 
 	def remove_levels(self, level: int):
@@ -263,49 +265,56 @@ class IdConverter(object):
 		self.nid = ids
 		return ids
 
+
 class Selector(object):
+
 	def __init__(self, matrices):
 		self.matrices = matrices
 		self.sum_matrix = matrices.sum(axis=0)
+		self.basic_select__ = np.array([])
+		self.label = np.array([])
+		self.RF_select__ = np.array([])
+		self.feature_importance = np.array([])
 
 	def count_true(self, array):
 		return list(array).count(True)
 
-	def run_basic_select(self, ):
+	def run_basic_select(self, coefficient):
 		# tested
-		'''
-		drop features: sum_matrix[:, i] < sum_matrix[:, i].mean() / 1000 
-		add threshold 
-		'''
+		"""
+		drop features: sum_matrix[:, i] < sum_matrix[:, i].mean() / 1000
+		add threshold
+		"""
 		s = self.matrices.shape
 		s_ma = self.sum_matrix
 		ct = self.count_true
-		checkVal = np.array([s_ma[:, i] >= s_ma[:, i].mean()/1000 for i in range(s[2])]).T
+		checkVal = np.array([s_ma[:, i] >= s_ma[:, i].mean() * coefficient for i in range(s[2])]).T
 		checkZeros = s_ma != 0 
 		self.basic_select__ = np.array([ct(checkVal[i]) == ct(checkZeros[i]) for i in range(s[1])])
 
-	def cal_feature_importances(self, label, n_jobs=10, max_depth=10):
+	def cal_feature_importance(self, label, n_jobs=10, max_depth=10):
 		# tested
-		'''
-		'''
+		"""
+		"""
 		s = self.matrices.shape
 		self.label = label
-		importances = [''] * s[2]
-		for i in range(s[2]):
+		importance = [''] * s[2]
+		for i in trange(s[2]):
 			model = RandomForestRegressor(random_state=1, max_depth=max_depth, n_jobs=n_jobs)
 			model.fit(self.matrices[:, :, i], label)
-			importances[i] = model.feature_importances_
-		self.feature_importances = np.array(importances, dtype=np.float32).T
+			importance[i] = model.feature_importances_
+		self.feature_importance = np.array(importance, dtype=np.float32).T
 
-	def run_RF_regression_select(self, ):
+	def run_RF_regression_select(self, coefficient):
 		# tested
-		'''
-		add threshold 
-		'''
+		"""
+		add threshold
+		"""
 		s = self.matrices.shape
 		checkZeros = [self.sum_matrix[i] != 0 for i in range(s[1])]
-		im = self.feature_importances
-		checkIm = np.array([im[:, i] >= im[:, i].mean() / 1000 for i in range(s[2])]).T
+		im = self.feature_importance
+
+		checkIm = np.array([im[:, i] >= im[:, i].mean() * coefficient for i in range(s[2])]).T
 		ct = self.count_true
 		self.RF_select__ = np.array([ct(checkIm[i]) == ct(checkZeros[i]) for i in range(s[1])])
 
@@ -313,7 +322,7 @@ class Selector(object):
 def npz_merge(files):
 	# tested
 	npzs = [np.load(file) for file in files]
-	keys = ['matrices','label_0','label_1','label_2','label_3','label_4']
+	keys = ['matrices', 'label_0', 'label_1', 'label_2', 'label_3', 'label_4']
 	data = {key: np.concatenate([npz[key] for npz in tqdm(npzs)], axis=0) for key in keys}
 	return data
 

@@ -1,14 +1,11 @@
 import gc
 import os
-import ray
-import psutil
 import pickle
 import argparse
 import numpy as np
 import pandas as pd
 from tqdm import tqdm, trange
 from joblib import Parallel, delayed
-from pympler import tracker,summary,muppy
 from dp_utils import DataLoader, IdConverter, Selector, npz_merge
 from functools import reduce
 from livingTree import SuperTree
@@ -41,6 +38,8 @@ parser.add_argument("-o", '--output_dir', type=str, default='data/npzs/',
 					help='Output directory. default: matrices')
 parser.add_argument("-t", '--tree', type=str, default='data/trees/',
 					help='The directory of trees (species_tree.pkl and biome_tree.pkl). default: tree/')
+parser.add_argument("-c", '--coef', type=float, default=1e-3,
+					help='The coefficient for determining threshold when selecting features. default: 1e-3')
 
 # global setting
 args = parser.parse_args()
@@ -156,7 +155,6 @@ elif args.mode == 'convert':
 		print('finished !')
 
 	# define convert function
-	#@profile
 	def convert_to_npzs(sample, biome_layered, matrix_ncol,
 						species_tree, st_bottom_up_ids, paths_to_gen_matrix, biome_tree):
 		species_tree = pickle.loads(pickle.dumps(species_tree))
@@ -194,7 +192,7 @@ elif args.mode == 'convert':
 	# pre-compute reverse iteration node id order	
 	# pre-generate paths to node ids 
 	par_backend = 'threads' # {‘processes’, ‘threads’}
-	#print('Using jolib `{}` parallel backend with {} cores'.format(par_backend, args.n_jobs))
+	print('Using jolib `{}` parallel backend with {} cores'.format(par_backend, args.n_jobs))
 	par = Parallel(n_jobs=args.n_jobs, prefer=par_backend)  
 	print('Performing conversion......')
 
@@ -243,23 +241,32 @@ elif args.mode == 'merge':
 
 elif args.mode == 'select':
 	# tested
-	if len(os.listdir(args.input_dir)) != 1: print('you need to merge npzs first')
+	coefficient = args.coef
+	if len(os.listdir(args.input_dir)) != 1: print('You need to merge npzs first')
+	print('Loading data...')
 	tmp = np.load(os.path.join(args.input_dir, os.listdir(args.input_dir)[0]))
+	print('Finished !')
 	matrices = tmp['matrices']
-	print(matrices.shape)
+	print('Matrices shape now: {}'.format(matrices.shape))
+	print('Concatenating labels...')
 	labels_ = {i: tmp[i] for i in ['label_0', 'label_1', 'label_2', 'label_3', 'label_4']}
 	labels = reduce(lambda x, y: np.concatenate((x, y), axis=1), labels_.values())
+	print('Finished !')
 	selector = Selector(matrices)
-	selector.run_basic_select()
+	print('Performing basic feature selection...')
+	selector.run_basic_select(coefficient=coefficient)
 	feature_ixs = selector.basic_select__
 	tmp_matrices = matrices[:, feature_ixs, :]
-	print(tmp_matrices.shape)
+	print('Finished !')
+	print('Matrices shape after basic selecting: {}'.format(tmp_matrices.shape))
+	print('Performing random forest regression feature selection...')
 	selector = Selector(tmp_matrices)
-	selector.cal_feature_importances(label=labels, n_jobs=2)
-	selector.run_RF_regression_select()
+	selector.cal_feature_importance(label=labels, n_jobs=2)
+	selector.run_RF_regression_select(coefficient=coefficient)
 	feature_ixs = selector.RF_select__
 	new_matrices = tmp_matrices[:, feature_ixs, :]
-	print(new_matrices.shape)
+	print('Finished !')
+	print('Matrices shape after random forest regression selecting: {}'.format(new_matrices.shape))
 	np.savez(os.path.join(args.output_dir, 'feature-selected_matrices.npz'),
 			 matrices=new_matrices,
 			 label_0=labels_['label_0'],
@@ -267,3 +274,4 @@ elif args.mode == 'select':
 			 label_2=labels_['label_2'],
 			 label_3=labels_['label_3'],
 			 label_4=labels_['label_4'])
+	print('Result are saved in {}'.format(os.path.join(args.output_dir, 'feature-selected_matrices.npz')))
