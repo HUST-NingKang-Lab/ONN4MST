@@ -8,9 +8,14 @@
 
 
 
+## preprocessing update
 
 1. fix label0-label5 deletions
-2. updating livingTree with numpy.chararray
+2. rebuild species tree and biome tree
+
+
+
+
 
 
 

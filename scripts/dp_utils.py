@@ -248,7 +248,12 @@ class DataLoader(object):
 class IdConverter(object):
 	def __init__(self, ):
 		pass
-	
+
+	def fix_issue2_3(self, ids_path: str):
+		ids_path = ids_path.replace('; ', ';')
+		ids_path = ids_path.replace('k__', 'sk__').replace(';p__', ';k__;p__') if ids_path.startswith('k__') else ids_path
+		return ids_path
+
 	def convert(self, ids_path: str, sep):
 		# tested, use path
 		ids = ids_path.split(sep)
@@ -308,7 +313,7 @@ class Selector(object):
 def npz_merge(files):
 	# tested
 	npzs = [np.load(file) for file in files]
-	keys = ['matrices','label_0','label_1','label_2','label_3','label_4','label_5']
+	keys = ['matrices','label_0','label_1','label_2','label_3','label_4']
 	data = {key: np.concatenate([npz[key] for npz in tqdm(npzs)], axis=0) for key in keys}
 	return data
 
