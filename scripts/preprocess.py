@@ -242,11 +242,10 @@ elif args.mode == 'merge':
 elif args.mode == 'select':
 	# tested
 	coefficient = args.coef
-	if len(os.listdir(args.input_dir)) != 1: print('You need to merge npzs first')
 	print('Loading data...')
-	tmp = np.load(os.path.join(args.input_dir, os.listdir(args.input_dir)[0]))
-	print('Finished !')
+	tmp = np.load(os.path.join(args.input_dir, 'merged_matrices.npz'))
 	matrices = tmp['matrices']
+	print('Finished !')
 	print('Matrices shape now: {}'.format(matrices.shape))
 	print('Concatenating labels...')
 	labels_ = {i: tmp[i] for i in ['label_0', 'label_1', 'label_2', 'label_3', 'label_4']}
@@ -267,11 +266,14 @@ elif args.mode == 'select':
 	new_matrices = tmp_matrices[:, feature_ixs, :]
 	print('Finished !')
 	print('Matrices shape after random forest regression selecting: {}'.format(new_matrices.shape))
-	np.savez(os.path.join(args.output_dir, 'feature-selected_matrices.npz'),
+	out_name = 'matrices_{}_features_coef_{}.npz'.format(new_matrices.shape[1], args.coef)
+	np.savez(os.path.join(args.output_dir, out_name),
 			 matrices=new_matrices,
 			 label_0=labels_['label_0'],
 			 label_1=labels_['label_1'],
 			 label_2=labels_['label_2'],
 			 label_3=labels_['label_3'],
 			 label_4=labels_['label_4'])
-	print('Result are saved in {}'.format(os.path.join(args.output_dir, 'feature-selected_matrices.npz')))
+	print('Result are saved in {}'.format(os.path.join(args.output_dir, out_name)))
+	np.savez('tmp/feature_ixs.npz', abu_select=selector.basic_select__, imptc_select=selector.RF_select__)
+	print('The indeces of selected features are saved in {}'.format('tmp/feature_ixs.npz'))

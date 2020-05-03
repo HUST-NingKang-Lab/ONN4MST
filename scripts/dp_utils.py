@@ -275,9 +275,7 @@ class Selector(object):
 		self.label = np.array([])
 		self.RF_select__ = np.array([])
 		self.feature_importance = np.array([])
-
-	def count_true(self, array):
-		return list(array).count(True)
+		self.is_nonZero = self.sum_matrix != 0 
 
 	def run_basic_select(self, coefficient):
 		# tested
@@ -285,37 +283,45 @@ class Selector(object):
 		drop features: sum_matrix[:, i] < sum_matrix[:, i].mean() / 1000
 		add threshold
 		"""
-		s = self.matrices.shape
-		s_ma = self.sum_matrix
-		ct = self.count_true
-		checkVal = np.array([s_ma[:, i] >= s_ma[:, i].mean() * coefficient for i in range(s[2])]).T
-		checkZeros = s_ma != 0 
-		self.basic_select__ = np.array([ct(checkVal[i]) == ct(checkZeros[i]) for i in range(s[1])])
+		#s = self.matrices.shape
+		#s_ma = self.sum_matrix
+		C = coefficient
+		#is_greater = np.array([s_ma[:, i] >= (s_ma[:, i].mean() * coefficient) for i in range(s[2])]).T
+		is_greater = np.apply_along_axis(func1d=lambda x: x >= (C * x.mean()), axis=0, arr=self.sum_matrix)
+
+		#self.basic_select__ = np.array([is_greater[i].sum() == self.is_nonZero[i].sum() for i in range(s[1])])
+		self.basic_select__ = is_greater.sum(axis=1) == self.is_nonZero.sum(axis=1)
 
 	def cal_feature_importance(self, label, n_jobs=10, max_depth=10):
 		# tested
 		"""
 		"""
-		s = self.matrices.shape
+		shape = self.matrices.shape
 		self.label = label
-		importance = [''] * s[2]
-		for i in trange(s[2]):
+		importance = np.zeros(shape[1:])
+		for i in trange(shape[2]):
 			model = RandomForestRegressor(random_state=1, max_depth=max_depth, n_jobs=n_jobs)
 			model.fit(self.matrices[:, :, i], label)
-			importance[i] = model.feature_importances_
-		self.feature_importance = np.array(importance, dtype=np.float32).T
+			importance[:, i] = model.feature_importances_
+		self.feature_importance = importance
 
 	def run_RF_regression_select(self, coefficient):
 		# tested
 		"""
 		add threshold
 		"""
-		s = self.matrices.shape
-		im = self.feature_importance
+		C = coefficient
+		shape = self.matrices.shape
+		importance = self.feature_importance
+		'''
+		is_important_T = np.array([importance[:, i] >= (importance[:, i].mean() * coefficient) for i in range(shape[2])])
+		is_important = is_important_T.T
+		'''
+		is_important = np.apply_along_axis(func1d=lambda x: x >= (C * x.mean()), axis=0, arr=importance)
 
-		checkIm = np.array([im[:, i] >= im[:, i].mean() * coefficient for i in range(s[2])]).T
-		ct = self.count_true
-		self.RF_select__ = np.array([False not in checkIm[i, 0:ct(checkZeros[i])] for i in range(s[1])])
+		n_nonZero = np.apply_along_axis(func1d=lambda x: x.sum(), axis=1, arr=self.is_nonZero)
+		RF_select__ = [is_important[i, 0:n_nonZero[i]].sum() == n_nonZero[i] for i in range(shape[1])]
+		self.RF_select__ = np.array(RF_select__)
 
 
 def npz_merge(files):
