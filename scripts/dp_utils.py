@@ -311,12 +311,11 @@ class Selector(object):
 		add threshold
 		"""
 		s = self.matrices.shape
-		checkZeros = [self.sum_matrix[i] != 0 for i in range(s[1])]
 		im = self.feature_importance
 
 		checkIm = np.array([im[:, i] >= im[:, i].mean() * coefficient for i in range(s[2])]).T
 		ct = self.count_true
-		self.RF_select__ = np.array([ct(checkIm[i]) == ct(checkZeros[i]) for i in range(s[1])])
+		self.RF_select__ = np.array([False not in checkIm[i, 0:ct(checkZeros[i])] for i in range(s[1])])
 
 
 def npz_merge(files):

@@ -261,7 +261,7 @@ elif args.mode == 'select':
 	print('Matrices shape after basic selecting: {}'.format(tmp_matrices.shape))
 	print('Performing random forest regression feature selection...')
 	selector = Selector(tmp_matrices)
-	selector.cal_feature_importance(label=labels, n_jobs=2)
+	selector.cal_feature_importance(label=labels, n_jobs=args.n_jobs)
 	selector.run_RF_regression_select(coefficient=coefficient)
 	feature_ixs = selector.RF_select__
 	new_matrices = tmp_matrices[:, feature_ixs, :]
