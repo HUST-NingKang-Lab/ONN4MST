@@ -46,7 +46,7 @@ args = parser.parse_args()
 if args.mode == 'convert':
 	# print('convert mode')
 	loader = DataLoader(path=args.input_dir, batch_size=args.batch_size, batch_index=args.batch_index)
-elif args.mode in ['check','build']:
+elif args.mode in ['check', 'build', 'count']:
 	loader = DataLoader(path=args.input_dir)
 else:
 	pass
@@ -219,10 +219,20 @@ elif args.mode == 'convert':
 elif args.mode == 'count':
 	# tested
 	sample_count = loader.get_sample_count()
-	res = ['{}:{}'.format(key, value) for key, value in sample_count.items()]
-	print('\n'.join(res))  # save needed
-# id_id needed, unique tag conversion needed
-# new algorithm
+	res = pd.DataFrame(list(sample_count.items()), columns=['Microbiome', 'Sample size'])
+
+	fix_issue_1 = lambda x: x.replace('Host-associated', 'Host_associated').\
+		replace('Oil-contaminated', 'Oil_contaminated').\
+		replace('Non-marine', 'Non_marine')
+	res['Microbiome'] = res['Microbiome'].apply(lambda x: fix_issue_1(os.path.split(x)[1]))
+	# id conversion needed
+	res.to_excel(os.path.join(args.output_dir, 'sample_count_ONN_format.xls'), index=False)
+
+	restore = lambda x: x.replace('Host_associated', 'Host-associated').\
+		replace('Oil_contaminated', 'Oil-contaminated').replace('Non_marine', 'Non-marine')
+	res['Microbiome'] = res['Microbiome'].apply(lambda x: x.replace('-', ' > ')).apply(restore)
+	res.to_excel(os.path.join(args.output_dir, 'sample_count_EBI_format.xls'), index=False)
+	print('Done !')
 
 elif args.mode == 'merge':
 	# tested
@@ -277,7 +287,7 @@ elif args.mode == 'select':
 	print('Result are saved in {}'.format(os.path.join(args.output_dir, out_name)))
 	conf_name = '{}features_{}C.npz'.format(new_matrices.shape[1], args.coef)
 	np.savez('tmp/'+conf_name, abu_select=selector.basic_select__, imptc_select=selector.RF_select__)
-	print('The indeces of selected features are saved in tmp/{}'.format(conf_name)
+	print('The indeces of selected features are saved in tmp/{}'.format(conf_name))
 
 
 
