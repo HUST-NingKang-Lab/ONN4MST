@@ -275,5 +275,10 @@ elif args.mode == 'select':
 			 label_3=labels_['label_3'],
 			 label_4=labels_['label_4'])
 	print('Result are saved in {}'.format(os.path.join(args.output_dir, out_name)))
-	np.savez('tmp/feature_ixs.npz', abu_select=selector.basic_select__, imptc_select=selector.RF_select__)
-	print('The indeces of selected features are saved in {}'.format('tmp/feature_ixs.npz'))
+	conf_name = '{}features_{}C.npz'.format(new_matrices.shape[1], args.coef)
+	np.savez('tmp/'+conf_name, abu_select=selector.basic_select__, imptc_select=selector.RF_select__)
+	print('The indeces of selected features are saved in tmp/{}'.format(conf_name)
+
+
+
+
