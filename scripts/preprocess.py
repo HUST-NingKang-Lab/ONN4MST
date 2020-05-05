@@ -238,7 +238,7 @@ elif args.mode == 'count':
 	res.to_csv(os.path.join(args.output_dir, 'sample_count_EBI_format.tsv'), sep='\t', index=False)
 	print('Finished !')
 	print('Generating DLMER format result...')
-	text_res = ['{}:{}'.format(biome, count) for biome, count in sample_count.items()]
+	text_res = ['{}:{}'.format(fix_issue_1(biome), count) for biome, count in sample_count.items()]
 	with open(os.path.join(args.output_dir, 'sample_count_DLMER_format.txt'), 'w') as f:
 		f.write('\n'.join(text_res))
 	print('Finished !')
