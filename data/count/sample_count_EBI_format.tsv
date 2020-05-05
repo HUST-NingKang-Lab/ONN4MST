@@ -1,115 +1,115 @@
 Microbiome	Sample size
-root > Host-associated > Human > Circulatory_system	2
-root > Host-associated > Human > Reproductive_system > Female	20
-root > Environmental > Aquatic > Marine > Pelagic	176
-root > Host-associated > Insecta > Digestive_system	165
+root > Environmental > Aquatic > Freshwater > Lake	3475
 root > Environmental > Aquatic > Non-marine_Saline_and_Alkaline > Alkaline > Sediment	98
-root > Environmental > Terrestrial > Soil > Contaminated	1
-root > Environmental > Aquatic > Marine > Intertidal_zone > Salt_marsh	757
-root > Environmental > Aquatic > Marine > Wetlands > Sediment	105
-root > Environmental > Aquatic > Marine > Intertidal_zone	90
-root > Engineered > Wastewater > Industrial_wastewater > Petrochemical	14
-root > Environmental > Terrestrial > Soil > Crop	1
-root > Engineered > Wastewater	110
-root > Environmental > Terrestrial > Soil > Tropical_rainforest	191
-root > Environmental > Aquatic > Freshwater > Groundwater > Biofilm	11
-root > Engineered > Wastewater > Water_and_sludge	508
-root > Host-associated > Plants	1986
-root > Environmental > Terrestrial > Soil > Boreal_forest	3
-root > Environmental > Aquatic > Marine > Neritic_zone > Sediment	5
+root > Environmental > Terrestrial > Soil > Forest_soil	230
+root > Host-associated > Human	1016
+root > Host-associated > Human > Skin	4848
+root > Environmental > Terrestrial > Soil > Sand	16
 root > Host-associated > Human > Digestive_system > Oral > Subgingival_plaque	794
+root > Environmental > Aquatic > Marine > Intertidal_zone	90
+root > Environmental > Aquatic > Non-marine_Saline_and_Alkaline > Hypersaline > Sediment	19
+root > Environmental > Aquatic > Marine > Coastal	4307
+root > Environmental > Terrestrial > Soil > Crop > Agricultural_land	16
+root > Environmental > Aquatic > Marine > Oceanic	3457
+root > Host-associated > Plants > Rhizosphere > Soil	3380
+root > Mixed	7231
+root > Environmental > Aquatic > Marine > Wetlands > Sediment	105
+root > Environmental > Aquatic > Marine > Wetlands	6
+root > Host-associated > Human > Digestive_system > Oral > tongue_dorsum	955
+root > Host-associated > Mammals > Digestive_system > Stomach > Rumen	612
+root > Environmental > Aquatic > Marine > Intertidal_zone > Microbialites	7
 root > Environmental > Terrestrial > Soil > Wetlands	60
-root > Environmental > Terrestrial > Soil > Desert	28
-root > Environmental > Aquatic > Sediment	315
-root > Host-associated > Insecta	608
-root > Host-associated > Plants > Rhizoplane > Endophytes	35
 root > Environmental > Aquatic > Marine > Oceanic > Oil-contaminated_sediments	48
-root > Environmental > Aquatic > Marine > Hydrothermal_vents > Black_smokers	2
-root > Host-associated > Plants > Root	703
-root > Environmental > Aquatic > Marine > Intertidal_zone > Sediment	140
-root > Host-associated > Human > Digestive_system > Oral	5820
-root > Environmental > Terrestrial > Soil > Loam > Agricultural	48
+root > Environmental > Aquatic > Marine > Cold_seeps	555
+root > Environmental > Terrestrial > Soil > Agricultural	1132
+root > Environmental > Aquatic > Freshwater > Groundwater > Biofilm	11
+root > Host-associated > Plants > Rhizosphere	3925
+root > Engineered > Wastewater > Industrial_wastewater > Petrochemical	14
+root > Host-associated > Plants > Rhizoplane > Endophytes	35
+root > Environmental > Aquatic > Marine > Cold_seeps > Sediment	82
+root > Host-associated > Insecta	608
 root > Host-associated > Mammals > Digestive_system > Large_intestine	494
-root > Host-associated > Mammals > Digestive_system > Oral_cavity > Buccal_mucosa	26
+root > Engineered > Wastewater > Nutrient_removal > Dissolved_organics_(aerobic)	48
+root > Environmental > Aquatic > Marine > Oil_seeps	2
+root > Environmental > Terrestrial > Soil > Uranium_contaminated	1
+root > Environmental > Terrestrial > Soil	5038
+root > Environmental > Aquatic > Marine > Hydrothermal_vents > Microbial_mats	11
+root > Host-associated > Human > Digestive_system > Oral > Supragingival_plaque	513
+root > Environmental > Aquatic > Marine > Sediment	3031
+root > Environmental > Terrestrial > Soil > Contaminated	1
+root > Environmental > Aquatic > Marine > Oceanic > Abyssal_plane	792
+root > Environmental > Terrestrial > Soil > Grasslands	350
+root > Host-associated > Human > Circulatory_system	2
+root > Environmental > Aquatic > Non-marine_Saline_and_Alkaline > Hypersaline	7
+root > Environmental > Aquatic > Marine	5922
+root > Host-associated > Plants > Root	703
+root > Environmental > Terrestrial > Soil > Permafrost	74
+root > Host-associated > Human > Reproductive_system > Female	20
+root > Environmental > Aquatic > Marine > Coastal > Sediment	979
+root > Host-associated > Human > Digestive_system > Intestine	553
+root > Environmental > Aquatic > Marine > Marginal_Sea	220
+root > Host-associated > Human > Digestive_system > Oral	5820
+root > Environmental > Aquatic > Marine > Intertidal_zone > Sediment	140
+root > Environmental > Aquatic > Sediment	315
+root > Environmental > Aquatic > Marine > Hydrothermal_vents > Sediment	74
+root > Engineered > Wastewater > Industrial_wastewater > Mine_water	79
+root > Host-associated > Human > Digestive_system > Oral > Throat	21
+root > Environmental > Aquatic > Non-marine_Saline_and_Alkaline > Salt_crystallizer_pond	108
+root > Engineered > Wastewater > Nutrient_removal > Dissolved_organics_(anaerobic)	8
+root > Environmental > Terrestrial > Soil > Boreal_forest	3
 root > Host-associated > Plants > Rhizosphere > Forest_soil	959
 root > Environmental > Aquatic > Marine > Oceanic > Sediment	468
-root > Environmental > Aquatic > Freshwater > Lake	3475
-root > Environmental > Aquatic > Marine > Hydrothermal_vents > Microbial_mats	11
-root > Host-associated > Plants > Rhizosphere	3925
+root > Environmental > Terrestrial > Soil > Desert	28
 root > Host-associated > Human > Digestive_system > Large_intestine > Fecal	29427
-root > Environmental > Aquatic > Marine > Hydrothermal_vents > Diffuse_flow	1
-root > Environmental > Aquatic > Marine > Intertidal_zone > Mangrove_swamp	106
-root > Environmental > Terrestrial > Soil > Sand	16
-root > Environmental > Aquatic > Marine > Oceanic	3457
-root > Environmental > Terrestrial > Soil > Grasslands	350
-root > Host-associated > Human > Digestive_system > Large_intestine	535
-root > Engineered > Wastewater > Nutrient_removal > Dissolved_organics_(anaerobic)	8
-root > Host-associated > Human > Digestive_system > Oral > buccal_mucosa	289
-root > Host-associated > Mammals > Digestive_system > Large_intestine > Cecum	201
-root > Environmental > Aquatic > Marine > Hydrothermal_vents	52
-root > Host-associated > Human	1016
-root > Host-associated > Human > Digestive_system	1810
-root > Host-associated > Human > Respiratory_system > Nasopharyngeal	2637
-root > Environmental > Terrestrial > Soil	5038
-root > Host-associated > Human > Respiratory_system > Pulmonary_system > Sputum	135
-root > Environmental > Aquatic > Marine > Marginal_Sea	220
-root > Host-associated > Human > Respiratory_system	23
-root > Host-associated > Plants > Phylloplane	21
-root > Host-associated > Plants > Phylloplane > Endophytes	3025
-root > Mixed	7231
-root > Host-associated > Human > Respiratory_system > Nasopharyngeal > Nasal_cavity	17
-root > Environmental > Terrestrial > Soil > Forest_soil	230
-root > Host-associated > Mammals > Digestive_system > Stomach	3
-root > Environmental > Aquatic > Marine > Coastal > Sediment	979
-root > Environmental > Aquatic > Marine > Intertidal_zone > Microbialites	7
-root > Host-associated > Human > Digestive_system > Intestine	553
-root > Host-associated > Human > Digestive_system > Oral > Throat	21
-root > Host-associated > Human > Reproductive_system > Vagina	164
-root > Engineered > Wastewater > Activated_Sludge	233
-root > Host-associated > Plants > Rhizosphere > Epiphytes	36
-root > Host-associated > Mammals > Digestive_system	4941
-root > Environmental > Aquatic > Marine > Cold_seeps > Sediment	82
-root > Environmental > Terrestrial > Soil > Uranium_contaminated	1
-root > Host-associated > Plants > Rhizosphere > Soil	3380
-root > Environmental > Aquatic > Thermal_springs > Sediment	10
-root > Host-associated > Mammals > Digestive_system > Foregut > Rumen	42
-root > Engineered > Wastewater > Nutrient_removal > Dissolved_organics_(aerobic)	48
-root > Host-associated > Human > Circulatory_system > Blood	24
-root > Environmental > Aquatic > Marine > Neritic_zone	77
-root > Environmental > Aquatic > Marine > Intertidal_zone > Coral_reef	1004
-root > Environmental > Aquatic > Marine > Cold_seeps	555
-root > Environmental > Aquatic > Non-marine_Saline_and_Alkaline > Hypersaline	7
-root > Environmental > Terrestrial > Soil > Agricultural	1132
-root > Environmental > Terrestrial > Soil > Crop > Agricultural_land	16
-root > Environmental > Terrestrial > Soil > Permafrost	74
-root > Environmental > Aquatic > Freshwater	9
-root > Environmental > Aquatic > Marine > Oceanic > Abyssal_plane	792
-root > Environmental > Aquatic > Marine > Intertidal_zone > Estuary	83
-root > Environmental > Aquatic > Marine > Volcanic	1
-root > Engineered > Wastewater > Industrial_wastewater > Agricultural_wastewater	34
-root > Environmental > Aquatic > Marine > Oceanic > Benthic	292
-root > Host-associated > Human > Digestive_system > Oral > Saliva	3862
-root > Host-associated > Mammals > Digestive_system > Stomach > Rumen	612
-root > Engineered > Wastewater > Industrial_wastewater	261
-root > Host-associated > Human > Lympathic_system > Lymph_nodes	12
-root > Environmental > Aquatic > Marine	5922
-root > Host-associated > Human > Respiratory_system > Nasopharyngeal > Pharynx	55
-root > Host-associated > Human > Digestive_system > Oral > Periodontal_pockets	10
-root > Host-associated > Human > Digestive_system > Oral > Supragingival_plaque	513
-root > Host-associated > Human > Digestive_system > Oral > tongue_dorsum	955
-root > Environmental > Aquatic > Marine > Sediment	3031
-root > Environmental > Aquatic > Marine > Oil_seeps	2
-root > Environmental > Aquatic > Marine > Wetlands	6
-root > Host-associated > Human > Skin	4848
-root > Engineered > Wastewater > Industrial_wastewater > Mine_water	79
-root > Host-associated > Mammals > Digestive_system > Fecal	4822
-root > Environmental > Aquatic > Non-marine_Saline_and_Alkaline > Salt_crystallizer_pond	108
-root > Environmental > Aquatic > Marine > Oceanic > Aphotic_zone	62
-root > Environmental > Aquatic > Marine > Coastal	4307
-root > Environmental > Aquatic > Marine > Hydrothermal_vents > Sediment	74
-root > Environmental > Aquatic > Marine > Oceanic > Photic_zone	376
-root > Environmental > Aquatic > Non-marine_Saline_and_Alkaline > Hypersaline > Sediment	19
 root > Host-associated > Mammals > Digestive_system > Large_intestine > Fecal	2904
-root > Environmental > Aquatic > Marine > Oceanic > Oil-contaminated	69
-root > Host-associated > Human > Reproductive_system > Vagina > posterior_fornix	11
 root > Environmental > Aquatic > Marine > Oil-contaminated_sediment	256
+root > Host-associated > Plants > Rhizosphere > Epiphytes	36
+root > Environmental > Aquatic > Marine > Neritic_zone > Sediment	5
+root > Host-associated > Plants > Phylloplane > Endophytes	3025
+root > Environmental > Terrestrial > Soil > Loam > Agricultural	48
+root > Host-associated > Human > Respiratory_system > Pulmonary_system > Sputum	135
+root > Host-associated > Human > Circulatory_system > Blood	24
+root > Host-associated > Mammals > Digestive_system	4941
+root > Host-associated > Human > Reproductive_system > Vagina > posterior_fornix	11
+root > Environmental > Aquatic > Marine > Oceanic > Benthic	292
+root > Host-associated > Human > Lympathic_system > Lymph_nodes	12
+root > Host-associated > Mammals > Digestive_system > Stomach	3
+root > Environmental > Aquatic > Marine > Intertidal_zone > Coral_reef	1004
+root > Engineered > Wastewater > Industrial_wastewater > Agricultural_wastewater	34
+root > Engineered > Wastewater > Water_and_sludge	508
+root > Host-associated > Human > Respiratory_system > Nasopharyngeal > Nasal_cavity	17
+root > Engineered > Wastewater	110
+root > Host-associated > Human > Respiratory_system	23
+root > Host-associated > Mammals > Digestive_system > Large_intestine > Cecum	201
+root > Environmental > Aquatic > Marine > Oceanic > Aphotic_zone	62
+root > Environmental > Terrestrial > Soil > Crop	1
+root > Host-associated > Human > Digestive_system > Oral > buccal_mucosa	289
+root > Engineered > Wastewater > Industrial_wastewater	261
+root > Host-associated > Mammals > Digestive_system > Foregut > Rumen	42
+root > Host-associated > Plants	1986
+root > Host-associated > Human > Reproductive_system > Vagina	164
+root > Host-associated > Plants > Phylloplane	21
+root > Host-associated > Human > Digestive_system > Oral > Periodontal_pockets	10
+root > Environmental > Aquatic > Marine > Pelagic	176
+root > Environmental > Aquatic > Marine > Intertidal_zone > Estuary	83
+root > Host-associated > Mammals > Digestive_system > Oral_cavity > Buccal_mucosa	26
+root > Environmental > Aquatic > Marine > Hydrothermal_vents	52
+root > Environmental > Aquatic > Marine > Neritic_zone	77
+root > Host-associated > Human > Respiratory_system > Nasopharyngeal	2637
+root > Host-associated > Human > Digestive_system	1810
+root > Environmental > Aquatic > Thermal_springs > Sediment	10
+root > Host-associated > Mammals > Digestive_system > Fecal	4822
+root > Host-associated > Insecta > Digestive_system	165
+root > Environmental > Aquatic > Marine > Volcanic	1
+root > Environmental > Aquatic > Marine > Hydrothermal_vents > Black_smokers	2
+root > Environmental > Aquatic > Marine > Intertidal_zone > Mangrove_swamp	106
+root > Environmental > Aquatic > Freshwater	9
+root > Host-associated > Human > Digestive_system > Large_intestine	535
+root > Environmental > Aquatic > Marine > Intertidal_zone > Salt_marsh	757
+root > Environmental > Aquatic > Marine > Oceanic > Oil-contaminated	69
+root > Engineered > Wastewater > Activated_Sludge	233
+root > Host-associated > Human > Respiratory_system > Nasopharyngeal > Pharynx	55
+root > Environmental > Aquatic > Marine > Hydrothermal_vents > Diffuse_flow	1
+root > Host-associated > Human > Digestive_system > Oral > Saliva	3862
+root > Environmental > Terrestrial > Soil > Tropical_rainforest	191
+root > Environmental > Aquatic > Marine > Oceanic > Photic_zone	376
