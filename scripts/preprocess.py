@@ -221,18 +221,28 @@ elif args.mode == 'count':
 	sample_count = loader.get_sample_count()
 	res = pd.DataFrame(list(sample_count.items()), columns=['Microbiome', 'Sample size'])
 
+	print('Generating ONN format result...')
 	fix_issue_1 = lambda x: x.replace('Host-associated', 'Host_associated').\
 		replace('Oil-contaminated', 'Oil_contaminated').\
 		replace('Non-marine', 'Non_marine')
 	res['Microbiome'] = res['Microbiome'].apply(lambda x: fix_issue_1(os.path.split(x)[1]))
 	# id conversion needed
 	res.to_excel(os.path.join(args.output_dir, 'sample_count_ONN_format.xls'), index=False)
-
+	res.to_csv(os.path.join(args.output_dir, 'sample_count_ONN_format.tsv'), sep='\t', index=False)
+	print('Finished !')
+	print('Generating EBI format result...')
 	restore = lambda x: x.replace('Host_associated', 'Host-associated').\
 		replace('Oil_contaminated', 'Oil-contaminated').replace('Non_marine', 'Non-marine')
 	res['Microbiome'] = res['Microbiome'].apply(lambda x: x.replace('-', ' > ')).apply(restore)
 	res.to_excel(os.path.join(args.output_dir, 'sample_count_EBI_format.xls'), index=False)
-	print('Done !')
+	res.to_csv(os.path.join(args.output_dir, 'sample_count_EBI_format.tsv'), sep='\t', index=False)
+	print('Finished !')
+	print('Generating DLMER format result...')
+	text_res = ['{}:{}'.format(biome, count) for biome, count in sample_count.items()]
+	with open(os.path.join(args.output_dir, 'sample_count_DLMER_format.txt'), 'w') as f:
+		f.write('\n'.join(text_res))
+	print('Finished !')
+	print('Results are saved in {}'.format(args.output_dir))
 
 elif args.mode == 'merge':
 	# tested
