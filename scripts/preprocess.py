@@ -40,6 +40,9 @@ parser.add_argument("-t", '--tree', type=str, default='data/trees/',
 					help='The directory of trees (species_tree.pkl and biome_tree.pkl). default: tree/')
 parser.add_argument("-c", '--coef', type=float, default=1e-3,
 					help='The coefficient for determining threshold when selecting features. default: 1e-3')
+parser.add_argument('--header', type=int, default=1,
+					help='The number of header in tsv files. default: 1')
+
 
 # global setting
 args = parser.parse_args()
@@ -61,13 +64,13 @@ if not os.path.isdir(args.tree):
 if args.mode == 'check':
 	# tested
 	# check just 1 line in file errors
-	loader.check_data(header=1)
+	loader.check_data(header=args.header)
 	loader.save_error_list()
 
 elif args.mode == 'build':
 	# tested
 	converter = IdConverter()
-	paths = pd.concat(map(lambda x: x.iloc(1)[2], tqdm(loader.get_data(header=1))))
+	paths = pd.concat(map(lambda x: x.iloc(1)[2], tqdm(loader.get_data(header=args.header))))
 	paths = paths.unique()
 	paths = [converter.fix_issue2_3(path) for path in paths]
 	paths = [converter.convert(x, sep=';') for x in paths]
@@ -121,12 +124,37 @@ elif args.mode == 'convert':
 	btree = tree.from_pickle(os.path.join(args.tree, 'biome_tree.pkl'))
 	btree.init_nodes_data(value=0)  # put this outside
 	print('finished !')
-	data = []
-	for i in map(lambda x: x.iloc(1)[1:], loader.get_data(header=1)): data.append(i.values.tolist())
-	print('finished !\nPreprocessing data......', end='', flush=True)
+	print('Preprocessing data......', end='', flush=True)
+	raw_data = [x.iloc(1)[1:] for x in tqdm(loader.get_data(header=args.header))]
 	fix = converter.fix_issue2_3
-	data = [{converter.convert(fix(sp[1]), sep=';')[-1]: sp[0] for sp in x} for x in data]
+	
+	def nearest_node_onTree(stree, path):
+		res = 'root'
+		#print(path)
+		for id_ in reversed(path):
+			if stree.contains(id_):
+				res = id_
+				break
+		return res
 
+	# stree_ids = [nid for nid in stree.expand_tree(mode=stree.DEPTH)]
+	
+	nnt = nearest_node_onTree
+	
+	def format_df(stree, df):
+		colnames = df.columns
+		df = df.rename(columns={colnames[0]: 'abundance', colnames[1]: 'taxonomy'})
+		df['path'] = df['taxonomy'].apply(lambda x: converter.convert(fix(x.lstrip('Root;') if x.startswith('Root;') else x), sep=';'))
+		df['nearest id'] = df['path'].apply(lambda x: nnt(stree, x))
+		ndf = pd.DataFrame()
+		ndf['nearest id'] = pd.unique(df['nearest id'])#									  'abundance'
+		#print(df.columns)
+		ndf['abundance in total'] = ndf['nearest id'].apply(lambda x: df[df['nearest id']==x]['abundance'].sum())
+		ndf = ndf[['nearest id', 'abundance in total']]
+		return {nid: abun for nid, abun in ndf.values.tolist()}
+	
+	
+	data = [format_df(stree, df) for df in tqdm(raw_data)]
 	# fix issue 1
 	biomes_fixed = [x.replace('Host-associated', 'Host_associated').\
 					   replace('Oil-contaminated', 'Oil_contaminated').\
@@ -174,9 +202,12 @@ elif args.mode == 'convert':
 		species_tree = pickle.loads(pickle.dumps(species_tree))
 		biome_tree = pickle.loads(pickle.dumps(biome_tree))
 		species_tree.fill_with(data=sample)
+		#print('The number of node on species tree is', len(sample))
 		species_tree.update_values(bottom_up_ids=st_bottom_up_ids)
 		Sum = species_tree['root'].data
-		matrix = np.divide(species_tree.get_matrix(paths=paths_to_gen_matrix, ncol=matrix_ncol), Sum)  # relative abundance
+		#print(Sum)
+		matrix = np.divide(species_tree.get_matrix(paths=paths_to_gen_matrix, ncol=matrix_ncol), Sum).astype(np.float32)  
+		# relative abundance
 		biome_tree.fill_with(data={biome: 1 for biome in biome_layered})
 		bfs_data = biome_tree.get_bfs_data()
 		labels = [np.array(bfs_data[level], dtype=np.float32) for level in range(1, biome_tree.depth() + 1)]
@@ -206,7 +237,7 @@ elif args.mode == 'convert':
 	# pre-compute reverse iteration node id order	
 	# pre-generate paths to node ids 
 	par_backend = 'threads' # {‘processes’, ‘threads’}
-	print('Using jolib `{}` parallel backend with {} cores'.format(par_backend, args.n_jobs))
+	print('Using joblib `{}` parallel backend with {} cores'.format(par_backend, args.n_jobs))
 	par = Parallel(n_jobs=args.n_jobs, prefer=par_backend)  
 	print('Performing conversion......')
 
@@ -225,10 +256,9 @@ elif args.mode == 'convert':
 	output_dir = os.path.join(args.output_dir, 'batch_'+str(args.batch_index)+'.npz')
 	np.savez(output_dir, matrices=matrices, label_0=labels[0], label_1=labels[1],
 			 label_2=labels[2], label_3=labels[3], label_4=labels[4])
-	with open('data/paths/batch_'+str(args.batch_index)+'.txt', 'w') as f:
+	with open(os.path.join(args.output_dir+'/batch_')+str(args.batch_index)+'.txt', 'w') as f:
 		f.write('\n'.join(biomes_fixed))
-	print('Results are save in {} and tsv file paths in the batch are saved in {}'.\
-		format(output_dir, 'data/paths/batch_'+str(args.batch_index)+'.txt'))
+	print('Results are save in {}.'.format(output_dir))
 
 elif args.mode == 'count':
 	# tested
@@ -260,7 +290,7 @@ elif args.mode == 'count':
 
 elif args.mode == 'merge':
 	# tested
-	files = os.listdir(args.input_dir)
+	files = [x for x in os.listdir(args.input_dir) if x.endswith('.npz')]
 	files.sort(key=lambda x: int(x.lstrip('batch_').rstrip('.npz')))
 	print(files)
 	files = map(lambda x: os.path.join(args.input_dir, x), files)
@@ -292,6 +322,9 @@ elif args.mode == 'select':
 	tmp_matrices = matrices[:, feature_ixs, :]
 	print('Finished !')
 	print('Matrices shape after basic selecting: {}'.format(tmp_matrices.shape))
+
+	indeces_backup = selector.basic_select__
+
 	print('Performing random forest regression feature selection...')
 	selector = Selector(tmp_matrices)
 	selector.cal_feature_importance(label=labels, n_jobs=args.n_jobs)
@@ -310,7 +343,7 @@ elif args.mode == 'select':
 			 label_4=labels_['label_4'])
 	print('Result are saved in {}'.format(os.path.join(args.output_dir, out_name)))
 	conf_name = '{}features_{}C.npz'.format(new_matrices.shape[1], args.coef)
-	np.savez('tmp/'+conf_name, abu_select=selector.basic_select__, imptc_select=selector.RF_select__)
+	np.savez('tmp/'+conf_name, abu_select=indeces_backup, imptc_select=selector.RF_select__)
 	print('The indeces of selected features are saved in tmp/{}'.format(conf_name))
 
 

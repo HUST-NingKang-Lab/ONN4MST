@@ -9,6 +9,7 @@ from treelib import Node, Tree
 from functools import reduce
 from sklearn.ensemble import RandomForestRegressor
 from copy import copy
+from pprint import pprint
 #from ete3 import NCBITaxa
 # from joblib import *
 
@@ -195,6 +196,7 @@ class DataLoader(object):
 
 	def save_error_list(self, ):
 		# tested
+		#pprint(self.error_msg)
 		with open('tmp/error_list', 'w') as f:
 			f.write('\n'.join(self.error_msg.keys()))
 	
@@ -210,12 +212,12 @@ class DataLoader(object):
 		for path in tqdm(self.paths):
 			try: 
 				f = read_csv(path, header=header, sep='\t')
-				self.status[path] = [self.check_ncols(f), 
+				self.status[path] = [self.check_ncols(f), self.check_sum(f),
 				self.check_col_name(f), 
 				self.check_values(f)]
 
 			except:
-				self.status[path] = ['IOError','IOError','IOError']
+				self.status[path] = ['IOError', 'IOError', 'IOError', 'IOError']
 		self.error_msg = {path: status 
 		for path, status in self.status.items() 
 		if list(set(status)) != ['True']}
@@ -226,10 +228,15 @@ class DataLoader(object):
 			return 'True'
 		else:
 			return 'False'
+	
+	def check_sum(self, File):
+		cols = File.columns
+		return str(File[cols[1]].sum() != 0)
 
 	def check_col_name(self, File):
 		# tested
 		Colnames = File.columns.tolist()
+		#print(Colnames)
 		if Colnames[0] in ['# OTU ID', '#OTU ID']:
 			return 'True'
 		else:
