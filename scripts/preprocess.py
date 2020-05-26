@@ -97,6 +97,20 @@ elif args.mode == 'build':
 	with open(os.path.join(args.tree, 'ordered_labels.txt'), 'w') as f:
 		f.write('\n'.join(ordered_labels))
 	print('Ordered_labels are saved in',os.path.join(args.tree, 'ordered_labels.txt'))
+	ids = btree.get_top_down_ids()
+	restore = lambda x: x.replace('Host_associated', 'Host-associated').\
+		replace('Oil_contaminated', 'Oil-contaminated').replace('Non_marine', 'Non-marine')
+	biomes_split = pd.DataFrame()
+	biomes_split['ONN Microbiome'] = ids
+	biomes_split['EBI Microbiome'] = biomes_split['ONN Microbiome'].apply(lambda x: restore(x.split('-')[-1]))
+	biomes_split = biomes_split.sort_values(by='EBI Microbiome', axis=0)
+	biomes_split = biomes_split[['EBI Microbiome','ONN Microbiome']]
+	biomes_split.to_csv(os.path.join(args.tree, 'EBI_ONN_Microbiome.tsv'), sep='\t', index=False)
+	biomes_split.to_excel(os.path.join(args.tree, 'EBI_ONN_Microbiome.xls'), index=False)
+	print('Microbiome in EBI&ONN format are saved in {} and {}'.format(os.path.join(args.tree,
+																					  'EBI_ONN_Microbiome.tsv'),
+																		 os.path.join(args.tree,
+																					  'EBI_ONN_Microbiome.xls')))
 
 elif args.mode == 'convert':
 	print('Loading trees......', end='', flush=True)
