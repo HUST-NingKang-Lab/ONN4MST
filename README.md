@@ -68,6 +68,9 @@ python scripts/preprocess.py select --input_dir data/npzs --output_dir data/npzs
 ```shell
 scripts/ONN4MDM.py [options] -g/--gpus <int> -t/--tree <tree.file> -n/--name <name.file> -m/--model <model.file> -i/--ifn <input.file> -o/--ofn <output.file> -th/--threshold <float>
 ```
+## Todo
+
+1. Optimizing the speed when querying taxa database. https://stackoverflow.com/a/53253110
 
 ## Author
    Name   |      Email      |      Organization

@@ -196,7 +196,9 @@ class DataLoader(object):
 
 	def save_error_list(self, ):
 		# tested
-		#pprint(self.error_msg)
+		msg = ['{} --> {}'.format(file, err) for file, err in self.error_msg.items()]
+		with open('tmp/error_msg', 'w') as f:
+			f.write('\n'.join(msg))
 		with open('tmp/error_list', 'w') as f:
 			f.write('\n'.join(self.error_msg.keys()))
 	

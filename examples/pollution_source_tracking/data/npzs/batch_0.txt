@@ -1,0 +1,11 @@
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904476_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904473_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904479_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904480_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904471_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904474_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904475_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904481_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904478_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904472_FASTQ_otu.tsv
+data/tsvs/root-Environmental-Aquatic-Freshwater-Groundwater/ERR904477_FASTQ_otu.tsv

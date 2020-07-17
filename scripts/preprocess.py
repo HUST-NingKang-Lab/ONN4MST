@@ -61,6 +61,35 @@ if not os.path.isdir(args.tree):
 	os.mkdir(args.tree)
 
 
+def convert_to_npzs(sample, biome_layered, matrix_ncol,
+					species_tree, st_bottom_up_ids, paths_to_gen_matrix, biome_tree):
+	species_tree = pickle.loads(pickle.dumps(species_tree))
+	biome_tree = pickle.loads(pickle.dumps(biome_tree))
+	species_tree.fill_with(data=sample)
+	#print('The number of node on species tree is', len(sample))
+	species_tree.update_values(bottom_up_ids=st_bottom_up_ids)
+	Sum = species_tree['root'].data
+	#print(Sum)
+	matrix = np.divide(species_tree.get_matrix(paths=paths_to_gen_matrix, ncol=matrix_ncol), Sum).astype(np.float32)  
+	# relative abundance
+	biome_tree.fill_with(data={biome: 1 for biome in biome_layered})
+	bfs_data = biome_tree.get_bfs_data()
+	labels = [np.array(bfs_data[level], dtype=np.float32) for level in range(1, biome_tree.depth() + 1)]
+	
+	# recycle memory
+	del matrix_ncol
+	del Sum
+	del species_tree 
+	del biome_tree 
+	del bfs_data 
+	del paths_to_gen_matrix 
+	del st_bottom_up_ids 
+	del sample 
+	del biome_layered
+	gc.collect()
+
+	return matrix, labels
+
 if args.mode == 'check':
 	# tested
 	# check just 1 line in file errors
@@ -197,35 +226,6 @@ elif args.mode == 'convert':
 		print('finished !')
 
 	# define convert function
-	def convert_to_npzs(sample, biome_layered, matrix_ncol,
-						species_tree, st_bottom_up_ids, paths_to_gen_matrix, biome_tree):
-		species_tree = pickle.loads(pickle.dumps(species_tree))
-		biome_tree = pickle.loads(pickle.dumps(biome_tree))
-		species_tree.fill_with(data=sample)
-		#print('The number of node on species tree is', len(sample))
-		species_tree.update_values(bottom_up_ids=st_bottom_up_ids)
-		Sum = species_tree['root'].data
-		#print(Sum)
-		matrix = np.divide(species_tree.get_matrix(paths=paths_to_gen_matrix, ncol=matrix_ncol), Sum).astype(np.float32)  
-		# relative abundance
-		biome_tree.fill_with(data={biome: 1 for biome in biome_layered})
-		bfs_data = biome_tree.get_bfs_data()
-		labels = [np.array(bfs_data[level], dtype=np.float32) for level in range(1, biome_tree.depth() + 1)]
-		
-		# recycle memory
-		del matrix_ncol
-		del Sum
-		del species_tree 
-		del biome_tree 
-		del bfs_data 
-		del paths_to_gen_matrix 
-		del st_bottom_up_ids 
-		del sample 
-		del biome_layered
-		gc.collect()
-
-		return matrix, labels
-
 	'''
 	print('Performing conversion......')
 	# Execute sequentially
