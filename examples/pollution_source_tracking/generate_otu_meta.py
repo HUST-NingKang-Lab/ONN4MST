@@ -11,11 +11,11 @@ warnings.filterwarnings('ignore')
 
 # -----configuration goes here-----
 
-sinks_tsvfolder = 'examples/pollution_source_tracking/data/ONN/tsvs/'
-sources_tsvfolder = 'data/tsvs'
-np.random.seed(1)
+sinks_tsvfolder = 'data/ONN/tsvs/'
+sources_tsvfolder = '/home/qiuhao/ONN/ONNdata/'
+np.random.seed(4)
 possible_pollution_sources = []
-random.seed(1)
+random.seed(4)
 # -----ends configuration ---------
 
 sink_biomes = [os.path.join(sinks_tsvfolder, i) for i in os.listdir(sinks_tsvfolder)]
@@ -31,11 +31,11 @@ sink_samples = [os.path.join(folder, f) for folder in sink_biomes
 # sampling samples since SourceTracker and FEAST are slow
 if possible_pollution_sources == []:
     source_samples = [os.path.join(folder, f) for folder in source_biomes 
-                                              for f in random.sample(os.listdir(folder), 2)]  
+                                              for f in random.sample(os.listdir(folder), min(2, len(os.listdir(folder))))]  
 else:
     source_samples = [os.path.join(folder, f) for folder in source_biomes 
-                      for f in random.sample(os.listdir(folder), 
-                                             int(300/len(possible_pollution_sources)))] 
+                      for f in random.sample(os.listdir(folder), min(int(300/len(possible_pollution_sources), 
+						  											 len(os.listdir(folder)))))] 
 
 # read and preprocess samples
 filter_cols = lambda x: x[x.columns[1:3]]
@@ -59,8 +59,12 @@ def merge(x, y):
     return pd.merge(left=x, right=y, on='taxonomy', how='outer')
 
 otu = reduce(merge, tqdm(list(sink_tsvs.values())+list(source_tsvs.values()))).fillna(0) 
-print(otu)
-otu.to_csv('otu.tsv', sep='\t')
+print(otu.isna().sum().sum())
+#otu.index.name = ''
+#print(otu.index == '')
+#otu = otu.drop(columns='taxonomy')
+#otu.loc[:, 'taxonomy'] = np.arange(otu.shape[0]).astype(str)
+otu.astype(int).to_csv('otu.tsv', sep='\t')
 # generate meta table from paths
 meta_sinks = pd.DataFrame(map(lambda x: (x.split('/')[-2], x.split('/')[-1].split('_')[0]), sink_tsvs.keys()), 
                           columns=['Env', 'SampleID'])
