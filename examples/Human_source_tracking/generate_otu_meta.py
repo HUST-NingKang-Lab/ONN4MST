@@ -71,7 +71,7 @@ meta_sinks = pd.DataFrame(map(lambda x: (x.split('/')[-2], x.split('/')[-1].spli
 meta_sinks.loc[:, 'id'] = np.arange(1, meta_sinks.shape[0]+1)
 meta_sinks.loc[:, 'SourceSink'] = 'Sink'
 meta_sinks.loc[:, 'Study'] = 'MGYS00001601'
-meta_sinks.loc[:, 'Description'] = 'Well'
+meta_sinks.loc[:, 'Description'] = 'Human associated'
 meta_sinks.loc[:, 'Details'] = 'Undefined'
 
 meta_sources = pd.DataFrame(map(lambda x: (x.split('/')[-2], x.split('/')[-1].\
