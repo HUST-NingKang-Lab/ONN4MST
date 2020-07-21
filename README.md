@@ -1,5 +1,5 @@
 # ONN4MDM
-<img src="https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/realse-01.png" width="134" height="20">
+<img src="https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/relase.png" width="134" height="20">
 Ontology-aware Neural Network for Mircobiome Data Mining!
 
 ![Training a ONN source tracking model and using it for microbiome samples' source tracking](https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/Figure2_main.png)
