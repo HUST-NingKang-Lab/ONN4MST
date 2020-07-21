@@ -1,16 +1,19 @@
 # ONN4MDM
+<img src="https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/realse-01.png" width="60" height="10">
 Ontology-aware Neural Network for Mircobiome Data Mining!
 
 ![Training a ONN source tracking model and using it for microbiome samples' source tracking](https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/Figure2_main.png)
-
 This program is designed to perform fast and accurate biome source tracking. The ontology of biome is organized to a biome tree, which have six layers. From the root nodes to the leaf nodes, each node has only one parent node. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. The input is a species realtive abundance ".tsv" file, which can be produced by Qiime or get from EBI. The output is a biome source ".txt" file, whcih shows you where the input sample comes from.
 
 The preprocessor can make the data preprocessing and sample statistics of the Ontology-aware Neural Network easier. Due to the use of three predefined classes, the simplicity and efficiency of the code are greatly improved. For very time-consuming big data calculations, any minor data or program errors can cost you days or even weeks. Using this program to check the integrity of all data and error values before processing can greatly reduce the probability of your program running errors.
 
-## Install
-Download the zip archive from this [repository][1], then unzip the archive.
+## Support
+For support using ONN4MST, please email us. Any comments/insights would be greatly appreciated.
+
+## Installation
+Download the zip archive from this [repository][1], then unzip the archive on your local computer platform.
 ## Function
-The program can be used for biome source tracking.
+The program could be used for microbiome samples' source tracking.
 ### tsv convert to npz
 The input file format of ONN is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "scripts/preprocess.py" could work for it.
 ### source tracking
