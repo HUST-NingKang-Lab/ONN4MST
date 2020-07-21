@@ -1,7 +1,8 @@
 # ONN4MDM
 Ontology-aware Neural Network for Mircobiome Data Mining!
 
-![Training a ONN source tracking model and using it for microbiome samples' source tracking](https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/Figure2.pdf)
+![Training a ONN source tracking model and using it for microbiome samples' source tracking](https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/Figure2_main.png)
+<img src="https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/Figure2_main.png" width="300" height="450" />
 
 This program is designed to perform fast and accurate biome source tracking. The ontology of biome is organized to a biome tree, which have six layers. From the root nodes to the leaf nodes, each node has only one parent node. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. The input is a species realtive abundance ".tsv" file, which can be produced by Qiime or get from EBI. The output is a biome source ".txt" file, whcih shows you where the input sample comes from.
 
