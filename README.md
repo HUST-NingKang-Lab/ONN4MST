@@ -18,7 +18,7 @@ The program could be used for microbiome samples source tracking.
 ### Before using
 Check if the src/searching.py is executable. If this file is not executable, type
 ```shell
-chmox +x src/searching.py
+chmod +x src/searching.py
 ```
 ### Abundance table convert to the Matrix
 The input file format of ONN4MST is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "src/preprocess.py" could work for it.
