@@ -1,4 +1,4 @@
-# ONN4MDM
+# ONN4MST
 <img src="https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/relase.png" width="134" height="20">
 Ontology-aware Neural Network for Mircobiome Data Mining!
 
@@ -14,20 +14,19 @@ For support using ONN4MST, please email us. Any comments/insights would be great
 Download the zip archive from this [repository][1], then unzip the archive on your local computer platform.
 ## Function
 The program could be used for microbiome samples' source tracking.
-### tsv convert to npz
-The input file format of ONN is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "scripts/preprocess.py" could work for it.
-### source tracking
+### Abundance table convert to the Matrix
+The input file format of ONN4MST is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "scripts/preprocess.py" could work for it.
+### Microbiome samples source tracking
 If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "scripts/ONN4MDM.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model.
 ## Dependencies
 
-- for data preprocessing
-  - [python 3.7][6]
-  - [Treelib 1.5.5][2]
-  - [Pandas 1.0.1][3]
-  - [Numpy 1.18.1][4]
-- for microbiome source tracking
-  - [tensorflow-gpu-1.14.0][5]
+- For data preprocessing
   - [python-3.7][6]
+  - [Treelib-1.5.5][2]
+  - [Pandas-1.0.1][3]
+  - [Numpy-1.16][4]
+- For microbiome samples source tracking
+  - [tensorflow-gpu-1.14][5]
 
 ## Usage
 
@@ -68,10 +67,10 @@ python scripts/preprocess.py merge --input_dir data/npzs --output_dir data/npzs
 python scripts/preprocess.py select --input_dir data/npzs --output_dir data/npzs
 ```
 
-- **source tracking**
+- **Microbiome samples source tracking**
 
 ```shell
-scripts/ONN4MDM.py [options] -g/--gpus <int> -t/--tree <tree.file> -n/--name <name.file> -m/--model <model.file> -i/--ifn <input.file> -o/--ofn <output.file> -th/--threshold <float>
+scripts/searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE] [-m MODEL] [-th THRESHOLD] [-of {1,2,3}] ifn ofn
 ```
 ## Todo
 
