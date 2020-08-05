@@ -16,7 +16,7 @@ Download the zip archive from this [repository][1], then unzip the archive on yo
 The program could be used for microbiome samples source tracking.
 
 ### Before using
-Check if the src/searching.py is executable. If this file is not executable, type
+- Check if the src/searching.py is executable. If this file is not executable, type
 ```shell
 chmod +x src/searching.py
 ```
