@@ -13,11 +13,17 @@ For support using ONN4MST, please email us. Any comments/insights would be great
 ## Installation
 Download the zip archive from this [repository][1], then unzip the archive on your local computer platform.
 ## Function
-The program could be used for microbiome samples' source tracking.
+The program could be used for microbiome samples source tracking.
+
+### Before using
+Check if the src/searching.py is executable. If this file is not executable, type
+```shell
+chmox +x src/searching.py
+```
 ### Abundance table convert to the Matrix
-The input file format of ONN4MST is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "scripts/preprocess.py" could work for it.
+The input file format of ONN4MST is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "src/preprocess.py" could work for it.
 ### Microbiome samples source tracking
-If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "scripts/ONN4MDM.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model.
+If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "src/searching.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model.
 ## Dependencies
 
 - For data preprocessing
