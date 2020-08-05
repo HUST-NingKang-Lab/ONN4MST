@@ -34,43 +34,43 @@ If you have successfully converted the ".tsv" file into ".npz" file, then you co
 - Check data 
 
 ```shell
-python scripts/preprocess.py check --input_dir data/tsvs
+python src/preprocess.py check --input_dir data/tsvs
 ```
 
 - Construct tree de novoly
 
 ```shell
-python scripts/preprocess.py build --input_dir data/tsvs --tree data/trees
+python src/preprocess.py build --input_dir data/tsvs --tree data/trees
 ```
 
 - Convert 'tsv' files to model-acceptable 'npz' file
 
 ```shell
-python scripts/preprocess.py convert --input_dir data/tsvs --tree data/trees --output_dir data/npzs
+python src/preprocess.py convert --input_dir data/tsvs --tree data/trees --output_dir data/npzs
 ```
 
 - Count the number of samples in each biome
 
 ```shell
-python scripts/preprocess.py count --input_dir data/tsvs --output_dir tmp/
+python src/preprocess.py count --input_dir data/tsvs --output_dir tmp/
 ```
 
 - Merge multiple 'npz' files to a single 'npz'
 
 ```shell
-python scripts/preprocess.py merge --input_dir data/npzs --output_dir data/npzs
+python src/preprocess.py merge --input_dir data/npzs --output_dir data/npzs
 ```
 
 - Do feature selection
 
 ```shell
-python scripts/preprocess.py select --input_dir data/npzs --output_dir data/npzs
+python src/preprocess.py select --input_dir data/npzs --output_dir data/npzs
 ```
 
 - **Microbiome samples source tracking**
 
 ```shell
-scripts/searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE] [-m MODEL] [-th THRESHOLD] [-of {1,2,3}] ifn ofn
+src/searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE] [-m MODEL] [-th THRESHOLD] [-of {1,2,3}] ifn ofn
 ```
 ## Todo
 
