@@ -1,15 +1,8 @@
-import gc
-import os
-import pickle
-import argparse
-import numpy as np
-import pandas as pd
-from tqdm import tqdm, trange
-from joblib import Parallel, delayed
-from dp_utils import DataLoader, IdConverter, Selector, npz_merge
-from functools import reduce
-from livingTree import SuperTree
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
+
+import argparse
 
 des = '''
 This is an integrated data preprocessor for Ontology-aware Neural Network.
@@ -24,8 +17,8 @@ Work mode:
 '''
 parser = argparse.ArgumentParser(description=des, formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("mode", type=str, choices=['check', 'build', 'convert', 'count', 'merge', 'select'],
-					default='convert',
-					help="Work mode of the program. default: convert")
+					default='',
+					help="Work mode of the program. default: None")
 parser.add_argument("-p", "--n_jobs", type=int, default=1,
 					help='The number of processors to use. default: 1')
 parser.add_argument("-b", "--batch_index", type=int, default=-1,
@@ -33,19 +26,33 @@ parser.add_argument("-b", "--batch_index", type=int, default=-1,
 parser.add_argument("-s", "--batch_size", type=int, default=1000,
 					help='The number of samples in each batch. -1 means process all at once. default: -1')
 parser.add_argument("-i", '--input_dir', type=str, default='data/tsvs/',
-					help='Input directory, must be parent folder of biome folders. default: data/')
+					help='Input directory, must be parent folder of biome folders. default: data/tsvs')
 parser.add_argument("-o", '--output_dir', type=str, default='data/npzs/',
-					help='Output directory. default: matrices')
+					help='Output directory. default: data/npzs')
 parser.add_argument("-t", '--tree', type=str, default='data/trees/',
-					help='The directory of trees (species_tree.pkl and biome_tree.pkl). default: tree/')
+					help='The directory of trees (species_tree.pkl and biome_tree.pkl). default: data/tree/')
 parser.add_argument("-c", '--coef', type=float, default=1e-3,
 					help='The coefficient for determining threshold when selecting features. default: 1e-3')
 parser.add_argument('--header', type=int, default=1,
 					help='The number of header in tsv files. default: 1')
 
+args = parser.parse_args()
+
+if args.mode in ['check', 'build', 'convert', 'count', 'merge', 'select']:
+	import gc
+	import os
+	import pickle
+	import numpy as np
+	import pandas as pd
+	from tqdm import tqdm, trange
+	from joblib import Parallel, delayed
+	from dp_utils import DataLoader, IdConverter, Selector, npz_merge
+	from functools import reduce
+	from livingTree import SuperTree
+else:
+	print('Must specify a valid work mode, type -h to get the help information.')
 
 # global setting
-args = parser.parse_args()
 if args.mode == 'convert':
 	# print('convert mode')
 	loader = DataLoader(path=args.input_dir, batch_size=args.batch_size, batch_index=args.batch_index)
@@ -342,7 +349,7 @@ elif args.mode == 'select':
 			 label_3=labels_['label_3'],
 			 label_4=labels_['label_4'])
 	print('Result are saved in {}'.format(os.path.join(args.output_dir, out_name)))
-	conf_name = '{}features_{}C.npz'.format(new_matrices.shape[1], args.coef)
+	conf_name = 'indeces_for_{}features_{}C.npz'.format(new_matrices.shape[1], args.coef)
 	np.savez('tmp/'+conf_name, abu_select=indeces_backup, imptc_select=selector.RF_select__)
 	print('The indeces of selected features are saved in tmp/{}'.format(conf_name))
 

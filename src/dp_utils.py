@@ -210,7 +210,7 @@ class DataLoader(object):
 	def check_data(self, header=1):
 		# tested
 		self.status = {}
-		print('Check data integrity')
+		print('Checking data integrity')
 		for path in tqdm(self.paths):
 			try: 
 				f = read_csv(path, header=header, sep='\t')
