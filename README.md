@@ -132,7 +132,7 @@ In the second output format, the predicted sources and their contribution to eac
 
 It can be easily plotted into pie charts.
 
-![](visualization.png)
+![](image/visualization.png)
 
 ## Author
 
