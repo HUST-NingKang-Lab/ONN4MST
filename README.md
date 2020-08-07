@@ -1,10 +1,10 @@
 # ONN4MST
 <img src="https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/release.png" width="134" height="20">
-Ontology-aware Neural Network for Mircobiome Data Mining!
+Ontology-aware Neural Network for Mircobiome samples Source Tracking!
 
-<img src="https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/Figure2.png">
+<img src="https://github.com/HUST-NingKang-Lab/ONN4MDM/blob/master/image/Figure3.png">
 This program is designed to perform fast and accurate biome source tracking. The ontology of biome is organized to a biome tree, which have six layers. From the root nodes to the leaf nodes, each node has only one parent node. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. The input is a species realtive abundance ".tsv" file, which can be produced by Qiime or get from EBI. The output is a biome source ".txt" file, whcih shows you where the input sample comes from.
-
+&nbsq;
 The preprocessing program can make the data preprocessing and sample statistics of the Ontology-aware Neural Network easier. For very time-consuming big data calculations, any minor data or program errors can cost days or even weeks. Using this program to check the integrity of all data and error values before processing can greatly reduce the probability of program running errors.
 
 ## Support
@@ -23,8 +23,6 @@ conda activate ONN4MST
 ```
 
 ## Function
-The program could be used for microbiome samples source tracking.
-
 #### Before using
 Check if the `preprocess.py` and `searching.py` under `src/` is executable. If they are not executable, type
 
