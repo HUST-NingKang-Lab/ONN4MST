@@ -50,7 +50,7 @@ usage: preprocess.py [-h] [-p N_JOBS] [-b BATCH_INDEX] [-s BATCH_SIZE]
 
 Basically, the `-i`,  `-o` and `-t` arguments for `src/proprocess.py` are used to specify the `input_folder`, `output_folder` and `tree_folder`. 
 
-```shell
+```bash
 usage: searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE]
                     [-m MODEL] [-th THRESHOLD] [-of {1,2,3}]
                     ifn ofn
@@ -58,7 +58,7 @@ usage: searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE]
 
 The `-m`  and `-t` arguments for `src/searching.py` are used to specify model (".json" file, see release page) and biome ontology (".tree" file under `config`). If you want ONN4MST to run in GPU mode, use `-g 1`.  And the model based on selected features can be accessed by using `-s 1`. 
 
-There are several more than flexible arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option. 
+There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option. 
 
 ## Input format
 
@@ -66,7 +66,7 @@ The example data can be found [here](data/tsvs). Notice that here is a header "#
 
 <table><thead><tr><th colspan="3"># Constructed from biom file</th></tr></thead><tbody><tr><td># OTU ID</td><td>ERR1754760</td><td>taxonomy</td></tr><tr><td>207119</td><td>19.0</td><td>sk__Archaea</td></tr><tr><td>118090</td><td>45.0</td><td>sk__Archaea;k__;p__Thaumarchaeota;c__;o__Nitrosopumilales;f__Nitro...</td></tr><tr><td>153156</td><td>38.0</td><td>sk__Archaea;k__;p__Thaumarchaeota;c__;o__Nitrosopumilales;f__Nitro...</td></tr><tr><td>131704</td><td>1.0</td><td>sk__Archaea;k__;p__Thaumarchaeota;c__Nitrososphaeria;o__Nitrososp...</td></tr><tr><td>103181</td><td>5174.0</td><td>sk__Bacteria</td></tr><tr><td>157361</td><td>9.0</td><td>sk__Bacteria;k__;p__;c__;o__;f__;g__;s__agricultural_soil_bacterium_SC-I-11</td></tr></tbody></table>
 
-You need to process your data and organize your data directory into `input_folder/biome/tsv_files`, just like this.
+You need to process your data and organize them into `input_folder/biome/tsv_files`, just like this.
 
 ```reStructuredText
 data/tsvs
@@ -87,8 +87,7 @@ data/tsvs
 
 Here's a simple example for using ONN4MST to perform microbial source tracking. 
 
-
-- **First, check the integrity of your data before doing anything with ONN4MST.**
+#### **First, check the integrity of your data before doing anything with ONN4MST.**
 
 Generally, If you use files from **MGnify** database, you can just use preprocessing program normally.
 
@@ -104,7 +103,7 @@ src/preprocess.py check -i data/tsvs --header 0
 
 The file path and error message of all broken data will be saved to `error_list` and `error_msg`  under `tmp` folder.
 
-- **Convert ".tsv" files (in MGnify format) to model-acceptable ".npz" file.**
+#### **Convert ".tsv" files (in MGnify format) to model-acceptable ".npz" file.**
 
 Also, you need to specify the header argument here, take "1" as an example.
 
@@ -112,7 +111,7 @@ Also, you need to specify the header argument here, take "1" as an example.
 src/preprocess.py convert -i data/tsvs -t data/trees -o data/npzs/ --header 1 --batch_size 10 --batch_index 0 --n_jobs 1
 ```
 
-- **Microbiome samples source tracking**.
+#### **Microbiome samples source tracking**.
 
 Perform source tracking using ONN4MST in CPU mode.
 
@@ -122,11 +121,18 @@ src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 0 -t config/
 
 ## Output format
 
-```
+In the second output format, the predicted sources and their contribution to each sample are given as follows. 
 
 ```
+>Sample_1	Layer2|root-Engineered,root-Environmental,root-Host_associated...
+>Sample_1	Layer2|0.0,4.589534e-06,0.99999374,1.6987236e-06	Layer3|...
+>Sample_2	Layer2|root-Engineered,root-Environmental,root-Host_associated...
+>Sample_2	Layer2|1.5492266e-06,0.00038966027,0.999591,1.7816106e-05	Layer3|...
+```
 
+It can be easily plotted into pie charts.
 
+![](visualization.png)
 
 ## Author
 
