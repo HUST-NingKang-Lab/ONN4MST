@@ -127,7 +127,7 @@ In the second output format, the predicted sources and their contribution to eac
 >Sample_2	Layer2|1.5492266e-06,0.00038966027,0.999591,1.7816106e-05	Layer3|...
 ```
 
-It can be easily visualized into pie charts.
+They can be easily visualized into pie charts.
 
 ![](image/visualization.png)
 
