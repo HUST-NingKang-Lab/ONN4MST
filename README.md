@@ -17,7 +17,7 @@ Besides, we recommend deploying ONN4MST using `git` and `conda`.
 ```shell
 git clone https://github.com/HUST-NingKang-Lab/ONN4MDM.git
 cd ONN4MST
-conda create -n ONN4MST -f environment.yaml
+conda env create -n ONN4MST -f environment.yaml
 conda activate ONN4MST
 ```
 
