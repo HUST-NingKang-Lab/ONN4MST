@@ -136,12 +136,5 @@ They can be easily visualized into pie charts.
    Name   |      Email      |      Organization
 :--------:|-----------------|--------------------------------------------------------------------------------------------------------------------------------
 Hugo Zha |hugozha@hust.deu.cn|Ph.D. Candidate, School of Life Science and Technology, Huazhong University of Science & Technology
-Hui Chong|chonghui@hust.edu.cn ch37915405887@gmail.com|Research Assistant, School of Life Science and Technology, Huazhong University of Science & Technology
+Hui Chong|huichong.me@gmail.com|Research Assistant, School of Life Science and Technology, Huazhong University of Science & Technology
 Kang Ning|ningkang@hust.edu.cn|Professor, School of Life Science and Technology, Huazhong University of Science & Technology
-
-[1]:https://github.com/HUST-NingKang-Lab/ONN4MDM
-[2]:https://github.com/caesar0301/treelib
-[3]:https://pandas.pydata.org
-[4]:www.numpy.org
-[5]:https://pypi.org/project/tensorflow-gpu/1.14.0/
-[6]:https://www.python.org/downloads/release/python-374/
