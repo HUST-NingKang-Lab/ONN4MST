@@ -2,7 +2,7 @@
 <img src="image/release.png" width="134" height="20">
 Ontology-aware Neural Network for Mircobiome samples Source Tracking!
 
-<img src="image/Figure3.png">
+<img src="image/Figure1.png">
 This program is designed to perform fast and accurate biome source tracking. The ontology of biome is organized to a biome tree, which have six layers. From the root nodes to the leaf nodes, each node has only one parent node. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. The input is a species realtive abundance ".tsv" file, which can be produced by Qiime or get from EBI. The output is a biome source ".txt" file, whcih shows you where the input sample comes from.<br>
 The preprocessing program can make the data preprocessing and sample statistics of the Ontology-aware Neural Network easier. For very time-consuming big data calculations, any minor data or program errors can cost days or even weeks. Using this program to check the integrity of all data and error values before processing can greatly reduce the probability of program running errors.
 
@@ -129,7 +129,7 @@ In the second output format, the predicted sources and their contribution to eac
 
 They can be easily visualized into pie charts.
 
-![](image/visualization.png)
+![](image/Supplementary Figure5.png)
 
 ## Author
 
