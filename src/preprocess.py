@@ -11,12 +11,13 @@ Work mode:
 \tcheck mode: check all of your data files, the error data file are saved in tmp/ folder.
 \tbuild mode: de novoly build a species tree using your own data.
 \tconvert mode: convert tsv file from EBI MGnify database to model acceptable n-dimensional array.
+\tfilter mode: filter features. get npz with selected features from npz with all features.
 \tcount mode: count the number of samples in each biome.
 \tmerge mode: merge multiple npz files to a single npz.
 \tselect mode: do feature selection for merged matrices npz.
 '''
 parser = argparse.ArgumentParser(description=des, formatter_class=argparse.RawTextHelpFormatter)
-parser.add_argument("mode", type=str, choices=['check', 'build', 'convert', 'count', 'merge', 'select'],
+parser.add_argument("mode", type=str, choices=['check', 'build', 'convert', 'filter', 'count', 'merge', 'select'],
 					default='',
 					help="Work mode of the program. default: None")
 parser.add_argument("-p", "--n_jobs", type=int, default=1,
@@ -38,7 +39,7 @@ parser.add_argument('--header', type=int, default=1,
 
 args = parser.parse_args()
 
-if args.mode in ['check', 'build', 'convert', 'count', 'merge', 'select']:
+if args.mode in ['check', 'build', 'convert', 'filter', 'count', 'merge', 'select']:
 	import gc
 	import os
 	import pickle
@@ -266,6 +267,20 @@ elif args.mode == 'convert':
 	with open(os.path.join(args.output_dir+'/batch_')+str(args.batch_index)+'.txt', 'w') as f:
 		f.write('\n'.join(biomes_fixed))
 	print('Results are save in {}.'.format(output_dir))
+
+elif args.mode == 'filter':
+        npzs = [os.path.join(args.input_dir, npz) for npz in os.listdir(args.input_dir) if npz.endswith('.npz')]
+        indices = np.load('tmp/indeces_for_1462features_0.001C.npz')
+        abu_indices = indices['abu_select']
+        imptc_indices = indices['imptc_select']
+        print(list(indices.keys()))
+        filter_features = lambda matrices: matrices[:, abu_indices, :][:, imptc_indices, :]
+        print('processing...')
+        for npz in tqdm(npzs):
+            f = np.load(npz)
+            matrices = filter_features(f['matrices'])
+            np.savez(os.path.join(args.output_dir, 'selected_' + npz.split('/')[-1]), matrices=matrices, label_0=f['label_0'],
+                     label_1=f['label_1'], label_2=f['label_2'], label_3=f['label_3'], label_4=f['label_4'])
 
 elif args.mode == 'count':
 	# tested
