@@ -33,37 +33,36 @@ conda activate ONN4MST
 ├── README.md                              : Basic informations for the repository
 ├── data                                   : Data files for ONN4MST
 │   ├── npzs                               : ".npz" files and path files for ONN4MST
-│   │   ├── GroundWaterSamplesMatrices.npz : ".npz" files for 11 Groundwater samples mentioned in our study.
-│   │   ├── GroundWaterSamplesPaths.txt    : Path to 11 Groundwater samples mentioned in our study.
-│   │   ├── HumanSamplesMatrices.npz
-│   │   └── HumanSamplesPaths.txt
-│   ├── trees
-│   │   ├── biome_tree.pkl
-│   │   ├── ordered_labels.txt
-│   │   └── species_tree.pkl
-│   └── tsvs
-│       ├── GroundWaterSamplesOTUs.tar.gz
-│       └── HumanSamplesOTUs.tar.gz
-├── environment.yaml
-├── git_push.sh
-├── image
-│   ├── Figure1.png
-│   ├── Figure2.png
+│   │   ├── GroundWaterSamplesMatrices.npz : ".npz" files for 11 Groundwater samples mentioned in our study
+│   │   ├── GroundWaterSamplesPaths.txt    : Path to 11 Groundwater samples mentioned in our study
+│   │   ├── HumanSamplesMatrices.npz       : Path to 10 Human samples mentioned in our study
+│   │   └── HumanSamplesPaths.txt          : ".npz" files for 10 Human samples mentioned in our study
+│   ├── trees                              : Tree files for ONN4MST
+│   │   ├── biome_tree.pkl                 : Tree file containing serialized biome ontology
+│   │   ├── ordered_labels.txt             : Biomes involved in the biome ontology
+│   │   └── species_tree.pkl               : Phylogenetic tree used by ONN4MST
+│   └── tsvs                               : Raw input (".tsv") files for ONN4MST
+│       ├── GroundWaterSamplesOTUs.tar.gz  : Compressed raw data for 11 Groundwater samples
+│       └── HumanSamplesOTUs.tar.gz        : Compressed raw data for 10 Human samples
+├── environment.yaml                       : Dependencies for ONN4MST
+├── image                                  : Images used in README
+│   ├── Figure1.png                        
+│   ├── Figure2.png                        
 │   ├── Supplementary_Figure5.png
 │   └── release.png
 ├── log
-│   └── Update.log
-├── src
-│   ├── dp_utils.py
-│   ├── gen_ontology.py
-│   ├── graph_builder.py
-│   ├── predicting.py
-│   ├── preprocess.py
-│   ├── searching.py
-│   └── utils.py
-└── tmp
-    ├── 1462FeaturesIndices.npz
-    └── error_list
+│   └── Update.log                         : Updates for each version of ONN4MST
+├── src                                    : Source code for ONN4MST
+│   ├── dp_utils.py                        : Utility classes for data preprocessing program
+│   ├── gen_ontology.py                    : Utility functions for generating biome ontology
+│   ├── graph_builder.py                   : Utility for computational graph building of ON4MST
+│   ├── predicting.py                      : Utility functions for the prediction function ONN4MST
+│   ├── preprocess.py                      : Main preprocessing program
+│   ├── searching.py                       : Main searching program
+│   └── utils.py                           : Other utility functions for ONN4MST
+└── tmp                                    : Temporal files of ONN4MST
+    ├── 1462FeaturesIndices.npz            : ".npz" files containing indices for 1462 selected features
+    └── error_list                         : Error list of input data files, produced by preprocessing program
 ```
 
 ## Function
