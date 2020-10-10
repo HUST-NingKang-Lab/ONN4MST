@@ -119,13 +119,6 @@ data/tsvs
 └── root-Host_associated-Human
     ├── ERR1073574_FASTQ_otu.tsv
     ├── ERR1074236_FASTQ_otu.tsv
-    ├── ERR1074237_FASTQ_otu.tsv
-    ├── ERR1074238_FASTQ_otu.tsv
-    ├── ERR1074494_FASTQ_otu.tsv
-    ├── ERR1074498_FASTQ_otu.tsv
-    ├── ERR1074499_FASTQ_otu.tsv
-    ├── ERR1076801_FASTQ_otu.tsv
-    ├── ERR1076805_FASTQ_otu.tsv
     └── ERR1077660_FASTQ_otu.tsv
 ```
 
@@ -154,7 +147,8 @@ The file path and error message of all broken data will be saved to `error_list`
 Also, you need to specify the header argument here, take "1" as an example.
 
 ```bash
-src/preprocess.py convert -i data/tsvs -t data/trees -o data/npzs/ --header 1 --batch_size 10 --batch_index 0 --n_jobs 1
+src/preprocess.py convert -i data/tsvs -t data/trees -o data/npzs/ --header 1 \
+	--batch_size 10 --batch_index 0 --n_jobs 1
 ```
 
 #### **Microbiome samples source tracking**.
@@ -164,25 +158,29 @@ Perform source tracking using ONN4MST
 - using model based on all features, in CPU mode.
 
 ```bash
-src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
+src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 0 -t config/microbiome.tree \
+	-m config/model_df.json -th 0 -of 2
 ```
 
 - using model based on all features, in GPU mode.
 
 ```bash
-src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
+src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 0 -t config/microbiome.tree \
+	-m config/model_df.json -th 0 -of 2
 ```
 
 - using model based on selected features, in CPU mode.
 
 ```bash
-src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 1 -t config/microbiome.tree -m config/model_sf.json -th 0 -of 2
+src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 1 -t config/microbiome.tree \
+	-m config/model_sf.json -th 0 -of 2
 ```
 
 - using model based on selected features, in GPU mode.
 
 ```bash
-src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 1 -t config/microbiome.tree -m config/model_sf.json -th 0 -of 2
+src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 1 -t config/microbiome.tree \
+	-m config/model_sf.json -th 0 -of 2
 ```
 
 ## Output format
