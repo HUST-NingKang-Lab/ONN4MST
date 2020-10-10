@@ -9,12 +9,12 @@ This is an integrated data preprocessor for Ontology-aware Neural Network.
 
 Work mode:
 \tcheck mode: check all of your data files, the error data file are saved in tmp/ folder.
-\tbuild mode: de novoly build a species tree using your own data.
+\tbuild mode: de novoly build a species tree using your own data (deprecated).
 \tconvert mode: convert tsv file from EBI MGnify database to model acceptable n-dimensional array.
 \tfilter mode: filter features. get npz with selected features from npz with all features.
-\tcount mode: count the number of samples in each biome.
+\tcount mode: count the number of samples in each biome (deprecated).
 \tmerge mode: merge multiple npz files to a single npz.
-\tselect mode: do feature selection for merged matrices npz.
+\tselect mode: do feature selection for merged matrices npz (deprecated).
 '''
 parser = argparse.ArgumentParser(description=des, formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("mode", type=str, choices=['check', 'build', 'convert', 'filter', 'count', 'merge', 'select'],
@@ -270,7 +270,7 @@ elif args.mode == 'convert':
 
 elif args.mode == 'filter':
         npzs = [os.path.join(args.input_dir, npz) for npz in os.listdir(args.input_dir) if npz.endswith('.npz')]
-        indices = np.load('tmp/indeces_for_1462features_0.001C.npz')
+        indices = np.load('tmp/1462FeatureIndices.npz')
         abu_indices = indices['abu_select']
         imptc_indices = indices['imptc_select']
         print(list(indices.keys()))
