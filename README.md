@@ -10,13 +10,18 @@ The preprocessing program can make the data preprocessing and sample statistics 
 For support using ONN4MST, please email us. Any comments/insights would be greatly appreciated.
 
 ## Installation
-Download the zip archive from this [repository](https://github.com/HUST-NingKang-Lab/ONN4MST), then unzip the archive on your local computer platform.
-
-Besides, we recommend deploying ONN4MST using `git` and `conda`.
+We recommend deploying ONN4MST using `git` and `conda`.
 
 ```shell
+# clone this repository
 git clone https://github.com/HUST-NingKang-Lab/ONN4MDM.git
 cd ONN4MST
+
+# download and uncompress our model
+wget -c https://github.com/HUST-NingKang-Lab/ONN4MST/releases/download/v0.2/config.tar.gz
+tar zxvf config.tar.gz
+
+# configure environment using environment.yaml
 conda env create -n ONN4MST -f environment.yaml
 conda activate ONN4MST
 ```
