@@ -3,7 +3,8 @@
 Ontology-aware Neural Network for Mircobiome sample Source Tracking!
 
 <img src="image/Figure1.png">
-This program is designed to perform fast and accurate biome source tracking among millions of samples from hundreds of niches. The biome ontology is organized as a tree-like structure, which have six layers. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. Each input sample is represented by a species realtive abundance ".tsv" file, which can be produced by Qiime or obtained from EBI. The output is a biome source ".txt" file, which shows you which biome (niche) the input sample is most likely comes from.<br>
+This program is designed to perform fast and accurate biome source tracking among millions of samples from hundreds of niches. The biome ontology is organized as a tree-like structure, which have six layers. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. Each input sample is represented by a species realtive abundance ".tsv" file, which can be produced by Qiime or obtained from EBI. The output is a biome source ".txt" file, which shows you which biome (niche) the input sample is most likely comes from.
+
 The preprocessing program can make the data preprocess and sample statistical analysis of the Ontology-aware Neural Network easier. For very time-consuming big data calculation, any minor data or program errors can cost days or even weeks. Using this program to check the integrity of all data and error values before processing can greatly reduce the probability of program running errors.
 
 #### Repository structure
@@ -79,7 +80,9 @@ chmod +x src/preprocess.py src/searching.py
 #### Abundance table convert to the Matrix
 The input file format of ONN4MST is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "src/preprocess.py" could work for it.
 #### Microbiome samples source tracking
-If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "src/searching.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model. The model can run either in GPU  or CPU mode, we have provided an option `-g` to indicate that. See [Usage](https://github.com/HUST-NingKang-Lab/ONN4MST#usage) for details.
+If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "src/searching.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model. 
+
+The model can run either in GPU  or CPU mode, we have provided an option `-g` to indicate that. See [Usage](https://github.com/HUST-NingKang-Lab/ONN4MST#usage) for details.
 
 ## Dependencies
 
