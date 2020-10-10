@@ -170,7 +170,7 @@ src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 0 -t config/
 - using model based on all features, in GPU mode.
 
 ```bash
-src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
+src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
 ```
 
 - using model based on selected features, in CPU mode.
