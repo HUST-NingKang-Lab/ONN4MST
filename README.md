@@ -42,8 +42,8 @@ conda activate ONN4MST
 │   │   ├── ordered_labels.txt             : Biomes involved in the biome ontology
 │   │   └── species_tree.pkl               : Phylogenetic tree used by ONN4MST
 │   └── tsvs                               : Raw input (".tsv") files for ONN4MST
-│       ├── GroundWaterSamplesOTUs.tar.gz  : Compressed raw data for 11 Groundwater samples
-│       └── HumanSamplesOTUs.tar.gz        : Compressed raw data for 10 Human samples
+│       ├── GroundWaterSamplesOTUs.tar.gz  : Compressed 11 Groundwater samples
+│       └── HumanSamplesOTUs.tar.gz        : Compressed 10 Human samples
 ├── environment.yaml                       : Dependencies for ONN4MST
 ├── image                                  : Images used in README
 │   ├── Figure1.png                        
@@ -62,7 +62,7 @@ conda activate ONN4MST
 │   └── utils.py                           : Other utility functions for ONN4MST
 └── tmp                                    : Temporal files of ONN4MST
     ├── 1462FeaturesIndices.npz            : ".npz" files containing indices for 1462 selected features
-    └── error_list                         : Error list of input data files, produced by preprocessing program
+    └── error_list                         : Error list of input data files
 ```
 
 ## Function
