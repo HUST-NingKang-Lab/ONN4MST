@@ -3,14 +3,14 @@
 Ontology-aware Neural Network for Mircobiome sample Source Tracking!
 
 <img src="image/Figure1.png">
-This program is designed to perform fast and accurate biome source tracking. The ontology of biome is organized to a biome tree, which have six layers. From the root nodes to the leaf nodes, each node has only one parent node. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. The input is a species realtive abundance ".tsv" file, which can be produced by Qiime or get from EBI. The output is a biome source ".txt" file, whcih shows you where the input sample comes from.<br>
-The preprocessing program can make the data preprocessing and sample statistics of the Ontology-aware Neural Network easier. For very time-consuming big data calculations, any minor data or program errors can cost days or even weeks. Using this program to check the integrity of all data and error values before processing can greatly reduce the probability of program running errors.
+This program is designed to perform fast and accurate biome source tracking among millions of samples from hundreds of niches. The biome ontology is organized as a tree-like structure, which have six layers. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. Each input sample is represented by a species realtive abundance ".tsv" file, which can be produced by Qiime or obtained from EBI. The output is a biome source ".txt" file, which shows you which biome (niche) the input sample is most likely comes from.<br>
+The preprocessing program can make the data preprocess and sample statistical analysis of the Ontology-aware Neural Network easier. For very time-consuming big data calculation, any minor data or program errors can cost days or even weeks. Using this program to check the integrity of all data and error values before processing can greatly reduce the probability of program running errors.
 
 #### Repository structure
 
 ```reStructuredText
 .
-├── README.md                              : Basic informations for the repository
+├── README.md                              : Basic information for the repository
 ├── data                                   : Data files for ONN4MST
 │   ├── npzs                               : ".npz" files and path files for ONN4MST
 │   │   ├── GroundWaterSamplesMatrices.npz : ".npz" files for 11 Groundwater samples mentioned in our study
@@ -79,7 +79,8 @@ chmod +x src/preprocess.py src/searching.py
 #### Abundance table convert to the Matrix
 The input file format of ONN4MST is the ".npz" file. Before ONN, you need to convert the original input ".tsv" file into ".npz" file. The script "src/preprocess.py" could work for it.
 #### Microbiome samples source tracking
-If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "src/searching.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model.
+If you have successfully converted the ".tsv" file into ".npz" file, then you could run the script "src/searching.py" for biome source tracking. Besides, you need also indicate a trained model. We have provided a well trained model as the default model. The model can run either in GPU  or CPU mode, we have provided an option `-g` to indicate that. See [Usage](https://github.com/HUST-NingKang-Lab/ONN4MST#usage) for details.
+
 ## Dependencies
 
 See [environment.yaml](environment.yaml).
@@ -101,7 +102,7 @@ usage: searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE]
                     ifn ofn
 ```
 
-The `-m`  and `-t` arguments for `src/searching.py` are used to specify model (".json" file, see release page) and biome ontology (".tree" file under `config`). If you want ONN4MST to run in GPU mode, use `-g 1`.  And the model based on selected features can be accessed by using `-s 1`. 
+The `-m`  and `-t` arguments for `src/searching.py` are used to specify model (".json" file, see release page) and biome ontology (".tree" file under `config`). If you want ONN4MST to run in GPU mode, use `-g 1`.  And the model based on selected features can be accessed by using `-m config/model_df.json` with `-s 1`. 
 
 There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option. 
 
@@ -158,10 +159,30 @@ src/preprocess.py convert -i data/tsvs -t data/trees -o data/npzs/ --header 1 --
 
 #### **Microbiome samples source tracking**.
 
-Perform source tracking using ONN4MST in CPU mode.
+Perform source tracking using ONN4MST
+
+- using model based on all features, in CPU mode.
 
 ```bash
 src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
+```
+
+- using model based on all features, in GPU mode.
+
+```bash
+src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
+```
+
+- using model based on selected features, in CPU mode.
+
+```bash
+src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 1 -t config/microbiome.tree -m config/model_sf.json -th 0 -of 2
+```
+
+- using model based on selected features, in GPU mode.
+
+```bash
+src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 1 -t config/microbiome.tree -m config/model_sf.json -th 0 -of 2
 ```
 
 ## Output format
