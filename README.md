@@ -34,7 +34,7 @@ The preprocessing program can make the data preprocessing and sample statistics 
 │   └── Update.log                         : Updates for each version of ONN4MST
 ├── src                                    : Source code for ONN4MST
 │   ├── dp_utils.py                        : Utility classes for data preprocessing program
-│   ├── gen_ontology.py                    : Utility functions for generating biome ontology
+│   ├── gen_ontology.py                    : Utility functions for the generating of biome ontology
 │   ├── graph_builder.py                   : Utility for computational graph building of ON4MST
 │   ├── predicting.py                      : Utility functions for the prediction function ONN4MST
 │   ├── preprocess.py                      : Main preprocessing program
