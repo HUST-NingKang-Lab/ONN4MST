@@ -30,11 +30,11 @@ conda activate ONN4MST
 
 ```reStructuredText
 .
-├── README.md
-├── data
-│   ├── npzs
-│   │   ├── GroundWaterSamplesMatrices.npz
-│   │   ├── GroundWaterSamplesPaths.txt
+├── README.md                              : Basic informations for the repository
+├── data                                   : Data files for ONN4MST
+│   ├── npzs                               : ".npz" files and path files for ONN4MST
+│   │   ├── GroundWaterSamplesMatrices.npz : ".npz" files for 11 Groundwater samples mentioned in our study.
+│   │   ├── GroundWaterSamplesPaths.txt    : Path to 11 Groundwater samples mentioned in our study.
 │   │   ├── HumanSamplesMatrices.npz
 │   │   └── HumanSamplesPaths.txt
 │   ├── trees
@@ -52,8 +52,7 @@ conda activate ONN4MST
 │   ├── Supplementary_Figure5.png
 │   └── release.png
 ├── log
-│   ├── Update.log
-│   └── todo.log
+│   └── Update.log
 ├── src
 │   ├── dp_utils.py
 │   ├── gen_ontology.py
