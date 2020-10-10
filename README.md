@@ -29,7 +29,42 @@ conda activate ONN4MST
 ## Repository
 
 ```reStructuredText
-
+.
+├── README.md
+├── data
+│   ├── npzs
+│   │   ├── GroundWaterSamplesMatrices.npz
+│   │   ├── GroundWaterSamplesPaths.txt
+│   │   ├── HumanSamplesMatrices.npz
+│   │   └── HumanSamplesPaths.txt
+│   ├── trees
+│   │   ├── biome_tree.pkl
+│   │   ├── ordered_labels.txt
+│   │   └── species_tree.pkl
+│   └── tsvs
+│       ├── GroundWaterSamplesOTUs.tar.gz
+│       └── HumanSamplesOTUs.tar.gz
+├── environment.yaml
+├── git_push.sh
+├── image
+│   ├── Figure1.png
+│   ├── Figure2.png
+│   ├── Supplementary_Figure5.png
+│   └── release.png
+├── log
+│   ├── Update.log
+│   └── todo.log
+├── src
+│   ├── dp_utils.py
+│   ├── gen_ontology.py
+│   ├── graph_builder.py
+│   ├── predicting.py
+│   ├── preprocess.py
+│   ├── searching.py
+│   └── utils.py
+└── tmp
+    ├── 1462FeaturesIndices.npz
+    └── error_list
 ```
 
 ## Function
