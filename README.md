@@ -6,28 +6,6 @@ Ontology-aware Neural Network for Mircobiome samples Source Tracking!
 This program is designed to perform fast and accurate biome source tracking. The ontology of biome is organized to a biome tree, which have six layers. From the root nodes to the leaf nodes, each node has only one parent node. The Neural Network is also organized in six layers, which could produce a hierarchical classification result. The input is a species realtive abundance ".tsv" file, which can be produced by Qiime or get from EBI. The output is a biome source ".txt" file, whcih shows you where the input sample comes from.<br>
 The preprocessing program can make the data preprocessing and sample statistics of the Ontology-aware Neural Network easier. For very time-consuming big data calculations, any minor data or program errors can cost days or even weeks. Using this program to check the integrity of all data and error values before processing can greatly reduce the probability of program running errors.
 
-## Support
-For support using ONN4MST, please email us. Any comments/insights would be greatly appreciated.
-
-## Installation
-We recommend deploying ONN4MST using `git` and `conda`.
-
-```shell
-# clone this repository
-git clone https://github.com/HUST-NingKang-Lab/ONN4MDM.git
-cd ONN4MST
-
-# download and uncompress our model
-wget -c https://github.com/HUST-NingKang-Lab/ONN4MST/releases/download/v0.2/config.tar.gz
-tar zxvf config.tar.gz
-
-# configure environment using environment.yaml
-conda env create -n ONN4MST -f environment.yaml
-conda activate ONN4MST
-```
-
-## Repository
-
 ```reStructuredText
 .
 ├── README.md                              : Basic informations for the repository
@@ -63,6 +41,27 @@ conda activate ONN4MST
 └── tmp                                    : Temporal files of ONN4MST
     ├── 1462FeaturesIndices.npz            : ".npz" files containing indices for 1462 selected features
     └── error_list                         : Error list of input data files
+```
+
+
+## Support
+For support using ONN4MST, please email us. Any comments/insights would be greatly appreciated.
+
+## Installation
+We recommend deploying ONN4MST using `git` and `conda`.
+
+```shell
+# clone this repository
+git clone https://github.com/HUST-NingKang-Lab/ONN4MDM.git
+cd ONN4MST
+
+# download and uncompress our model
+wget -c https://github.com/HUST-NingKang-Lab/ONN4MST/releases/download/v0.2/config.tar.gz
+tar zxvf config.tar.gz
+
+# configure environment using environment.yaml
+conda env create -n ONN4MST -f environment.yaml
+conda activate ONN4MST
 ```
 
 ## Function
