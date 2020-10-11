@@ -102,7 +102,7 @@ Basically, the `-i`,  `-o` and `-t` arguments for `src/proprocess.py` are used t
 
 ```bash
 usage: searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE]
-                    [-m MODEL] [-th THRESHOLD] [-of {1,2,3}]
+                    [-m MODEL] [-th THRESHOLD] [-mp MAPPING] [-of {1,2,3}]
                     ifn ofn
 ```
 
