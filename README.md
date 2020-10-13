@@ -218,8 +218,8 @@ They can be easily visualized into pie charts.
 For easy reproduction, we have converted 11 Groundwater samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of environmental samples from less studied biomes*" in our paper. To reproduce the experiment, run the following command after fully configured ONN4MST and its dependencies:
 
 ```bash
-src/searching.py data/npzs/data/npzs/GroundwaterSamplesMatrices.npz ContributionToGroundwaterSamples.txt -g 0 -s 0 \
--t config/microbiome.tree -m config/model_df.json -th 0 -of 3
+src/searching.py data/npzs/data/npzs/GroundwaterSamplesMatrices.npz ContributionToGroundwaterSamples.txt \
+	-g 0 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 3
 ```
 
 Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt). And their related metadata are given below. The order of samples in output file is in totally agreement with that in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt).
@@ -244,7 +244,7 @@ For easy reproduction, we have converted 10 Human samples into model-acceptable 
 
 ```bash
 src/searching.py data/npzs/data/npzs/HumanSamplesMatrices.npz ContributionToHumanSamples.txt -g 0 -s 0 \
--t config/microbiome.tree -m config/model_df.json -th 0 -of 3
+	-t config/microbiome.tree -m config/model_df.json -th 0 -of 3
 ```
 
 Their MGnify Run ID can be found in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). And their related metadata are given below. The order of samples in output file is in totally agreement with that in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt).
