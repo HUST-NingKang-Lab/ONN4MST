@@ -211,6 +211,10 @@ They can be easily visualized into pie charts.
 
 ![](image/Supplementary_Figure5.png)
 
+## Evaluation of source tracking methods
+
+For the evaluation of source tracking methods, please refer to [DLMER-Bio](https://github.com/YuzhengDun1999/DLMER-Bio).
+
 ## Source tracking of environmental samples from less studied biomes
 
 For easy reproduction, we have converted 11 Groundwater samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of environmental samples from less studied biomes*" in our paper. To reproduce the experiment, run the following command after fully configured ONN4MST and its dependencies:
@@ -259,7 +263,6 @@ Their MGnify Run ID can be found in [HumanSamplesPaths.txt](data/npzs/HumanSampl
 | ERR1076805 | American Gut Project Right Hand sample (Right hand 1) |
 | ERR1074237 | American Gut Project Stool sample (Stool 1)           |
 | ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
-|            |                                                       |
 
 ## Authors
 
