@@ -215,7 +215,7 @@ They can be easily visualized into pie charts.
 
 ![](image/Supplementary_Figure5.png)
 
-### Source tracking of environmental samples from less studied biomes
+## Source tracking of environmental samples from less studied biomes
 
 For easy reproduction, we have converted 11 Groundwater samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of environmental samples from less studied biomes*" in our paper. To reproduce the experiment, run the following command after fully configured ONN4MST and its dependencies:
 
@@ -240,7 +240,7 @@ Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/Grou
 | ERR904473 | Well_B1            |
 | ERR904476 | Well_C2            |
 
-### Source tracking of samples from closely related human associated biomes
+## Source tracking of samples from closely related human associated biomes
 
 For easy reproduction, we have converted 10 Human samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of samples from closely related human associated biomes*" in our paper. To reproduce these experiments, run the following command:
 
