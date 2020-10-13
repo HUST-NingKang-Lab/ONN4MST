@@ -238,7 +238,7 @@ Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/Grou
 
 ## Source tracking of samples from closely related human associated biomes
 
-For easy reproduction, we have converted 10 Human samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of samples from closely related human associated biomes*" in our paper. To reproduce these experiments, run the following command:
+For easy reproduction, we have converted 10 Human samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of samples from closely related human associated biomes*" in our paper. To reproduce the experiment, run the following command:
 
 ```bash
 src/searching.py data/npzs/data/npzs/HumanSamplesMatrices.npz ContributionToHumanSamples.txt -g 0 -s 0 \
