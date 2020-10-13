@@ -261,7 +261,7 @@ Their MGnify Run ID can be found in [HumanSamplesPaths.txt](data/npzs/HumanSampl
 | ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
 |            |                                                       |
 
-## Author
+## Authors
 
    Name   |      Email      |      Organization
 :--------:|-----------------|--------------------------------------------------------------------------------------------------------------------------------
