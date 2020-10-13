@@ -49,8 +49,6 @@ The preprocessing program can make the data preprocess and sample statistical an
 
 **We don't provide our training program (which are essential to the reproduction of our other experiments) on this repository. Please contact us if you need.**
 
-**For the reproduction of our experiments, see [Experiments reproduction](https://github.com/HUST-NingKang-Lab/ONN4MST#experiment-reproduction).**
-
 **ONN4MST models are provided in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). **
 
 ## Support
