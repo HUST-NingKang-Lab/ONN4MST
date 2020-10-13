@@ -47,13 +47,24 @@ The preprocessing program can make the data preprocess and sample statistical an
     └── error_list                         : Error list of input data files
 ```
 
-**ONN4MST models are provided in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). **
+**We don't provide our training program (which are essential to the reproduction of our other experiments) on this repository. Please contact us if you need.**
 
-**For the reproduction of our experiments, see [Experiments reproduction](https://github.com/HUST-NingKang-Lab/ONN4MST#experiment-reproduction)**
+**For the reproduction of our experiments, see [Experiments reproduction](https://github.com/HUST-NingKang-Lab/ONN4MST#experiment-reproduction).**
+
+**ONN4MST models are provided in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). **
 
 ## Support
 
 For support using ONN4MST, please email [us](https://github.com/HUST-NingKang-Lab/ONN4MST#author). Any comments/insights would be greatly appreciated.
+
+## Requirements
+
+- Unix/Linux operating system
+
+- at least 2 GB free disk space
+- at least 22 GB RAM
+
+Windows users can easily install ONN4MST through [WSL (Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
 ## Installation
 We recommend deploying ONN4MST using `git` and `conda`.
@@ -114,7 +125,7 @@ The `-m`  and `-t` arguments for `src/searching.py` are used to specify model ("
 
 ## Simplified program walk-through
 
-Here's a simple example for using ONN4MST to perform microbial source tracking. 
+Here's a simple guide for using ONN4MST to perform microbial source tracking. 
 
 #### Input format
 
@@ -131,8 +142,6 @@ data/tsvs
     ├── ERR1074236_FASTQ_otu.tsv
     └── ERR1077660_FASTQ_otu.tsv
 ```
-
-## 
 
 #### **First, check the integrity of your data before doing anything with ONN4MST.**
 
@@ -206,41 +215,55 @@ They can be easily visualized into pie charts.
 
 ![](image/Supplementary_Figure5.png)
 
-## A show-case
+### Source tracking of environmental samples from less studied biomes
 
-We have converted 11 Groundwater samples and 10 Human samples into model-acceptable ".npz" files. which can be used to reproduce the experiments "*Source tracking of environmental samples from less studied biomes*" and "*Source tracking of samples from closely related human associated biomes*" in our paper. To reproduce these experiments, run the following command after fully configured ONN4MST and its dependencies:
-
-- Source tracking of environmental samples from less studied biomes
+For easy reproduction, we have converted 11 Groundwater samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of environmental samples from less studied biomes*" in our paper. To reproduce the experiment, run the following command after fully configured ONN4MST and its dependencies:
 
 ```bash
 src/searching.py data/npzs/data/npzs/GroundwaterSamplesMatrices.npz ContributionToGroundwaterSamples.txt -g 0 -s 0 \
 -t config/microbiome.tree -m config/model_df.json -th 0 -of 3
 ```
 
-- Source tracking of samples from closely related human associated biomes
+Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt). And their related metadata are given below. The order of samples in output file is in totally agreement with that in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt).
+
+| Run ID    | Sample description |
+| --------- | ------------------ |
+| ERR904477 | Well_D             |
+| ERR904472 | Well_A2            |
+| ERR904478 | Well_E             |
+| ERR904481 | Well_H             |
+| ERR904475 | Well_C1            |
+| ERR904474 | Well_B2            |
+| ERR904471 | Well_A1            |
+| ERR904480 | Well_G             |
+| ERR904479 | Well_F             |
+| ERR904473 | Well_B1            |
+| ERR904476 | Well_C2            |
+
+### Source tracking of samples from closely related human associated biomes
+
+For easy reproduction, we have converted 10 Human samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of samples from closely related human associated biomes*" in our paper. To reproduce these experiments, run the following command:
 
 ```bash
 src/searching.py data/npzs/data/npzs/HumanSamplesMatrices.npz ContributionToHumanSamples.txt -g 0 -s 0 \
 -t config/microbiome.tree -m config/model_df.json -th 0 -of 3
 ```
 
-Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt) and [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). And their related metadata are given below. The order of samples in output file in totally agreement with those in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt) and [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt).
+Their MGnify Run ID can be found in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). And their related metadata are given below. The order of samples in output file is in totally agreement with that in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt).
 
-| Run ID    | Sample description | Run ID     | Sample description                                    |
-| --------- | ------------------ | ---------- | ----------------------------------------------------- |
-| ERR904477 | Well_D             | ERR1074236 | American Gut Project Mouth sample (Mouth 2)           |
-| ERR904472 | Well_A2            | ERR1074494 | American Gut Project Stool sample (Stool 2)           |
-| ERR904478 | Well_E             | ERR1073574 | American Gut Project Left Hand sample (Left hand 2)   |
-| ERR904481 | Well_H             | ERR1076801 | American Gut Project Left Hand sample (Left hand 1)   |
-| ERR904475 | Well_C1            | ERR1074499 | American Gut Project Forehead sample (Forehead 1)     |
-| ERR904474 | Well_B2            | ERR1077660 | American Gut Project Right Hand sample (Right hand 2) |
-| ERR904471 | Well_A1            | ERR1074498 | American Gut Project Mouth sample (Mouth 1)           |
-| ERR904480 | Well_G             | ERR1076805 | American Gut Project Right Hand sample (Right hand 1) |
-| ERR904479 | Well_F             | ERR1074237 | American Gut Project Stool sample (Stool 1)           |
-| ERR904473 | Well_B1            | ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
-| ERR904476 | Well_C2            |            |                                                       |
-
-**We don't provide our training program (which are essential to the reproduction of our other experiments) on this repository. Please contact us if you need.**
+| Run ID     | Sample description                                    |
+| ---------- | ----------------------------------------------------- |
+| ERR1074236 | American Gut Project Mouth sample (Mouth 2)           |
+| ERR1074494 | American Gut Project Stool sample (Stool 2)           |
+| ERR1073574 | American Gut Project Left Hand sample (Left hand 2)   |
+| ERR1076801 | American Gut Project Left Hand sample (Left hand 1)   |
+| ERR1074499 | American Gut Project Forehead sample (Forehead 1)     |
+| ERR1077660 | American Gut Project Right Hand sample (Right hand 2) |
+| ERR1074498 | American Gut Project Mouth sample (Mouth 1)           |
+| ERR1076805 | American Gut Project Right Hand sample (Right hand 1) |
+| ERR1074237 | American Gut Project Stool sample (Stool 1)           |
+| ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
+|            |                                                       |
 
 ## Author
 
