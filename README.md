@@ -127,7 +127,7 @@ The `-m`  and `-t` arguments for `src/searching.py` are used to specify model ("
 
 Here's a simple guide for using ONN4MST to perform microbial source tracking. 
 
-#### Input format
+### Input format
 
 The example data can be found [here](data/tsvs). Notice that here is a header "# Constructed from biom file" in the first line.
 
@@ -143,7 +143,7 @@ data/tsvs
     └── ERR1077660_FASTQ_otu.tsv
 ```
 
-#### **First, check the integrity of your data before doing anything with ONN4MST.**
+### **Check the integrity of your data before doing anything with ONN4MST.**
 
 Generally, If you use files from **MGnify** database, you can just use preprocessing program normally.
 
@@ -159,7 +159,7 @@ src/preprocess.py check -i data/tsvs --header 0
 
 The file path and error message of all broken data will be saved to `error_list` and `error_msg`  under `tmp` folder.
 
-#### **Convert ".tsv" files (in MGnify format) to model-acceptable ".npz" file.**
+### **Convert ".tsv" files (in MGnify format) to model-acceptable ".npz" file.**
 
 Also, you need to specify the header argument here, take "1" as an example.
 
@@ -168,7 +168,7 @@ src/preprocess.py convert -i data/tsvs -t data/trees -o data/npzs/ --header 1 \
 	--batch_size 10 --batch_index 0 --n_jobs 1
 ```
 
-#### **Microbiome samples source tracking**.
+### **Microbiome samples source tracking**.
 
 Perform source tracking using ONN4MST
 
@@ -200,7 +200,7 @@ src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 1 -t config/
 	-m config/model_sf.json -th 0 -of 2
 ```
 
-#### Output format
+### Output format
 
 In the second output format, the predicted sources and their contribution to each sample are given as follows. 
 
