@@ -59,8 +59,8 @@ For support using ONN4MST, please email [us](https://github.com/HUST-NingKang-La
 
 - Unix/Linux operating system
 
-- at least 2 GB free disk space
-- at least 22 GB RAM
+- At least 2 GB free disk space
+- At least 22 GB RAM
 
 Windows users can easily install ONN4MST through [WSL (Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
