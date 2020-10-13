@@ -112,7 +112,11 @@ The `-m`  and `-t` arguments for `src/searching.py` are used to specify model ("
 
 **There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option.** 
 
-## Input format
+## Simplified program walk-through
+
+Here's a simple example for using ONN4MST to perform microbial source tracking. 
+
+#### Input format
 
 The example data can be found [here](data/tsvs). Notice that here is a header "# Constructed from biom file" in the first line.
 
@@ -128,9 +132,7 @@ data/tsvs
     └── ERR1077660_FASTQ_otu.tsv
 ```
 
-## Demo
-
-Here's a simple example for using ONN4MST to perform microbial source tracking. 
+## 
 
 #### **First, check the integrity of your data before doing anything with ONN4MST.**
 
@@ -189,7 +191,7 @@ src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 1 -t config/
 	-m config/model_sf.json -th 0 -of 2
 ```
 
-## Output format
+#### Output format
 
 In the second output format, the predicted sources and their contribution to each sample are given as follows. 
 
