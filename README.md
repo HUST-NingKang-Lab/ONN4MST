@@ -108,7 +108,7 @@ usage: searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE]
 
 The `-m`  and `-t` arguments for `src/searching.py` are used to specify model (".json" file, see release page) and biome ontology (".tree" file under `config`). If you want ONN4MST to run in GPU mode, use `-g 1`.  And the model based on selected features can be accessed by using `-m config/model_df.json` with `-s 1`. 
 
-There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option. 
+**There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option.** 
 
 ## Input format
 
@@ -201,6 +201,57 @@ In the second output format, the predicted sources and their contribution to eac
 They can be easily visualized into pie charts.
 
 ![](image/Supplementary_Figure5.png)
+
+## Experiment reproduction
+
+We have converted 11 Groundwater samples and 10 Human samples into model-acceptable ".npz" files. which can be used to reproduce the experiments "*Source tracking of environmental samples from less studied biomes*" and "*Source tracking of samples from closely related human associated biomes*" in our paper. To reproduce these experiments, run the following command after fully configured ONN4MST and its dependencies:
+
+- Search 10 Human samples against combined dataset
+
+```bash
+src/searching.py data/npzs/data/npzs/HumanSamplesMatrices.npz ContributionToHumanSamples.txt -g 0 -s 0 \
+-t config/microbiome.tree -m config/model_df.json -th 0 -of 2
+```
+
+Their MGnify Run ID can be found in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). Their related metadata are also given below:
+
+| Run ID     | Sample description                                    |
+| ---------- | ----------------------------------------------------- |
+| ERR1074236 | American Gut Project Mouth sample (Mouth 2)           |
+| ERR1074494 | American Gut Project Stool sample (Stool 2)           |
+| ERR1073574 | American Gut Project Left Hand sample (Left hand 2)   |
+| ERR1076801 | American Gut Project Left Hand sample (Left hand 1)   |
+| ERR1074499 | American Gut Project Forehead sample (Forehead 1)     |
+| ERR1077660 | American Gut Project Right Hand sample (Right hand 2) |
+| ERR1074498 | American Gut Project Mouth sample (Mouth 1)           |
+| ERR1076805 | American Gut Project Right Hand sample (Right hand 1) |
+| ERR1074237 | American Gut Project Stool sample (Stool 1)           |
+| ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
+
+- Search 11 Groundwater samples against combined dataset
+
+```bash
+src/searching.py data/npzs/data/npzs/GroundwaterSamplesMatrices.npz ContributionToGroundwaterSamples.txt -g 0 -s 0 \
+-t config/microbiome.tree -m config/model_df.json -th 0 -of 2
+```
+
+Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt). Their related metadata are also given below:
+
+| Run ID    | Sample description |
+| --------- | ------------------ |
+| ERR904477 | Well_D             |
+| ERR904472 | Well_A2            |
+| ERR904478 | Well_E             |
+| ERR904481 | Well_H             |
+| ERR904475 | Well_C1            |
+| ERR904474 | Well_B2            |
+| ERR904471 | Well_A1            |
+| ERR904480 | Well_G             |
+| ERR904479 | Well_F             |
+| ERR904473 | Well_B1            |
+| ERR904476 | Well_C2            |
+
+**We don't provide training program for other experiments. Please contact us if you need.**
 
 ## Author
 
