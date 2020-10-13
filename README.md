@@ -47,7 +47,7 @@ The preprocessing program can make the data preprocess and sample statistical an
     └── error_list                         : Error list of input data files
 ```
 
-ONN4MST models are provided in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases).
+**ONN4MST models are provided in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). For the reproduction of our experiments, see [Experiments reproduction](https://github.com/HUST-NingKang-Lab/ONN4MST#experiment-reproduction)**
 
 ## Support
 
@@ -202,16 +202,9 @@ They can be easily visualized into pie charts.
 
 ![](image/Supplementary_Figure5.png)
 
-## Experiment reproduction
+## Experiments reproduction
 
 We have converted 11 Groundwater samples and 10 Human samples into model-acceptable ".npz" files. which can be used to reproduce the experiments "*Source tracking of environmental samples from less studied biomes*" and "*Source tracking of samples from closely related human associated biomes*" in our paper. To reproduce these experiments, run the following command after fully configured ONN4MST and its dependencies:
-
-- Search 10 Human samples against combined dataset
-
-```bash
-src/searching.py data/npzs/data/npzs/HumanSamplesMatrices.npz ContributionToHumanSamples.txt -g 0 -s 0 \
--t config/microbiome.tree -m config/model_df.json -th 0 -of 2
-```
 
 - Search 11 Groundwater samples against combined dataset
 
@@ -220,7 +213,14 @@ src/searching.py data/npzs/data/npzs/GroundwaterSamplesMatrices.npz Contribution
 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
 ```
 
-Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt) and [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). Their related metadata are also given below:
+- Search 10 Human samples against combined dataset
+
+```bash
+src/searching.py data/npzs/data/npzs/HumanSamplesMatrices.npz ContributionToHumanSamples.txt -g 0 -s 0 \
+-t config/microbiome.tree -m config/model_df.json -th 0 -of 2
+```
+
+Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt) and [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). And their related metadata are given below. The order of samples in output file in totally agreement with those in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt) and [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt).
 
 | Run ID    | Sample description | Run ID     | Sample description                                    |
 | --------- | ------------------ | ---------- | ----------------------------------------------------- |
@@ -235,9 +235,8 @@ Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/Grou
 | ERR904479 | Well_F             | ERR1074237 | American Gut Project Stool sample (Stool 1)           |
 | ERR904473 | Well_B1            | ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
 | ERR904476 | Well_C2            |            |                                                       |
-|           |                    |            |                                                       |
 
-**We don't provide training program for other experiments. Please contact us if you need.**
+**We don't provide our training program (which are essential to the reproduction of our other experiments) on this repository. Please contact us if you need.**
 
 ## Author
 
