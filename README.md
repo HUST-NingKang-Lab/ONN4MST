@@ -213,21 +213,6 @@ src/searching.py data/npzs/data/npzs/HumanSamplesMatrices.npz ContributionToHuma
 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
 ```
 
-Their MGnify Run ID can be found in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). Their related metadata are also given below:
-
-| Run ID     | Sample description                                    |
-| ---------- | ----------------------------------------------------- |
-| ERR1074236 | American Gut Project Mouth sample (Mouth 2)           |
-| ERR1074494 | American Gut Project Stool sample (Stool 2)           |
-| ERR1073574 | American Gut Project Left Hand sample (Left hand 2)   |
-| ERR1076801 | American Gut Project Left Hand sample (Left hand 1)   |
-| ERR1074499 | American Gut Project Forehead sample (Forehead 1)     |
-| ERR1077660 | American Gut Project Right Hand sample (Right hand 2) |
-| ERR1074498 | American Gut Project Mouth sample (Mouth 1)           |
-| ERR1076805 | American Gut Project Right Hand sample (Right hand 1) |
-| ERR1074237 | American Gut Project Stool sample (Stool 1)           |
-| ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
-
 - Search 11 Groundwater samples against combined dataset
 
 ```bash
@@ -235,21 +220,22 @@ src/searching.py data/npzs/data/npzs/GroundwaterSamplesMatrices.npz Contribution
 -t config/microbiome.tree -m config/model_df.json -th 0 -of 2
 ```
 
-Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt). Their related metadata are also given below:
+Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt) and [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). Their related metadata are also given below:
 
-| Run ID    | Sample description |
-| --------- | ------------------ |
-| ERR904477 | Well_D             |
-| ERR904472 | Well_A2            |
-| ERR904478 | Well_E             |
-| ERR904481 | Well_H             |
-| ERR904475 | Well_C1            |
-| ERR904474 | Well_B2            |
-| ERR904471 | Well_A1            |
-| ERR904480 | Well_G             |
-| ERR904479 | Well_F             |
-| ERR904473 | Well_B1            |
-| ERR904476 | Well_C2            |
+| Run ID    | Sample description | Run ID     | Sample description                                    |
+| --------- | ------------------ | ---------- | ----------------------------------------------------- |
+| ERR904477 | Well_D             | ERR1074236 | American Gut Project Mouth sample (Mouth 2)           |
+| ERR904472 | Well_A2            | ERR1074494 | American Gut Project Stool sample (Stool 2)           |
+| ERR904478 | Well_E             | ERR1073574 | American Gut Project Left Hand sample (Left hand 2)   |
+| ERR904481 | Well_H             | ERR1076801 | American Gut Project Left Hand sample (Left hand 1)   |
+| ERR904475 | Well_C1            | ERR1074499 | American Gut Project Forehead sample (Forehead 1)     |
+| ERR904474 | Well_B2            | ERR1077660 | American Gut Project Right Hand sample (Right hand 2) |
+| ERR904471 | Well_A1            | ERR1074498 | American Gut Project Mouth sample (Mouth 1)           |
+| ERR904480 | Well_G             | ERR1076805 | American Gut Project Right Hand sample (Right hand 1) |
+| ERR904479 | Well_F             | ERR1074237 | American Gut Project Stool sample (Stool 1)           |
+| ERR904473 | Well_B1            | ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
+| ERR904476 | Well_C2            |            |                                                       |
+|           |                    |            |                                                       |
 
 **We don't provide training program for other experiments. Please contact us if you need.**
 
