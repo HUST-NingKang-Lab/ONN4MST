@@ -164,13 +164,28 @@ def threshold_process(th,y_pred):
   #y_pred[y_pred >= th] = 1
   return(y_pred)
 
-def res2txt_mode1(th,y_pred,unknown,ontology,ofn):
+def read_sample_id(ifn):
+  sid = []
+  with open(ifn,'r') as f:
+    for line in f.readlines():
+      line = line.strip()
+      sname = line.split('/')[-1].replace('.tsv','')
+      sid.append(sname)
+  return(sid)
+
+def res2txt_mode1(th,y_pred,unknown,ontology,mapping,ofn):
   os.popen('rm -f {} >/dev/null'.format(ofn))
   time.sleep(3)
   res = open(ofn,'w')
   label_name = get_biome_source(ontology)
+  mapid = None
+  if(mapping != '0'):
+    mapid = read_sample_id(mapping)
   for i in range(len(y_pred)):
-    res.write('>Sample_' + str(i+1) + '\t')
+    if(mapid):
+      res.write('>' + str(mapid[i]) + '\t')
+    else:
+      res.write('>Sample_' + str(i+1) + '\t')
 
     #L2
     l2_ln = label_name[0:4]
@@ -185,10 +200,6 @@ def res2txt_mode1(th,y_pred,unknown,ontology,ofn):
         res.write(str(true_l2_ln[j]))
       else:
         res.write(str(true_l2_ln[j]) + ',')
-    #if(len(true_l2_ln) == 0 and unknown[i,0] >= th):
-      #res.write('Unknown_L2')
-    #if(len(true_l2_ln) != 0 and unknown[i,0] >= th):
-      #res.write(',Unknown_L2')
     res.write('\t')
 
     #L3
@@ -204,10 +215,6 @@ def res2txt_mode1(th,y_pred,unknown,ontology,ofn):
         res.write(str(true_l3_ln[j]))
       else:
         res.write(str(true_l3_ln[j]) + ',')
-    #if(len(true_l3_ln) == 0 and unknown[i,1] >= th):
-      #res.write('Unknown_L3')
-    #if(len(true_l3_ln) != 0 and unknown[i,1] >= th):
-      #res.write(',Unknown_L3')
     res.write('\t')
 
     #L4
@@ -223,10 +230,6 @@ def res2txt_mode1(th,y_pred,unknown,ontology,ofn):
         res.write(str(true_l4_ln[j]))
       else:
         res.write(str(true_l4_ln[j]) + ',')
-    #if(len(true_l4_ln) == 0 and unknown[i,2] >= th):
-      #res.write('Unknown_L4')
-    #if(len(true_l4_ln) != 0 and unknown[i,2] >= th):
-      #res.write(',Unknown_L4')
     res.write('\t')
 
     #L5
@@ -242,10 +245,6 @@ def res2txt_mode1(th,y_pred,unknown,ontology,ofn):
         res.write(str(true_l5_ln[j]))
       else:
         res.write(str(true_l5_ln[j]) + ',')
-    #if(len(true_l5_ln) == 0 and unknown[i,3] >= th):
-      #res.write('Unknown_L5')
-    #if(len(true_l5_ln) != 0 and unknown[i,3] >= th):
-      #res.write(',Unknown_L5')
     res.write('\t')
 
     #L6
@@ -261,22 +260,26 @@ def res2txt_mode1(th,y_pred,unknown,ontology,ofn):
         res.write(str(true_l6_ln[j]))
       else:
         res.write(str(true_l6_ln[j]) + ',')
-    #if(len(true_l6_ln) == 0 and unknown[i,4] >= th):
-      #res.write('Unknown_L6')
-    #if(len(true_l6_ln) != 0 and unknown[i,4] >= th):
-      #res.write(',Unknown_L6')
     res.write('\n')
   res.close()
   return 0
 
-def res2txt_mode2(th,y_pred,unknown,ontology,ofn):
+def res2txt_mode2(th,y_pred,unknown,ontology,mapping,ofn):
   os.popen('rm -f {} >/dev/null'.format(ofn))
   time.sleep(3)
   res = open(ofn,'w')
   label_name = get_biome_source(ontology)
+  mapid = None
+  if(mapping != '0'):
+    mapid = read_sample_id(mapping)
   for i in range(len(y_pred)):
-    res.write('>Sample_' + str(i+1) + '\t')
-    prob_line = '>Sample_' + str(i+1) + '\t' + 'Layer2|'
+    prob_line = ''
+    if(mapid):
+      res.write('>' + str(mapid[i]) + '\t')
+      prob_line = '>' + str(mapid[i]) + '\t' + 'Layer2|'
+    else:
+      res.write('>Sample_' + str(i+1) + '\t')
+      prob_line = '>Sample_' + str(i+1) + '\t' + 'Layer2|'
     #L2
     l2_ln = label_name[0:4]
     l2_pred = y_pred[i,0:4]
@@ -379,14 +382,23 @@ def res2txt_mode2(th,y_pred,unknown,ontology,ofn):
   res.close()
   return 0
 
-def res2txt_mode3(th,y_pred,unknown,ontology,ofn):
+def res2txt_mode3(th,y_pred,unknown,ontology,mapping,ofn):
   os.popen('rm -f {} >/dev/null'.format(ofn))
   time.sleep(3)
   res = open(ofn,'w')
   label_name = get_biome_source(ontology)
+  mapid=None
+  if(mapping != '0'):
+    mapid = read_sample_id(mapping)
   for i in range(len(y_pred)):
-    res.write('>Sample_' + str(i+1) + '\t')
-    prob_line = '>Sample_' + str(i+1) + '\t' + 'Layer2|'
+    prob_line = ''
+    if(mapid):
+      res.write('>' + str(mapid[i]) + '\t')
+      prob_line = '>' + str(mapid[i]) + '\t' + 'Layer2|'
+    else:
+      res.write('>Sample_' + str(i+1) + '\t')
+      prob_line = '>Sample_' + str(i+1) + '\t' + 'Layer2|'
+
     #L2
     l2_ln = label_name[0:4]
     l2_pred = y_pred[i,0:4]

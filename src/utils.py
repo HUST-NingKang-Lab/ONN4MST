@@ -25,6 +25,7 @@ def get_parser():
   parser.add_argument('-t', '--tree',type=str, default = None, help='The program need a tree file which stored the microbiome ontology. Default is \"./config/microbiome.tree\"')
   parser.add_argument('-m', '--model', type=str, default = None, help='A well trained model. Default is \"config/model_df.json\". If you set the \'-s\' to 1, you should set it to \"config/model_sf.json\"')
   parser.add_argument('-th', '--threshold', type=float, default = 0.3, help='The threshold control the sensitivity of predicting, which locate in [0,1]. Default is 0.3.')
+  parser.add_argument('-mp', '--mapping', type=str, default = '0', help='The mapping file which records the name of sample should be provided for better understanding the output results. This file usually locat at the ./data/npzs/')
   parser.add_argument('-of', '--outfmt', type=int, choices = [1,2,3], default = 1, help='The output format of result. Deafult is 1')
   #parser.add_argument('-N', '--NUM', type=int, default = 0, help='Sort the biome sources by prediction score form large to small, return the TOP N biome sources. Note: If the number of biome sources with a prediction score larger than threshold is less than N, the output will only contian those biome sources with a perdiction score larger than threshold. The suggestion value of N is 10 with a threshold (0.2 or smaller). If set N=0, the ouput will contain those biome sources with a prediction score larger than threshold. Default is 0')
   return(parser)

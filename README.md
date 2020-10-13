@@ -47,11 +47,20 @@ The preprocessing program can make the data preprocess and sample statistical an
     └── error_list                         : Error list of input data files
 ```
 
-ONN4MST models are provided in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases).
+ONN4MST models are provided in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). 
 
 ## Support
 
 For support using ONN4MST, please email [us](https://github.com/HUST-NingKang-Lab/ONN4MST#author). Any comments/insights would be greatly appreciated.
+
+## Requirements
+
+- Unix/Linux operating system
+
+- At least 2 GB free disk space
+- At least 22 GB RAM
+
+Windows users can easily install ONN4MST through [WSL (Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
 ## Installation
 We recommend deploying ONN4MST using `git` and `conda`.
@@ -102,15 +111,19 @@ Basically, the `-i`,  `-o` and `-t` arguments for `src/proprocess.py` are used t
 
 ```bash
 usage: searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE]
-                    [-m MODEL] [-th THRESHOLD] [-of {1,2,3}]
+                    [-m MODEL] [-th THRESHOLD] [-mp MAPPING] [-of {1,2,3}]
                     ifn ofn
 ```
 
 The `-m`  and `-t` arguments for `src/searching.py` are used to specify model (".json" file, see release page) and biome ontology (".tree" file under `config`). If you want ONN4MST to run in GPU mode, use `-g 1`.  And the model based on selected features can be accessed by using `-m config/model_df.json` with `-s 1`. 
 
-There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option. 
+**There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option.** 
 
-## Input format
+## Simplified program walk-through
+
+Here's a simple guide for using ONN4MST to perform microbial source tracking. 
+
+### Input format
 
 The example data can be found [here](data/tsvs). Notice that here is a header "# Constructed from biom file" in the first line.
 
@@ -126,11 +139,7 @@ data/tsvs
     └── ERR1077660_FASTQ_otu.tsv
 ```
 
-## Demo
-
-Here's a simple example for using ONN4MST to perform microbial source tracking. 
-
-#### **First, check the integrity of your data before doing anything with ONN4MST.**
+### **Check the integrity of your data before doing anything with ONN4MST.**
 
 Generally, If you use files from **MGnify** database, you can just use preprocessing program normally.
 
@@ -146,7 +155,7 @@ src/preprocess.py check -i data/tsvs --header 0
 
 The file path and error message of all broken data will be saved to `error_list` and `error_msg`  under `tmp` folder.
 
-#### **Convert ".tsv" files (in MGnify format) to model-acceptable ".npz" file.**
+### **Convert ".tsv" files (in MGnify format) to model-acceptable ".npz" file.**
 
 Also, you need to specify the header argument here, take "1" as an example.
 
@@ -155,7 +164,7 @@ src/preprocess.py convert -i data/tsvs -t data/trees -o data/npzs/ --header 1 \
 	--batch_size 10 --batch_index 0 --n_jobs 1
 ```
 
-#### **Microbiome samples source tracking**.
+### **Microbiome samples source tracking**.
 
 Perform source tracking using ONN4MST
 
@@ -187,7 +196,7 @@ src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 1 -t config/
 	-m config/model_sf.json -th 0 -of 2
 ```
 
-## Output format
+### Output format
 
 In the second output format, the predicted sources and their contribution to each sample are given as follows. 
 
@@ -202,7 +211,57 @@ They can be easily visualized into pie charts.
 
 ![](image/Supplementary_Figure5.png)
 
-## Author
+## Source tracking of environmental samples from less studied biomes
+
+For easy reproduction, we have converted 11 Groundwater samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of environmental samples from less studied biomes*" in our paper. To reproduce the experiment, run the following command after fully configured ONN4MST and its dependencies:
+
+```bash
+src/searching.py data/npzs/data/npzs/GroundwaterSamplesMatrices.npz ContributionToGroundwaterSamples.txt \
+	-g 0 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 3
+```
+
+Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt). And their related metadata are given below. The order of samples in output file is in totally agreement with that in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt).
+
+| Run ID    | Sample description |
+| --------- | ------------------ |
+| ERR904477 | Well_D             |
+| ERR904472 | Well_A2            |
+| ERR904478 | Well_E             |
+| ERR904481 | Well_H             |
+| ERR904475 | Well_C1            |
+| ERR904474 | Well_B2            |
+| ERR904471 | Well_A1            |
+| ERR904480 | Well_G             |
+| ERR904479 | Well_F             |
+| ERR904473 | Well_B1            |
+| ERR904476 | Well_C2            |
+
+## Source tracking of samples from closely related human associated biomes
+
+For easy reproduction, we have converted 10 Human samples into model-acceptable ".npz" files, which can be used to reproduce the experiments "*Source tracking of samples from closely related human associated biomes*" in our paper. To reproduce the experiment, run the following command:
+
+```bash
+src/searching.py data/npzs/data/npzs/HumanSamplesMatrices.npz ContributionToHumanSamples.txt -g 0 -s 0 \
+	-t config/microbiome.tree -m config/model_df.json -th 0 -of 3
+```
+
+Their MGnify Run ID can be found in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). And their related metadata are given below. The order of samples in output file is in totally agreement with that in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt).
+
+| Run ID     | Sample description                                    |
+| ---------- | ----------------------------------------------------- |
+| ERR1074236 | American Gut Project Mouth sample (Mouth 2)           |
+| ERR1074494 | American Gut Project Stool sample (Stool 2)           |
+| ERR1073574 | American Gut Project Left Hand sample (Left hand 2)   |
+| ERR1076801 | American Gut Project Left Hand sample (Left hand 1)   |
+| ERR1074499 | American Gut Project Forehead sample (Forehead 1)     |
+| ERR1077660 | American Gut Project Right Hand sample (Right hand 2) |
+| ERR1074498 | American Gut Project Mouth sample (Mouth 1)           |
+| ERR1076805 | American Gut Project Right Hand sample (Right hand 1) |
+| ERR1074237 | American Gut Project Stool sample (Stool 1)           |
+| ERR1074238 | American Gut Project Forehead sample (Forehead 2)     |
+|            |                                                       |
+
+## Authors
 
    Name   |      Email      |      Organization
 :--------:|-----------------|--------------------------------------------------------------------------------------------------------------------------------

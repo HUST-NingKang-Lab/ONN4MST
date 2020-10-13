@@ -8,7 +8,7 @@ import tensorflow as tf
 import utils
 
 class model(object):
-  def __init__(self, feature=None, feature_size=None, label=None, label_size=None, lr=1e-4, is_training=True, reuse=False, gpu_mode=True):
+  def __init__(self, feature=None, feature_size=None, label=None, label_size=None, lr=1e-4, is_training=True, reuse=False, gpu_mode=0):
     self.lr = lr
     self.is_training = is_training
     self.reuse = reuse
@@ -17,15 +17,15 @@ class model(object):
     self.label = label
     self.label_size = label_size
     myconfig = tf.compat.v1.ConfigProto()
-    myconfig.gpu_options.per_process_gpu_memory_fraction = 0.3
+    myconfig.gpu_options.per_process_gpu_memory_fraction = 0.5
     self.config = myconfig
 
     with tf.compat.v1.variable_scope('conv_vae', reuse=self.reuse):
-      if (not gpu_mode):
+      if(gpu_mode == 0):
         with tf.device('/cpu:0'):
           tf.compat.v1.logging.info('model using cpu!')
           self.build_graph()
-      else:
+      elif(gpu_mode == 1):
         tf.logging.info('model using gpu!')
         self.build_graph()
     self.init_session()
