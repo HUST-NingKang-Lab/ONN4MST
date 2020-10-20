@@ -117,7 +117,7 @@ usage: searching.py [-h] [-g {0,1}] [-gid GPU_CORE_ID] [-s {0,1}] [-t TREE]
 
 The `-m`  and `-t` arguments for `src/searching.py` are used to specify model (".json" file, see release page) and biome ontology (".tree" file under `config`). If you want ONN4MST to run in GPU mode, use `-g 1`.  And the model based on selected features can be accessed by using `-m config/model_df.json` with `-s 1`. 
 
-**There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option.** 
+There are several useful arguments (e.g. `--batch-Size`,  `--batch` and `--n_jobs`) provided in `src/preprocess.py` and `src/searching.py`. You can see them via `-h` option. 
 
 ## Simplified program walk-through
 
@@ -141,7 +141,7 @@ data/tsvs
 
 ### **Check the integrity of your data before doing anything with ONN4MST.**
 
-Generally, If you use files from **MGnify** database, you can just use preprocessing program normally.
+Generally, If you use files from [**MGnify** database](https://www.ebi.ac.uk/metagenomics/), you can just use preprocessing program normally.
 
 ```bash
 src/preprocess.py check -i data/tsvs
