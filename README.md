@@ -8,6 +8,8 @@ This program is designed to perform fast and accurate biome source tracking amon
 
 The preprocessing program can make the data preprocess and sample statistical analysis of the Ontology-aware Neural Network easier. For very time-consuming big data calculation, any minor data or program errors can cost days or even weeks. Using this program to check the integrity of all data and error values before processing can greatly reduce the probability of program running errors.
 
+We only provide general model on GitHub. Other models mentioned in our study as well as our training scripts are available upon reasonable request. General models based on all features (44,668 features) and selected features (1462 features) can be found in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). 
+
 #### Repository structure
 
 ```reStructuredText
@@ -46,8 +48,6 @@ The preprocessing program can make the data preprocess and sample statistical an
     ├── 1462FeaturesIndices.npz            : ".npz" files containing indices for 1462 selected features
     └── error_list                         : Error list of input data files
 ```
-
-We only provide general model on GitHub. Other models mentioned in our study as well as our training scripts are available upon reasonable request. General models based on all features (44,668 features) and selected features (1462 features) can be found in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). 
 
 ## Support
 
