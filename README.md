@@ -47,7 +47,7 @@ The preprocessing program can make the data preprocess and sample statistical an
     └── error_list                         : Error list of input data files
 ```
 
-ONN4MST models are provided in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). 
+We only provide general model on GitHub. Other models mentioned in our study as well as our training scripts are available upon reasonable request. General models based on all features (44,668 features) and selected features (1462 features) can be found in our [releases](https://github.com/HUST-NingKang-Lab/ONN4MST/releases). 
 
 ## Support
 
