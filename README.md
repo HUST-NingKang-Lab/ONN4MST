@@ -172,28 +172,28 @@ Perform source tracking using ONN4MST
 
 ```bash
 src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 0 -t config/microbiome.tree \
-	-m config/model_df.json -th 0 -of 2
+	-m config/model_df.json -th 0 -of 2 -mp data/npzs/paths.txt
 ```
 
 - using model based on all features, in GPU mode.
 
 ```bash
 src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 0 -t config/microbiome.tree \
-	-m config/model_df.json -th 0 -of 2
+	-m config/model_df.json -th 0 -of 2 -mp data/npzs/paths.txt
 ```
 
 - using model based on selected features, in CPU mode.
 
 ```bash
 src/searching.py data/npzs/batch_0.npz searching_result.txt -g 0 -s 1 -t config/microbiome.tree \
-	-m config/model_sf.json -th 0 -of 2
+	-m config/model_sf.json -th 0 -of 2 -mp data/npzs/paths.txt
 ```
 
 - using model based on selected features, in GPU mode.
 
 ```bash
 src/searching.py data/npzs/batch_0.npz searching_result.txt -g 1 -s 1 -t config/microbiome.tree \
-	-m config/model_sf.json -th 0 -of 2
+	-m config/model_sf.json -th 0 -of 2 -mp data/npzs/paths.txt
 ```
 
 ### Output format
@@ -221,7 +221,7 @@ For easy reproduction, we have converted 11 Groundwater samples into model-accep
 
 ```bash
 src/searching.py data/npzs/GroundwaterSamplesMatrices.npz ContributionToGroundwaterSamples.txt \
-	-g 0 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 3
+	-g 0 -s 0 -t config/microbiome.tree -m config/model_df.json -th 0 -of 3 -mp data/npzs/GroundwaterSamplesPaths.txt
 ```
 
 Their MGnify Run ID can be found in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt). And their related metadata are given below. The order of samples in output file is in totally agreement with that in [GroundwaterSamplesPaths.txt](data/npzs/GroundwaterSamplesPaths.txt).
@@ -246,7 +246,7 @@ For easy reproduction, we have converted 10 Human samples into model-acceptable 
 
 ```bash
 src/searching.py data/npzs/HumanSamplesMatrices.npz ContributionToHumanSamples.txt -g 0 -s 0 \
-	-t config/microbiome.tree -m config/model_df.json -th 0 -of 3
+	-t config/microbiome.tree -m config/model_df.json -th 0 -of 3 -mp data/npzs/HumanSamplesPaths.txt
 ```
 
 Their MGnify Run ID can be found in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt). And their related metadata are given below. The order of samples in output file is in totally agreement with that in [HumanSamplesPaths.txt](data/npzs/HumanSamplesPaths.txt).
