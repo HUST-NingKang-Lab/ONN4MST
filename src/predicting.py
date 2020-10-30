@@ -13,23 +13,28 @@ from graph_builder import model
 from gen_ontology import get_biome_source
 from utils import *
 
+#set seeable gpu core id for device
 def get_gid(gid):
   os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
   os.environ["CUDA_VISIBLE_DEVICES"]="{}".format(gid)
   dd = '{}'.format(gid)
   print(dd)
 
+#load the Matrix from ".npz" format file
 def npzload1(ifn):
   data = np.load(ifn)
   feature = data['matrices']
   return(feature)
 
+#recover the ONN model from "model.json"
 def Modelrecv(mdl, feature_size, label_size, gpus):
   Model = model(feature_size = feature_size, label_size = label_size, gpu_mode = gpus)
   Model.load_json(mdl)
   return(Model)
 
+#load data and feed it to the ONN model, and generate a raw prediction
 def Modelload(fn,Model):
+  #load data
   matrices = npzload1(fn)
   samplenum = len(matrices)
   matrices = matrices.reshape(samplenum, -1)
@@ -38,12 +43,14 @@ def Modelload(fn,Model):
   for i in range(samplenum):
     all_batch.append(i)
   all_batch = np.array(all_batch)
-  #feed the model with these samples
+  #feed the ONN model with these samples
   feed = {Model.x: matrices[all_batch]}
   y_pred = Model.sess.run([Model.y_pred], feed)
   y_pred = y_pred[0]
+  #return a raw prediction
   return(y_pred)
 
+#normalization of the raw prediction to make the sum of contributions equal to 1 at every ontology layer
 def scale_prob(y_pred):
   matrices_size,label_size = get_size(0)
   sn = len(y_pred)
@@ -142,11 +149,12 @@ def scale_prob(y_pred):
     l6_unknown.append(l6_unknown_tmp)
   l6_unknown = np.array(l6_unknown)
 
+  #return the normalized prediction couppled with the contribution of unknown
   pred = np.concatenate((pred_l2,pred_l3,pred_l4,pred_l5,pred_l6), axis=1)
   unknown = np.concatenate((l2_unknown,l3_unknown,l4_unknown,l5_unknown,l6_unknown), axis = 1)
   return(pred,unknown)
 
-
+#process the normalized prediction to avoid break in intermediate ontology layer
 def threshold_process(th,y_pred):
   sn = len(y_pred)
   li = layerindex = [0,4,11,33,89,132]
@@ -160,10 +168,10 @@ def threshold_process(th,y_pred):
       else:
         y_pred[i][li[j-1]:] = 0
         break
-  #y_pred[y_pred < th] = 0
-  #y_pred[y_pred >= th] = 1
+  #return a continous normalized prediction 
   return(y_pred)
 
+#get the samples' ID from a recording file
 def read_sample_id(ifn):
   sid = []
   with open(ifn,'r') as f:
@@ -173,6 +181,7 @@ def read_sample_id(ifn):
       sid.append(sname)
   return(sid)
 
+#write the continous normalized prediction to a txt file (output file format 1)
 def res2txt_mode1(th,y_pred,unknown,ontology,mapping,ofn):
   os.popen('rm -f {} >/dev/null'.format(ofn))
   time.sleep(3)
@@ -264,6 +273,7 @@ def res2txt_mode1(th,y_pred,unknown,ontology,mapping,ofn):
   res.close()
   return 0
 
+#write the continous normalized prediction to a txt file (output file format 2)
 def res2txt_mode2(th,y_pred,unknown,ontology,mapping,ofn):
   os.popen('rm -f {} >/dev/null'.format(ofn))
   time.sleep(3)
@@ -382,6 +392,7 @@ def res2txt_mode2(th,y_pred,unknown,ontology,mapping,ofn):
   res.close()
   return 0
 
+#write the continous normalized prediction to a txt file (output file format 3)
 def res2txt_mode3(th,y_pred,unknown,ontology,mapping,ofn):
   os.popen('rm -f {} >/dev/null'.format(ofn))
   time.sleep(3)
@@ -502,10 +513,7 @@ def res2txt_mode3(th,y_pred,unknown,ontology,mapping,ofn):
   res.close()
   return 0
 
-
-  
-
-
+#sort prediction according to the value of source contributions
 def sort_lst(true_label,prob_lst):
   tmp_lst = []
   for i in range(len(true_label)):
@@ -518,6 +526,7 @@ def sort_lst(true_label,prob_lst):
   print(tmp_lst)
   return(tmp_lst)
 
+#write the results of "top n" biomes and corrsponding contributions that biger than others
 def get_topn(y_pred,ontology,ofn,th,n):
   os.popen('rm -f {} >/dev/null'.format(ofn))
   time.sleep(3)

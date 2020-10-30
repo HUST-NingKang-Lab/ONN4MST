@@ -3,18 +3,20 @@
 import numpy as np
 import sys
 import argparse
-
+#record the shape of ontology
 def get_ontology_shape(ontology):
   shape = []
   for i in range(len(ontology)):
     shape.append(len(ontology[i]))
   return(shape)
 
+#record the shape of the Matrix and the label
 def get_size(sf):
   matrices_size = [312676,10234,14133]
   label_size = [4,7,22,56,43]
   return(matrices_size[sf],label_size)
 
+#define args in searching.py
 def get_parser():
   parser = argparse.ArgumentParser(description='This script performs fast and accurate biome source tracking based on Ontology Neural Network. Any problems please see (https://github.com/HUST-NingKang-Lab/ONN4MDM/) for detail infomation or send email to authors! Thank you for using onn4mst!')
   parser.add_argument('ifn', type=str, default = None, help='The input file must be a numpy array file in npz format, whcih could be produced by using preprocessing.py with a biome abundance tsv file.')

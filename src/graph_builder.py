@@ -17,7 +17,7 @@ class model(object):
     self.label = label
     self.label_size = label_size
     myconfig = tf.compat.v1.ConfigProto()
-    myconfig.gpu_options.per_process_gpu_memory_fraction = 0.5
+    myconfig.gpu_options.per_process_gpu_memory_fraction = 0.9
     self.config = myconfig
 
     with tf.compat.v1.variable_scope('conv_vae', reuse=self.reuse):
