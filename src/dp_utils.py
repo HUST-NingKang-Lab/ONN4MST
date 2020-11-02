@@ -10,16 +10,14 @@ from functools import reduce
 from sklearn.ensemble import RandomForestRegressor
 from copy import copy
 from pprint import pprint
-#from ete3 import NCBITaxa
-# from joblib import *
 
 
-# new_tree = Tree(tree.subtree(tree.root), deep=True)
-
+# Tree class for phylogenetic tree and ontology tree
 class SuperTree(Tree):
 
 	def get_bfs_nodes(self, ):
 		# tested
+		# Get nodes in Breadth First Traversal order.
 		nodes = {}
 		for i in range(self.depth()+1):
 			nodes[i] = []
@@ -30,45 +28,46 @@ class SuperTree(Tree):
 
 	def get_bfs_data(self, ):
 		# tested
+		# Get nodes' data in Breadth First Traversal order.
 		nodes = self.get_bfs_nodes()
 		return {i: list(map(lambda x: self[x].data, nodes[i])) for i in range(self.depth() + 1)}
 
 	def get_dfs_nodes(self, ):
 		# tested
+		# Get nodes in Depth First Traversal order.
 		return self.paths_to_leaves()
 
 	def get_dfs_data(self, ):
 		# tested
+		# Get nodes' data in Depth First Traversal order.
 		paths = self.get_dfs_nodes() # list
 		return [list(map(lambda x: self[x].data, path)) for path in paths]
 
 	def init_nodes_data(self, value = 0):
 		# tested
+		# Initialize nodes' data into value.
 		for id in self.expand_tree(mode=1):
 			self[id].data = value
 
 	def from_paths(self, paths):
 		# tested
-		# check duplicated son-fathur relationship
+		# Construct the tree using node paths
 		for path in paths:
 			current_node = self.root
 			for nid in path:
 				children_ids = [n.identifier for n in self.children(current_node)]
 				if nid not in children_ids: self.create_node(identifier=nid, parent=current_node)
 				current_node = nid
-	'''
-	def from_child_father(self, ):
-		return None
-	'''
 
 	def from_pickle(self, file: str):
-		# tested
+		# Restore the tree from a pickle dump.
 		with open(file, 'rb') as f: 
 			stree = pickle.load(f)
 		return stree
 
 	def path_to_node(self, node_id: str):
 		# tested
+		# Get path to a node
 		nid = node_id
 		path_r = []
 		while nid != 'root':
@@ -85,6 +84,7 @@ class SuperTree(Tree):
 
 	def update_value(self, ):
 		# tested
+		# Recalculate abundance for all taxa from the bottom up.
 		all_nodes = [nid for nid in self.expand_tree(mode=2)][::-1]
 		for nid in all_nodes:
 			d = sum([node.data for node in self.children(nid)])
@@ -92,11 +92,13 @@ class SuperTree(Tree):
 
 	def to_pickle(self, file: str):
 		# tested
+		# Dump the tree into pickle format.
 		with open(file, 'wb') as f:
 			pickle.dump(self, f)
 
 	def get_matrix(self, dtype = np.float32):
 		# tested
+		# Generate the Matrix using data stored in nodes.
 		paths_to_leaves = self.paths_to_leaves()
 		ncol = self.depth() + 1
 		nrow = len(paths_to_leaves)
@@ -109,16 +111,18 @@ class SuperTree(Tree):
 
 	def to_matrix_npy(self, file: str, dtype = np.float32):
 		# tested
+		# Save the Matrix into a file.
 		matrix = self.get_matrix(dtype=dtype)
 		np.save(file, matrix)
 
 	def copy(self, ):
-		# not working----test 
+		# tested
+		# Get a deep copy of the tree.
 		return deepcopy(self)
-		# return super_tree(self.subtree(self.root), deep=True) 
 
 	def remove_levels(self, level: int):
 		# tested
+		# Cut the tree, only keep nodes with levels < `level`.
 		nids = list(self.expand_tree(mode=1))[::-1]
 		for nid in nids:
 			if self.level(nid) >= level:
@@ -126,6 +130,7 @@ class SuperTree(Tree):
 
 	def save_paths_to_csv(self, file: str, fill_na=True):
 		# tested
+		# Save all paths of the tree into a csv file.
 		paths = self.paths_to_leaves()
 		df = pd.DataFrame(paths)
 		if fill_na:

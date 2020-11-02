@@ -53,9 +53,8 @@ if args.mode in ['check', 'build', 'convert', 'filter', 'count', 'merge', 'selec
 else:
 	print('Must specify a valid work mode, type -h to get the help information.')
 
-# global setting
+# Global settings
 if args.mode == 'convert':
-	# print('convert mode')
 	loader = DataLoader(path=args.input_dir, batch_size=args.batch_size, batch_index=args.batch_index)
 elif args.mode in ['check', 'build', 'count']:
 	loader = DataLoader(path=args.input_dir)
@@ -73,18 +72,19 @@ def convert_to_npzs(sample, biome_layered, matrix_ncol,
 					species_tree, st_bottom_up_ids, paths_to_gen_matrix, biome_tree):
 	species_tree = pickle.loads(pickle.dumps(species_tree))
 	biome_tree = pickle.loads(pickle.dumps(biome_tree))
+	# Map abundance
 	species_tree.fill_with(data=sample)
-	#print('The number of node on species tree is', len(sample))
+	# Recalculate abundance
 	species_tree.update_values(bottom_up_ids=st_bottom_up_ids)
 	Sum = species_tree['root'].data
-	#print(Sum)
+	# Calculate relative abundance
 	matrix = np.divide(species_tree.get_matrix(paths=paths_to_gen_matrix, ncol=matrix_ncol), Sum).astype(np.float32)  
-	# relative abundance
+	# Generate labels for sample
 	biome_tree.fill_with(data={biome: 1 for biome in biome_layered})
 	bfs_data = biome_tree.get_bfs_data()
 	labels = [np.array(bfs_data[level], dtype=np.float32) for level in range(1, biome_tree.depth() + 1)]
 	
-	# recycle memory
+	# Recycle memory
 	del matrix_ncol
 	del Sum
 	del species_tree 
@@ -100,26 +100,27 @@ def convert_to_npzs(sample, biome_layered, matrix_ncol,
 
 if args.mode == 'check':
 	# tested
-	# check just 1 line in file errors
+	# Check files, save error file list and error massages
 	loader.check_data(header=args.header)
 	loader.save_error_list()
 
 elif args.mode == 'build':
 	# tested
+	# Construct the phylogenetic tree and biome tree, deprecated.
 	converter = IdConverter()
 	paths = pd.concat(map(lambda x: x.iloc(1)[2], tqdm(loader.get_data(header=args.header))))
+	# Drop repeated paths
 	paths = paths.unique()
 	paths = [converter.fix_issue2_3(path) for path in paths]
 	paths = [converter.convert(x, sep=';') for x in paths]
-	# print(list(paths)[0:5])
 	stree = SuperTree()
 	stree.create_node(identifier='root')
 	print('Building tree', flush=True)
 	stree.from_paths(tqdm(paths))
-	# stree.show()
+	# Dump the phylogenetic tree
 	stree.to_pickle(file=os.path.join(args.tree, 'species_tree.pkl'))
 
-	# fix issue 1
+	# Fix issue 1
 	biomes_fixed = [x.replace('Host-associated', 'Host_associated').\
 					   replace('Oil-contaminated', 'Oil_contaminated').\
 					   replace('Non-marine', 'Non_marine') for x in os.listdir(args.input_dir)]
@@ -130,9 +131,10 @@ elif args.mode == 'build':
 	btree = SuperTree()
 	btree.create_node(identifier='root')
 	btree.from_paths(biomes)
-	# btree.show()
+	# Dump the biome tree
 	btree.to_pickle(file=os.path.join(args.tree, 'biome_tree.pkl'))
 	print('Species tree and biome tree are saved in {}'.format(args.tree))
+	# Save basic informations of biome tree.
 	ordered_labels = ['\nlayer_'+str(nlayer)+'\n'+'\n'.join(labels) for nlayer, labels in enumerate(btree.get_bfs_nodes().values())]
 	with open(os.path.join(args.tree, 'ordered_labels.txt'), 'w') as f:
 		f.write('\n'.join(ordered_labels))
@@ -153,6 +155,9 @@ elif args.mode == 'build':
 																					  'EBI_ONN_Microbiome.xls')))
 
 elif args.mode == 'convert':
+	# Convert input data into model-acceptable npz files
+
+	# Read trees
 	print('Loading trees......', end='', flush=True)
 	tree = SuperTree()
 	converter = IdConverter()
@@ -164,7 +169,8 @@ elif args.mode == 'convert':
 	print('Preprocessing data......', end='', flush=True)
 	raw_data = [x.iloc(1)[1:] for x in tqdm(loader.get_data(header=args.header))]
 	fix = converter.fix_issue2_3
-	
+
+	# Find nearest node on the tree.
 	def nearest_node_onTree(stree, path):
 		res = 'root'
 		#print(path)
@@ -173,11 +179,9 @@ elif args.mode == 'convert':
 				res = id_
 				break
 		return res
-
-	# stree_ids = [nid for nid in stree.expand_tree(mode=stree.DEPTH)]
-	
 	nnt = nearest_node_onTree
-	
+
+	# Preprocess the dataframe.
 	def format_df(stree, df):
 		colnames = df.columns
 		df = df.rename(columns={colnames[0]: 'abundance', colnames[1]: 'taxonomy'})
@@ -189,8 +193,6 @@ elif args.mode == 'convert':
 		ndf['abundance in total'] = ndf['nearest id'].apply(lambda x: df[df['nearest id']==x]['abundance'].sum())
 		ndf = ndf[['nearest id', 'abundance in total']]
 		return {nid: abun for nid, abun in ndf.values.tolist()}
-	
-	
 	data = [format_df(stree, df) for df in tqdm(raw_data)]
 	# fix issue 1
 	biomes_fixed = [x.replace('Host-associated', 'Host_associated').\
@@ -200,8 +202,6 @@ elif args.mode == 'convert':
 	pth_split = os.path.split
 	biomes = [converter.convert(pth_split(pth_split(x)[0])[-1], sep='-') for x in biomes_fixed]
 	print('finished !')
-	# biomes = list(biomes)
-	# data = list(data)
 	print('Total: {} biomes and {} samples'.format(len(biomes), len(data)))
 
 	# Back up the parameters during the first calculation, 
@@ -233,29 +233,21 @@ elif args.mode == 'convert':
 		# how about fixing k_bact with sk_bact
 		print('finished !')
 
-	# define convert function
-	'''
-	print('Performing conversion......')
-	# Execute sequentially
-	res = [convert_to_npzs(sample=data[i], biome_layered=biomes[i], matrix_ncol=matrix_ncol,
-								  species_tree=stree, st_bottom_up_ids=st_bottom_up_ids,
-								  paths_to_gen_matrix=paths_to_gen_matrix, biome_tree=btree) for i in trange(len(data))]
-
-	'''
-	# pre-compute reverse iteration node id order	
-	# pre-generate paths to node ids 
+	# Define convert function
+	# Pre-compute reverse iteration node id order
+	# Pre-generate paths to node ids
 	par_backend = 'threads' # {‘processes’, ‘threads’}
 	print('Using joblib `{}` parallel backend with {} cores'.format(par_backend, args.n_jobs))
-	par = Parallel(n_jobs=args.n_jobs, prefer=par_backend)  
+	par = Parallel(n_jobs=args.n_jobs, prefer=par_backend)
+	# Perform conversion.
 	print('Performing conversion......')
-
 	res = par(delayed(convert_to_npzs)(sample=data[i], biome_layered=biomes[i], matrix_ncol=matrix_ncol,
 									   species_tree=stree, st_bottom_up_ids=st_bottom_up_ids,
 									   paths_to_gen_matrix=paths_to_gen_matrix, biome_tree=btree)
 			  for i in trange(len(data))
 			  )
 	
-	# print(res[0:2])
+	# Post-process and save result.
 	raw_npzs = list(zip(*res))
 	matrices = raw_npzs[0]
 	labels = raw_npzs[1]
@@ -269,21 +261,26 @@ elif args.mode == 'convert':
 	print('Results are save in {}.'.format(output_dir))
 
 elif args.mode == 'filter':
-        npzs = [os.path.join(args.input_dir, npz) for npz in os.listdir(args.input_dir) if npz.endswith('.npz')]
-        indices = np.load('tmp/1462FeatureIndices.npz')
-        abu_indices = indices['abu_select']
-        imptc_indices = indices['imptc_select']
-        print(list(indices.keys()))
-        filter_features = lambda matrices: matrices[:, abu_indices, :][:, imptc_indices, :]
-        print('processing...')
-        for npz in tqdm(npzs):
-            f = np.load(npz)
-            matrices = filter_features(f['matrices'])
-            np.savez(os.path.join(args.output_dir, 'selected_' + npz.split('/')[-1]), matrices=matrices, label_0=f['label_0'],
-                     label_1=f['label_1'], label_2=f['label_2'], label_3=f['label_3'], label_4=f['label_4'])
+	# Get npz fils based on selected features.
+	npzs = [os.path.join(args.input_dir, npz) for npz in os.listdir(args.input_dir) if npz.endswith('.npz')]
+	# Read configurations
+	indices = np.load('tmp/1462FeatureIndices.npz')
+	abu_indices = indices['abu_select']
+	imptc_indices = indices['imptc_select']
+	print(list(indices.keys()))
+
+	filter_features = lambda matrices: matrices[:, abu_indices, :][:, imptc_indices, :]
+	print('processing...')
+	# Get matrices based on selected features.
+	for npz in tqdm(npzs):
+		f = np.load(npz)
+		matrices = filter_features(f['matrices'])
+		np.savez(os.path.join(args.output_dir, 'selected_' + npz.split('/')[-1]), matrices=matrices, label_0=f['label_0'],
+				 label_1=f['label_1'], label_2=f['label_2'], label_3=f['label_3'], label_4=f['label_4'])
 
 elif args.mode == 'count':
 	# tested
+	# Deprecated
 	sample_count = loader.get_sample_count()
 	res = pd.DataFrame(list(sample_count.items()), columns=['Microbiome', 'Sample size'])
 
@@ -312,6 +309,7 @@ elif args.mode == 'count':
 
 elif args.mode == 'merge':
 	# tested
+	# Merge multiple npz files into a single npz
 	files = [x for x in os.listdir(args.input_dir) if x.endswith('.npz')]
 	files.sort(key=lambda x: int(x.lstrip('batch_').rstrip('.npz')))
 	print(files)
@@ -327,6 +325,7 @@ elif args.mode == 'merge':
 
 elif args.mode == 'select':
 	# tested
+	# Deprecated
 	coefficient = args.coef
 	print('Loading data...')
 	tmp = np.load(os.path.join(args.input_dir, 'merged_matrices.npz'))
