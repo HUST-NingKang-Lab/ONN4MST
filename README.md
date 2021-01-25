@@ -211,7 +211,7 @@ In the second output format, the predicted sources and their contribution to eac
 
 They can be easily visualized into pie charts.
 
-![](image/Supplementary Figure5.png)
+<img src="image/Supplementary Figure5.png">
 
 ## Evaluation of source tracking methods
 
