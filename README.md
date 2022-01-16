@@ -1,6 +1,6 @@
 # ONN4MST
 <img src="image/release.png" width="134" height="20">
-Ontology-aware Neural Network for Mircobiome sample Source Tracking!
+Ontology-aware Neural Network for Microbial Source Tracking!
 
 <img src="image/Figure1.png">
 
