@@ -43,6 +43,8 @@ We only provide general model on GitHub. Other models mentioned in our study as 
 │   ├── predicting.py                      : Utility functions for the prediction function ONN4MST
 │   ├── preprocess.py                      : Main preprocessing program
 │   ├── searching.py                       : Main searching program
+│   ├── training.py                        : Training code of ON4MST
+│   ├── testing.py                         : Testing code of ON4MST
 │   └── utils.py                           : Other utility functions for ONN4MST
 └── tmp                                    : Temporal files of ONN4MST
     ├── 1462FeaturesIndices.npz            : ".npz" files containing indices for 1462 selected features
