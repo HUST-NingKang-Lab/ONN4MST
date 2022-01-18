@@ -38,16 +38,16 @@ We only provide general model on GitHub. Other models mentioned in our study as 
 ├── log
 │   └── Update.log                         : Updates for each version of ONN4MST
 ├── src                                    : Source code for ONN4MST
-│   ├── document4train.py                  : Document for training script
-│   ├── document4train.py                  : Document for testing script
+│   ├── document4train.txt                  : Document for training script
+│   ├── document4test.txt                  : Document for testing script
 │   ├── dp_utils.py                        : Utility classes for data preprocessing program
 │   ├── gen_ontology.py                    : Utility functions for the generating of biome ontology
 │   ├── graph_builder.py                   : Utility for computational graph building of ON4MST
 │   ├── predicting.py                      : Utility functions for the prediction function ONN4MST
 │   ├── preprocess.py                      : Main preprocessing program
 │   ├── searching.py                       : Main searching program
-│   ├── training.py                        : Training code of ON4MST
-│   ├── testing.py                         : Testing code of ON4MST
+│   ├── training.py                        : Training script of ON4MST
+│   ├── testing.py                         : Testing script of ON4MST
 │   └── utils.py                           : Other utility functions for ONN4MST
 └── tmp                                    : Temporal files of ONN4MST
     ├── 1462FeaturesIndices.npz            : ".npz" files containing indices for 1462 selected features
