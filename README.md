@@ -1,7 +1,6 @@
 # ONN4MST
-![](https://img.shields.io/badge/status-beta-brightgreen?style=flat-square&logo=appveyor)
-![](https://img.shields.io/badge/DOI-10.1101/2020.11.01.364208-brightgreen?style=flat-square&logo=appveyor)](https://www.biorxiv.org/content/10.1101/2020.11.01.364208) 
-![](https://img.shields.io/github/license/HUST-NingKang-Lab/EXPERT?style=flat-square&logo=appveyor)
+![](https://img.shields.io/badge/status-beta-brightgreen?style=flat-square&logo=appveyor) [![](https://img.shields.io/badge/DOI-10.1101/2020.11.01.364208-brightgreen?style=flat-square&logo=appveyor)](https://www.biorxiv.org/content/10.1101/2020.11.01.364208) [![](https://img.shields.io/github/license/HUST-NingKang-Lab/EXPERT?style=flat-square&logo=appveyor)
+
 Ontology-aware Neural Network for Microbial Source Tracking!
 
 <img src="image/Figure1.png">
