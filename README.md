@@ -38,8 +38,7 @@ We only provide general model on GitHub. Other models mentioned in our study as 
 ├── log
 │   └── Update.log                         : Updates for each version of ONN4MST
 ├── src                                    : Source code for ONN4MST
-│   ├── document4train.txt                  : Document for training script
-│   ├── document4test.txt                  : Document for testing script
+│   ├── document.md                        : Document for the scripts of ONN4MST
 │   ├── dp_utils.py                        : Utility classes for data preprocessing program
 │   ├── gen_ontology.py                    : Utility functions for the generating of biome ontology
 │   ├── graph_builder.py                   : Utility for computational graph building of ON4MST
