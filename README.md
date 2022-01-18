@@ -1,5 +1,5 @@
 # ONN4MST
-![](https://img.shields.io/badge/status-beta-brightgreen?style=flat-square&logo=appveyor) [![](https://img.shields.io/badge/DOI-10.1101/2020.11.01.364208-brightgreen?style=flat-square&logo=appveyor)](https://www.biorxiv.org/content/10.1101/2020.11.01.364208) [![](https://img.shields.io/github/license/HUST-NingKang-Lab/EXPERT?style=flat-square&logo=appveyor)
+![](https://img.shields.io/badge/status-beta-brightgreen?style=flat-square&logo=appveyor) [![](https://img.shields.io/badge/DOI-10.1101/2020.11.01.364208-brightgreen?style=flat-square&logo=appveyor)](https://www.biorxiv.org/content/10.1101/2020.11.01.364208) ![](https://img.shields.io/github/license/HUST-NingKang-Lab/EXPERT?style=flat-square&logo=appveyor)
 
 Ontology-aware Neural Network for Microbial Source Tracking!
 
@@ -38,6 +38,8 @@ We only provide general model on GitHub. Other models mentioned in our study as 
 ├── log
 │   └── Update.log                         : Updates for each version of ONN4MST
 ├── src                                    : Source code for ONN4MST
+│   ├── document4train.py                  : Document for training script
+│   ├── document4train.py                  : Document for testing script
 │   ├── dp_utils.py                        : Utility classes for data preprocessing program
 │   ├── gen_ontology.py                    : Utility functions for the generating of biome ontology
 │   ├── graph_builder.py                   : Utility for computational graph building of ON4MST
