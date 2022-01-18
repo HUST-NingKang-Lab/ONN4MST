@@ -72,7 +72,7 @@ We recommend deploying ONN4MST using `git` and `conda`.
 
 ```shell
 # clone this repository
-git clone https://github.com/HUST-NingKang-Lab/ONN4MDM.git
+git clone https://github.com/HUST-NingKang-Lab/ONN4MST.git
 cd ONN4MST
 
 # download and uncompress our model
