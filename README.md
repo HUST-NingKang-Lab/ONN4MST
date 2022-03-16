@@ -31,12 +31,8 @@ We only provide general model on GitHub. Other models mentioned in our study as 
 │       └── HumanSamplesOTUs.tar.gz        : Compressed 10 Human samples
 ├── environment.yaml                       : Dependencies for ONN4MST
 ├── image                                  : Images used in README
-│   ├── Figure1.png                        
-│   ├── Figure2.png                        
+│   ├── Figure1.png                                              
 │   ├── Supplementary_Figure5.png
-│   └── release.png
-├── log
-│   └── Update.log                         : Updates for each version of ONN4MST
 ├── src                                    : Source code for ONN4MST
 │   ├── document.md                        : Document for the scripts of ONN4MST
 │   ├── dp_utils.py                        : Utility classes for data preprocessing program
