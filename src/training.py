@@ -71,7 +71,7 @@ def train_model(trainfn,testfn,model_save_path,epochs,batch_size):
   for itr in range(epochs):
     #randomly sample a batch
     ind_batch = np.random.randint(0,len(matrices), batch_size)
-    ind_batch1 = np.random.randint(0,len(matrices), 1000)
+    ind_batch1 = np.random.randint(0,len(matrices), 1024)
     #feed the feature to model
     feed = {Model.x: matrices[ind_batch]}
     feed[Model.y_0] = label0[ind_batch]
@@ -98,7 +98,7 @@ def train_model(trainfn,testfn,model_save_path,epochs,batch_size):
         Model.save_json(model_save_path)
 
 def main():
-  train_model(sys.argv[1],sys.argv[2],sys.argv[3],10000,1024)
+  train_model(sys.argv[1],sys.argv[2],sys.argv[3],30000,1024)
 
 if(__name__ == '__main__'):
   main()
