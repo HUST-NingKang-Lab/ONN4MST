@@ -51,7 +51,7 @@ We only provide general model on GitHub. Other models mentioned in our study as 
 
 ## Support
 
-For support using ONN4MST, please email [us](https://github.com/HUST-NingKang-Lab/ONN4MST#author). Any comments/insights would be greatly appreciated.
+For support using ONN4MST, please email us. Any comments/insights would be greatly appreciated.
 
 ## Requirements
 
