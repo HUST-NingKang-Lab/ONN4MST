@@ -20,8 +20,8 @@ We only provide general model on GitHub. Other models mentioned in our study as 
 │   ├── npzs                               : ".npz" files and path files for ONN4MST
 │   │   ├── GroundWaterSamplesMatrices.npz : ".npz" files for 11 Groundwater samples mentioned in our study
 │   │   ├── GroundWaterSamplesPaths.txt    : Path to 11 Groundwater samples mentioned in our study
-│   │   ├── HumanSamplesMatrices.npz       : Path to 10 Human samples mentioned in our study
-│   │   └── HumanSamplesPaths.txt          : ".npz" files for 10 Human samples mentioned in our study
+│   │   ├── HumanSamplesMatrices.npz       : ".npz" files for 10 Human samples mentioned in our study
+│   │   └── HumanSamplesPaths.txt          : Path to 10 Human samples mentioned in our study
 │   ├── trees                              : Tree files for ONN4MST
 │   │   ├── biome_tree.pkl                 : Tree file containing serialized biome ontology
 │   │   ├── ordered_labels.txt             : Biomes involved in the biome ontology
